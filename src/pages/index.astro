@@ -1,0 +1,76 @@
+﻿---
+const companyName = "Lara Bear Construction";
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Lara Bear Construction - quality construction services you can trust." />
+    <title>Lara Bear Construction</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <header>
+      <nav class="nav">
+        <a href="/" class="logo">Lara Bear Construction</a>
+        <ul class="nav-links">
+          <li><a href="#services">Services</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Building Your Vision,<br />One Project at a Time</h1>
+        <p>Lara Bear Construction delivers quality craftsmanship on every job - residential and commercial.</p>
+        <a href="#contact" class="btn">Get a Free Quote</a>
+      </div>
+    </section>
+    <section id="services" class="section">
+      <h2>Our Services</h2>
+      <div class="cards">
+        <div class="card"><h3>Residential Construction</h3><p>Custom homes, renovations, and additions built to last.</p></div>
+        <div class="card"><h3>Commercial Construction</h3><p>From ground-up builds to tenant improvements and remodels.</p></div>
+        <div class="card"><h3>Remodeling & Renovation</h3><p>Kitchens, bathrooms, and full-home transformations.</p></div>
+      </div>
+    </section>
+    <section id="about" class="section alt">
+      <h2>About Us</h2>
+      <p>Lara Bear Construction is a trusted construction company committed to quality, safety, and customer satisfaction. With years of experience, we handle projects of every size - on time and on budget.</p>
+    </section>
+    <section id="contact" class="section">
+      <h2>Contact Us</h2>
+      <p>Ready to start your next project? Reach out for a free consultation.</p>
+      <div class="contact-info">
+        <p><strong>Email:</strong> info@larabearconstruction.com</p>
+        <p><strong>Phone:</strong> (555) 123-4567</p>
+      </div>
+      <a href="mailto:info@larabearconstruction.com" class="btn">Email Us</a>
+    </section>
+    <footer><p>(c) 2026 Lara Bear Construction. All rights reserved.</p></footer>
+    <style>
+      *{margin:0;padding:0;box-sizing:border-box;}
+      body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.6;color:#1a1a1a;}
+      .nav{display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;background:#1a1a1a;color:#fff;}
+      .logo{color:#fff;text-decoration:none;font-size:1.25rem;font-weight:700;}
+      .nav-links{list-style:none;display:flex;gap:1.5rem;}
+      .nav-links a{color:#fff;text-decoration:none;opacity:0.85;}
+      .nav-links a:hover{opacity:1;}
+      .hero{background:linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),#3a3a3a;color:#fff;text-align:center;padding:6rem 2rem;}
+      .hero h1{font-size:2.5rem;margin-bottom:1rem;}
+      .hero p{font-size:1.15rem;margin-bottom:2rem;opacity:0.9;}
+      .btn{display:inline-block;background:#d4a017;color:#1a1a1a;padding:0.75rem 2rem;border-radius:6px;text-decoration:none;font-weight:600;}
+      .btn:hover{background:#e6b530;}
+      .section{padding:4rem 2rem;max-width:960px;margin:0 auto;text-align:center;}
+      .section h2{font-size:2rem;margin-bottom:1.5rem;}
+      .section.alt{background:#f5f5f5;}
+      .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;margin-top:2rem;}
+      .card{background:#f9f9f9;border:1px solid #e0e0e0;border-radius:8px;padding:2rem;text-align:left;}
+      .card h3{margin-bottom:0.5rem;color:#d4a017;}
+      .contact-info{margin:1.5rem 0;font-size:1.1rem;}
+      footer{background:#1a1a1a;color:#fff;text-align:center;padding:2rem;}
+    </style>
+  </body>
+</html>
