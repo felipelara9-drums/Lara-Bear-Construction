@@ -1,0 +1,462 @@
+src/pages/restoration-remodeling.astro
+---
+const companyName = "Lara Bear Construction";
+const email = "larabearco@outlook.com";
+const phone = "559-892-6331";
+const phoneClean = "5598926331";
+
+const remodelServices = [
+  { title: "Water Damage Restoration", description: "Rapid response to water damage — extraction, drying, dehumidification, and full reconstruction of affected areas.", icon: "💧" },
+  { title: "Kitchen Remodel", description: "Custom cabinets, countertops, flooring, and lighting to transform your kitchen into the heart of your home.", icon: "🍳" },
+  { title: "Bathroom Remodel", description: "Walk-in showers, modern vanities, tile work, and fixtures for a spa-like bathroom retreat.", icon: "🚿" },
+  { title: "Whole-Home Renovation", description: "Complete home transformations — from layout changes to finishes, we handle every detail.", icon: "🏡" },
+  { title: "Fire & Smoke Damage", description: "Soot removal, odor elimination, structural drying, and full restoration after fire damage.", icon: "🔥" },
+  { title: "Storm Damage Repair", description: "Emergency board-up, tarping, and structural repairs after wind, hail, or storm damage.", icon: "⛈️" },
+];
+
+const galleryImages = [
+  { label: "Water Damage Restoration", placeholder: "Before & After — Water Extraction & Dry-Out" },
+  { label: "Kitchen Remodel", placeholder: "Modern Kitchen Renovation" },
+  { label: "Bathroom Remodel", placeholder: "Custom Bathroom Tile & Shower" },
+  { label: "Whole-Home Renovation", placeholder: "Full Home Transformation" },
+  { label: "Fire Damage Restoration", placeholder: "Fire Damage Repair & Rebuild" },
+  { label: "Living Room Remodel", placeholder: "Open Concept Living Space" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Restoration & Remodeling services by Lara Bear Construction — water damage restoration, kitchen and bathroom remodels, fire damage repair, and whole-home renovations." />
+    <title>Restoration & Remodeling | {companyName}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav">
+        <a href="/" class="logo">
+          <span class="logo-icon">🏗️</span>
+          {companyName}
+        </a>
+        <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+          ☰
+        </button>
+        <ul class="nav-links">
+          <li><a href="/restoration-remodeling">Restoration / Remodeling</a></li>
+          <li><a href="/landscape">Landscape</a></li>
+          <li><a href="/roofing">Roofing</a></li>
+          <li><a href="/#about">About</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Water Restoration Highlight -->
+    <section class="water-highlight">
+      <div class="water-highlight-content">
+        <span class="section-tag">⚡ 24/7 Emergency Response</span>
+        <h1>Water Damage Restoration</h1>
+        <p>When water damage strikes, every minute counts. Our certified team responds fast — extracting water, drying structures, preventing mold, and rebuilding your space to better-than-new condition.</p>
+        <div class="water-highlight-features">
+          <div class="whf-item"><span>💧</span> Water Extraction</div>
+          <div class="whf-item"><span>🌪️</span> Structural Drying</div>
+          <div class="whf-item"><span>🦠</span> Mold Prevention</div>
+          <div class="whf-item"><span>🔨</span> Full Rebuild</div>
+        </div>
+        <a href={`tel:+1${phoneClean}`} class="btn btn-emergency">Call Now: {phone}</a>
+      </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-tag">Our Services</span>
+        <h2>Restoration & Remodeling</h2>
+        <p>From emergency water damage to full home renovations — we handle it all.</p>
+      </div>
+      <div class="service-cards">
+        {remodelServices.map((service) => (
+          <div class="service-card">
+            <div class="service-icon">{service.icon}</div>
+            <h3>{service.title}</h3>
+            <p>{service.description}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Image Gallery -->
+    <section class="section section-alt">
+      <div class="section-header">
+        <span class="section-tag">Our Work</span>
+        <h2>Project Gallery</h2>
+        <p>See the quality of our restoration and remodeling work.</p>
+      </div>
+      <div class="gallery">
+        {galleryImages.map((img) => (
+          <div class="gallery-item">
+            <div class="gallery-placeholder">
+              <span class="gallery-icon">📷</span>
+              <p>{img.placeholder}</p>
+            </div>
+            <div class="gallery-label">{img.label}</div>
+          </div>
+        ))}
+      </div>
+      <p class="gallery-note">📸 Replace these placeholders with your project photos — just upload images to the <code>public/gallery/</code> folder and update the image paths in the code.</p>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-bar">
+      <div class="cta-content">
+        <h2>Need Restoration or Remodeling?</h2>
+        <p>Get a free estimate today. Emergency water damage? Call us now.</p>
+        <div class="cta-buttons">
+          <a href={`tel:+1${phoneClean}`} class="btn btn-primary">📞 {phone}</a>
+          <a href={`mailto:${email}`} class="btn btn-outline-light">📧 Email Us</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-brand">
+          <span class="logo-icon">🏗️</span>
+          <strong>{companyName}</strong>
+        </div>
+        <p>Restoration / Remodeling • Landscape • Roofing</p>
+        <nav class="footer-nav">
+          <a href="/restoration-remodeling">Restoration / Remodeling</a>
+          <a href="/landscape">Landscape</a>
+          <a href="/roofing">Roofing</a>
+          <a href="/#about">About</a>
+          <a href="/#contact">Contact</a>
+        </nav>
+        <p class="copyright">&copy; {new Date().getFullYear()} {companyName}. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <style is:global>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1.6;
+        color: #1a1a1a;
+        scroll-behavior: smooth;
+      }
+      a { text-decoration: none; color: inherit; }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(26, 26, 26, 0.95);
+        backdrop-filter: blur(10px);
+      }
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .logo {
+        color: #fff;
+        font-size: 1.25rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .logo-icon { font-size: 1.5rem; }
+      .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 1.5rem;
+      }
+      .nav-links a {
+        color: #fff;
+        opacity: 0.8;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: opacity 0.2s;
+      }
+      .nav-links a:hover { opacity: 1; }
+      .nav-toggle { display: none; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
+
+      .water-highlight {
+        background: linear-gradient(135deg, #1a3a5c 0%, #0d1f33 100%);
+        color: #fff;
+        padding: 5rem 2rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .water-highlight::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse at top right, rgba(52, 152, 219, 0.2), transparent 50%);
+      }
+      .water-highlight-content {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+        z-index: 1;
+      }
+      .water-highlight h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+      }
+      .water-highlight p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        margin-bottom: 2rem;
+      }
+      .water-highlight-features {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-bottom: 2.5rem;
+      }
+      .whf-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+      .whf-item span { font-size: 1.5rem; }
+      .btn-emergency {
+        background: #e74c3c;
+        color: #fff;
+        padding: 1rem 2.5rem;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 1.15rem;
+        display: inline-block;
+        animation: pulse 2s infinite;
+      }
+      .btn-emergency:hover {
+        background: #c0392b;
+        transform: translateY(-2px);
+      }
+      @keyframes pulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); }
+        50% { box-shadow: 0 0 0 12px rgba(231, 76, 60, 0); }
+      }
+
+      .section-tag {
+        display: inline-block;
+        color: #d4a017;
+        font-weight: 600;
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 0.5rem;
+      }
+
+      .section {
+        padding: 5rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .section-alt {
+        background: #f8f9fa;
+        max-width: 100%;
+      }
+      .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+      .section-header h2 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+      }
+      .section-header p { font-size: 1.1rem; color: #666; }
+
+      .service-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+      .service-card {
+        background: #fff;
+        border: 1px solid #e8e8e8;
+        border-radius: 16px;
+        padding: 2.5rem 2rem;
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+      .service-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: #d4a017;
+        transform: scaleX(0);
+        transition: transform 0.3s;
+      }
+      .service-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        border-color: transparent;
+      }
+      .service-card:hover::before { transform: scaleX(1); }
+      .service-icon { font-size: 3rem; margin-bottom: 1rem; }
+      .service-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.75rem;
+        font-weight: 700;
+      }
+      .service-card p { color: #666; }
+
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .gallery-item {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        background: #fff;
+      }
+      .gallery-placeholder {
+        height: 220px;
+        background: linear-gradient(135deg, #e8e8e8, #d0d0d0);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        color: #888;
+      }
+      .gallery-icon { font-size: 2.5rem; }
+      .gallery-placeholder p { font-size: 0.9rem; padding: 0 1rem; text-align: center; }
+      .gallery-label {
+        padding: 1rem;
+        font-weight: 600;
+        text-align: center;
+        color: #333;
+      }
+      .gallery-note {
+        text-align: center;
+        margin-top: 2rem;
+        color: #888;
+        font-size: 0.9rem;
+      }
+      .gallery-note code {
+        background: #e8e8e8;
+        padding: 0.15rem 0.4rem;
+        border-radius: 4px;
+        font-size: 0.85rem;
+      }
+
+      .cta-bar {
+        background: #1a1a1a;
+        color: #fff;
+        padding: 4rem 2rem;
+        text-align: center;
+      }
+      .cta-content h2 {
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+      }
+      .cta-content p {
+        opacity: 0.7;
+        margin-bottom: 2rem;
+      }
+      .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .btn {
+        display: inline-block;
+        padding: 0.875rem 2rem;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: none;
+      }
+      .btn-primary {
+        background: #d4a017;
+        color: #1a1a1a;
+      }
+      .btn-primary:hover {
+        background: #e6b530;
+        transform: translateY(-2px);
+      }
+      .btn-outline-light {
+        background: transparent;
+        color: #fff;
+        border: 2px solid rgba(255, 255, 255, 0.4);
+      }
+      .btn-outline-light:hover {
+        border-color: #fff;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      footer {
+        background: #0d0d0d;
+        color: #fff;
+        padding: 3rem 2rem 2rem;
+      }
+      .footer-content { max-width: 1200px; margin: 0 auto; text-align: center; }
+      .footer-brand {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+      .footer-content > p { opacity: 0.6; margin-bottom: 1rem; }
+      .footer-nav { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+      .footer-nav a { opacity: 0.7; transition: opacity 0.2s; }
+      .footer-nav a:hover { opacity: 1; }
+      .copyright { font-size: 0.875rem; opacity: 0.5; }
+
+      @media (max-width: 768px) {
+        .nav-toggle { display: block; }
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: #1a1a1a;
+          flex-direction: column;
+          padding: 1rem 2rem;
+          gap: 1rem;
+        }
+        .nav-links.open { display: flex; }
+        .water-highlight h1 { font-size: 2rem; }
+        .water-highlight p { font-size: 1rem; }
+        .section-header h2 { font-size: 1.75rem; }
+        .water-highlight-features { gap: 1rem; }
+        .whf-item { font-size: 0.95rem; }
+      }
+    </style>
+  </body>
+</html>
