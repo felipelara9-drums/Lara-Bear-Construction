@@ -1,1 +1,63 @@
-﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#1a1a1a"/><text x="16" y="22" font-size="18" font-weight="bold" fill="#d4a017" text-anchor="middle" font-family="sans-serif">LB</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200">
+  <defs>
+    <style>
+      .blue { fill: #002b6b; }
+      .gold { fill: #b8860b; }
+      .outline { fill: none; stroke: #002b6b; stroke-width: 4; }
+    </style>
+  </defs>
+
+  <!-- LB Monogram -->
+  <text x="600"
+        y="600"
+        text-anchor="middle"
+        font-family="Arial Black, Arial, sans-serif"
+        font-size="520"
+        class="blue">
+    LB
+  </text>
+
+  <!-- Bear Silhouette Placeholder -->
+  <path fill="#ffffff"
+        d="M430 620
+           L520 500
+           L660 450
+           L760 470
+           L820 520
+           L780 560
+           L700 580
+           L650 620
+           L740 760
+           L660 760
+           L600 680
+           L540 760
+           L470 760
+           L450 700
+           L490 620
+           Z"/>
+
+  <!-- Divider -->
+  <rect x="240" y="800" width="720" height="10" class="blue"/>
+
+  <!-- Company Name -->
+  <text x="600"
+        y="930"
+        text-anchor="middle"
+        font-family="Montserrat, Arial, sans-serif"
+        font-size="110"
+        font-weight="700"
+        letter-spacing="10"
+        class="blue">
+    LARA BEAR
+  </text>
+
+  <text x="600"
+        y="1020"
+        text-anchor="middle"
+        font-family="Montserrat, Arial, sans-serif"
+        font-size="60"
+        letter-spacing="18"
+        class="gold">
+    CONSTRUCTION
+  </text>
+</svg>
