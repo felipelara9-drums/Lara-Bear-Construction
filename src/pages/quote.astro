@@ -80,7 +80,7 @@ const estimateMap = {
           <div class="calculator-grid">
             <label>
               Project type
-              <select id="project-type">
+              <select id="project-type" aria-label="Project type">
                 <option value="water">Water Damage</option>
                 <option value="bathroom">Bathroom Remodel</option>
                 <option value="kitchen">Kitchen Remodel</option>
@@ -89,7 +89,9 @@ const estimateMap = {
 
             <label>
               Scope
-              <select id="project-scope"></select>
+              <select id="project-scope" aria-label="Project scope">
+                <option value="" disabled selected>Select scope</option>
+              </select>
             </label>
           </div>
 
@@ -103,7 +105,7 @@ const estimateMap = {
           </a>
 
           <p class="disclaimer">
-            These estimates are provided for budgeting purposes only. Final pricing depends on site conditions, material selections, accessibility, permit requirements, and project scope. A detailed on-site inspection is required for an accurate quote.
+            These estimates are provided for budgeting purposes only. Final pricing depends on site conditions, material selections, accessibility, permit requirements, and project scope. A detailed walkthrough from our team confirms final pricing before work begins.
           </p>
         </div>
 
@@ -152,35 +154,47 @@ const estimateMap = {
     </footer>
 
     <script>
-      const projectType = document.getElementById('project-type');
-      const projectScope = document.getElementById('project-scope');
-      const estimateTotal = document.getElementById('estimate-total');
+      document.addEventListener('DOMContentLoaded', () => {
+        const projectType = document.getElementById('project-type');
+        const projectScope = document.getElementById('project-scope');
+        const estimateTotal = document.getElementById('estimate-total');
 
-      function syncScopeOptions() {
-        const selected = projectType.value;
-        const options = estimateMap[selected].options;
+        function syncScopeOptions() {
+          const selected = projectType.value;
+          const options = estimateMap[selected]?.options || {};
+          const scopeOptions = Object.entries(options);
 
-        projectScope.innerHTML = Object.entries(options)
-          .map(([key, value]) => `<option value="${key}">${value.label}</option>`)
-          .join('');
+          projectScope.innerHTML = `
+            <option value="" disabled ${scopeOptions.length ? '' : 'selected'}>Select scope</option>
+            ${scopeOptions
+              .map(([key, value]) => `<option value="${key}">${value.label}</option>`)
+              .join('')}
+          `;
 
-        updateEstimate();
-      }
+          if (scopeOptions.length) {
+            projectScope.value = scopeOptions[0][0];
+          }
 
-      function updateEstimate() {
-        const selected = projectType.value;
-        const scope = projectScope.value;
-        const choice = estimateMap[selected].options[scope];
-
-        if (choice) {
-          estimateTotal.textContent = choice.price;
+          updateEstimate();
         }
-      }
 
-      projectType.addEventListener('change', syncScopeOptions);
-      projectScope.addEventListener('change', updateEstimate);
+        function updateEstimate() {
+          const selected = projectType.value;
+          const scope = projectScope.value;
+          const choice = estimateMap[selected]?.options?.[scope];
 
-      syncScopeOptions();
+          if (choice) {
+            estimateTotal.textContent = choice.price;
+          } else {
+            estimateTotal.textContent = '$0 - $0';
+          }
+        }
+
+        projectType.addEventListener('change', syncScopeOptions);
+        projectScope.addEventListener('change', updateEstimate);
+
+        syncScopeOptions();
+      });
     </script>
 
     <style is:global>
@@ -359,6 +373,12 @@ const estimateMap = {
         border-radius: 10px;
         background: #fbfbfb;
         color: var(--text);
+      }
+
+      select {
+        appearance: auto;
+        -webkit-appearance: menulist;
+        -moz-appearance: menulist;
       }
 
       input:focus, select:focus, textarea:focus {
