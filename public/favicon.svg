@@ -1,29 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Lara Bear Construction favicon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Lara Bear Construction favicon">
   <defs>
-    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#D8B867"/>
-      <stop offset="100%" stop-color="#BE8B1D"/>
+    <linearGradient id="lb-gold" x1="0%" x2="100%" y1="0%" y2="0%">
+      <stop offset="0%" stop-color="#E4C567"/>
+      <stop offset="100%" stop-color="#B9871D"/>
     </linearGradient>
   </defs>
 
-  <rect width="128" height="128" fill="#F3F3F1"/>
+  <rect width="64" height="64" rx="14" fill="#102D42"/>
 
-  <path d="M18 28 L64 8 L110 28 V39 H18 Z" fill="url(#gold)"/>
+  <!-- roof / badge frame -->
+  <path d="M16 26L32 14L48 26V42C48 48.6 42.6 54 36 54H28C21.4 54 16 48.6 16 42V26Z" fill="#F3F2EE"/>
+  <path d="M20 27L32 18L44 27" fill="none" stroke="url(#lb-gold)" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <path d="M25 42V89C25 100 33 108 44 108H58C70 108 77 101 77 89V74H59V89H43V52H77V42H25Z" fill="#0E2D52"/>
+  <!-- bear face -->
+  <circle cx="32" cy="31.5" r="11.5" fill="#102D42"/>
+  <circle cx="25.5" cy="25" r="2.6" fill="#F3F2EE"/>
+  <circle cx="38.5" cy="25" r="2.6" fill="#F3F2EE"/>
+  <path d="M26.5 34.5C28.5 36.8 30.3 37.8 32 37.8C33.7 37.8 35.5 36.8 37.5 34.5" fill="none" stroke="#F3F2EE" stroke-width="2.4" stroke-linecap="round"/>
+  <circle cx="32" cy="31.5" r="3.4" fill="#F3F2EE"/>
 
-  <path d="M40 42H68L81 56V61H40V42Z" fill="#0E2D52"/>
-
-  <path d="M30 58C30 44 40 33 53 33H58C71 33 81 44 81 58V77C81 90 72 100 59 100H53C40 100 30 90 30 77V58Z" fill="#0E2D52"/>
-
-  <path d="M46 46L55 31L64 46H46Z" fill="url(#gold)"/>
-  <path d="M82 46L73 31L64 46H82Z" fill="url(#gold)"/>
-
-  <path d="M41 64C41 55 48 48 57 48C66 48 73 55 73 64V70C73 79 66 86 57 86C48 86 41 79 41 70V64Z" fill="#F3F3F1"/>
-
-  <circle cx="50" cy="65" r="3.5" fill="#0E2D52"/>
-  <circle cx="64" cy="65" r="3.5" fill="#0E2D52"/>
-  <path d="M51 76C54 80 58 81 64 76" fill="none" stroke="#0E2D52" stroke-width="3" stroke-linecap="round"/>
-
-  <path d="M32 95H74" stroke="#D8B867" stroke-width="4" stroke-linecap="round"/>
+  <!-- gold accent line for construction / quality vibe -->
+  <path d="M19 46H45" stroke="url(#lb-gold)" stroke-width="3" stroke-linecap="round"/>
 </svg>
