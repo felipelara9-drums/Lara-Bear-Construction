@@ -1,24 +1,3 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Lara Bear Construction favicon">
-  <defs>
-    <linearGradient id="lb-gold" x1="0%" x2="100%" y1="0%" y2="0%">
-      <stop offset="0%" stop-color="#E4C567"/>
-      <stop offset="100%" stop-color="#B9871D"/>
-    </linearGradient>
-  </defs>
-
-  <rect width="64" height="64" rx="14" fill="#102D42"/>
-
-  <!-- roof / badge frame -->
-  <path d="M16 26L32 14L48 26V42C48 48.6 42.6 54 36 54H28C21.4 54 16 48.6 16 42V26Z" fill="#F3F2EE"/>
-  <path d="M20 27L32 18L44 27" fill="none" stroke="url(#lb-gold)" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>
-
-  <!-- bear face -->
-  <circle cx="32" cy="31.5" r="11.5" fill="#102D42"/>
-  <circle cx="25.5" cy="25" r="2.6" fill="#F3F2EE"/>
-  <circle cx="38.5" cy="25" r="2.6" fill="#F3F2EE"/>
-  <path d="M26.5 34.5C28.5 36.8 30.3 37.8 32 37.8C33.7 37.8 35.5 36.8 37.5 34.5" fill="none" stroke="#F3F2EE" stroke-width="2.4" stroke-linecap="round"/>
-  <circle cx="32" cy="31.5" r="3.4" fill="#F3F2EE"/>
-
-  <!-- gold accent line for construction / quality vibe -->
-  <path d="M19 46H45" stroke="url(#lb-gold)" stroke-width="3" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1254 1254" role="img" aria-label="Lara Bear Construction logo">
+  <image href="/logo.svg" width="1254" height="1254" preserveAspectRatio="xMidYMid meet" />
 </svg>
