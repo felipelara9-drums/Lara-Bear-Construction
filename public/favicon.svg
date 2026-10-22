@@ -1,23 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Lara Bear Construction logo">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Lara Bear Construction rugged bear logo">
   <defs>
     <linearGradient id="gold" x1="0%" x2="100%" y1="0%" y2="100%">
-      <stop offset="0%" stop-color="#E4B52E"/>
-      <stop offset="100%" stop-color="#C89012"/>
+      <stop offset="0%" stop-color="#E8B73A"/>
+      <stop offset="100%" stop-color="#C98A14"/>
     </linearGradient>
   </defs>
 
-  <rect width="128" height="128" rx="26" fill="#F8F9FA"/>
+  <rect width="128" height="128" rx="24" fill="#181818"/>
 
-  <path d="M22 41L64 18L106 41V52H22V41Z" fill="url(#gold)"/>
+  <path d="M18 44L64 18L110 44V58H18V44Z" fill="url(#gold)"/>
+  <path d="M30 58H98L90 72H38L30 58Z" fill="#1E1E1E" opacity="0.9"/>
 
-  <path d="M28 52h72c12 0 20 8 20 20v17c0 15-12 27-27 27H35C20 116 8 104 8 89V72c0-12 8-20 20-20z" fill="#1A1A1A"/>
+  <path d="M31 54c0-18 14-32 32-32h2c18 0 32 14 32 32v20c0 18-14 33-32 33h-2c-18 0-32-15-32-33V54Z" fill="#1A1A1A" stroke="url(#gold)" stroke-width="3.5" stroke-linejoin="round"/>
 
-  <path d="M35 52l10 18h38l10-18H35Z" fill="none" stroke="url(#gold)" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M40 38L48 21L58 38H40Z" fill="url(#gold)"/>
+  <path d="M88 38L80 21L70 38H88Z" fill="url(#gold)"/>
 
-  <circle cx="47" cy="67" r="5" fill="#F8F9FA"/>
-  <circle cx="81" cy="67" r="5" fill="#F8F9FA"/>
-  <circle cx="64" cy="75" r="4.5" fill="#F8F9FA"/>
-  <path d="M55 85c6 7 12 7 18 0" fill="none" stroke="#F8F9FA" stroke-width="4" stroke-linecap="round"/>
+  <path d="M43 80c0-11 9-19 21-19s21 8 21 19v7c0 14-9 24-21 24s-21-10-21-24v-7Z" fill="url(#gold)"/>
 
-  <path d="M38 94h52v8c0 7-6 13-13 13H51c-7 0-13-6-13-13v-8z" fill="url(#gold)"/>
+  <path d="M48 62l9-6 8 6-7 8-10-8Z" fill="#1A1A1A"/>
+  <path d="M51 62l9 7 8-7" fill="none" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <circle cx="51" cy="71" r="3.2" fill="#1A1A1A"/>
+  <circle cx="77" cy="71" r="3.2" fill="#1A1A1A"/>
+  <path d="M59 80c2 3 7 4 9 0" fill="none" stroke="#1A1A1A" stroke-width="3" stroke-linecap="round"/>
+
+  <path d="M39 89L49 98H79L89 89" fill="none" stroke="#E8B73A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M33 96H95" stroke="#E8B73A" stroke-width="4" stroke-linecap="round"/>
 </svg>
