@@ -20,9 +20,8 @@ const phoneClean = "5598926331";
   <body>
     <header class="site-header">
       <nav class="nav">
-        <a href="/" class="logo">
-          <span class="logo-icon">🏗️</span>
-          {companyName}
+        <a href="/" class="logo" aria-label="Lara Bear Construction home">
+          <img src="/logo.svg" alt="Lara Bear Construction logo" class="brand-logo" />
         </a>
         <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
           ☰
@@ -50,8 +49,7 @@ const phoneClean = "5598926331";
     <footer>
       <div class="footer-content">
         <div class="footer-brand">
-          <span class="logo-icon">🏗️</span>
-          <strong>{companyName}</strong>
+          <img src="/logo.svg" alt="Lara Bear Construction logo" class="brand-logo-footer" />
         </div>
         <p>Restoration / Remodeling</p>
         <nav class="footer-nav">
@@ -73,6 +71,7 @@ const phoneClean = "5598926331";
         background: #f7f7f7;
       }
       a { text-decoration: none; color: inherit; }
+      img { display: block; max-width: 100%; }
 
       .site-header {
         position: sticky;
@@ -90,14 +89,22 @@ const phoneClean = "5598926331";
         margin: 0 auto;
       }
       .logo {
-        color: #fff;
-        font-size: 1.25rem;
-        font-weight: 700;
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        justify-content: center;
       }
-      .logo-icon { font-size: 1.5rem; }
+      .brand-logo {
+        display: block;
+        width: clamp(170px, 18vw, 280px);
+        height: auto;
+        object-fit: contain;
+      }
+      .brand-logo-footer {
+        display: block;
+        width: clamp(140px, 16vw, 240px);
+        height: auto;
+        object-fit: contain;
+      }
       .nav-links {
         list-style: none;
         display: flex;
@@ -194,10 +201,7 @@ const phoneClean = "5598926331";
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 0.5rem;
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.75rem;
       }
       .footer-content > p { opacity: 0.6; margin-bottom: 1rem; }
       .footer-nav { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.5rem; flex-wrap: wrap; }

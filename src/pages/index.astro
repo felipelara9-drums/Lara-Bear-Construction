@@ -30,7 +30,7 @@ const services = [
     <header class="site-header">
       <nav class="nav">
         <a href="/" class="logo" aria-label="Lara Bear Construction home">
-          <span class="site-name">{companyName}</span>
+          <img src="/logo.svg" alt="Lara Bear Construction logo" class="brand-logo" />
         </a>
 
         <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
@@ -90,7 +90,7 @@ const services = [
         <div class="about-text">
           <span class="section-tag">Who We Are</span>
           <h2>Built on Trust, Quality, and Hard Work</h2>
-          <p>{companyName} is a full-service construction company serving homeowners and businesses with pride. We specialize in restoration and remodeling — delivering craftsmanship and reliability on every project.</p>
+          <p>{companyName} is a full-service construction company serving homeowners and businesses with pride. We specialize in restoration and remodeling — delivering craftsmanship and reliability that lasts.</p>
           <p>Every project, big or small, gets the same attention to detail. We show up on time, communicate clearly, and stand behind our work with a satisfaction guarantee.</p>
           <a href="/quote" class="btn btn-primary">Work With Us</a>
         </div>
@@ -145,7 +145,7 @@ const services = [
     <footer>
       <div class="footer-content">
         <div class="footer-brand">
-          <span class="footer-wordmark">{companyName}</span>
+          <img src="/logo.svg" alt="Lara Bear Construction logo" class="brand-logo-footer" />
         </div>
         <p>Restoration / Remodeling</p>
 
@@ -221,12 +221,18 @@ const services = [
         min-height: 44px;
       }
 
-      .site-name {
-        color:#fff;
-        font-size: 1.2rem;
-        font-weight: 800;
-        letter-spacing: 0.02em;
-        text-transform: none;
+      .brand-logo {
+        display:block;
+        width: clamp(170px, 24vw, 360px);
+        height:auto;
+        object-fit:contain;
+      }
+
+      .brand-logo-footer {
+        display:block;
+        width: clamp(150px, 18vw, 260px);
+        height:auto;
+        object-fit:contain;
       }
 
       .nav-links{
