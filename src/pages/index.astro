@@ -19,8 +19,8 @@ const services = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={`${companyName} — Restoration/Remodeling services. Quality construction you can trust.`} />
-    <title>{companyName} | Restoration, Landscape & Roofing</title>
+    <meta name="description" content={`${companyName} — Restoration and remodeling services. Quality construction you can trust.`} />
+    <title>{companyName} | Restoration & Remodeling</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -29,10 +29,13 @@ const services = [
   <body>
     <header class="site-header">
       <nav class="nav">
-        <a href="/" class="logo"><span class="logo-icon">🏗️</span> {companyName}</a>
+        <a href="/" class="logo" aria-label="Lara Bear Construction home">
+          <img src="/logo.png" alt="Lara Bear Construction logo" class="brand-logo" />
+        </a>
         <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
         <ul class="nav-links">
           <li><a href="/restoration-remodeling">Restoration / Remodeling</a></li>
+          <li><a href="/quote">Free Quote</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
@@ -45,7 +48,7 @@ const services = [
         <h1>Quality Construction<br /><span class="hero-accent">Done Right the First Time</span></h1>
         <p>{companyName} — your trusted partner for restoration and remodeling services.</p>
         <div class="hero-buttons">
-          <a href="#contact" class="btn btn-primary">Get a Free Quote</a>
+          <a href="/quote" class="btn btn-primary">Get a Free Quote</a>
           <a href="#services" class="btn btn-outline">Our Services</a>
         </div>
       </div>
@@ -86,7 +89,7 @@ const services = [
           <h2>Built on Trust, Quality, and Hard Work</h2>
           <p>{companyName} is a full-service construction company serving homeowners and businesses with pride. We specialize in restoration and remodeling — delivering craftsmanship, reliability, and attention to detail on every project.</p>
           <p>Every project, big or small, gets the same attention to detail. We show up on time, communicate clearly, and stand behind our work with a satisfaction guarantee.</p>
-          <a href="#contact" class="btn btn-primary">Work With Us</a>
+          <a href="/quote" class="btn btn-primary">Work With Us</a>
         </div>
         <div class="about-stats">
           <div class="stat-box"><strong>10+</strong><span>Years in Business</span></div>
@@ -127,10 +130,13 @@ const services = [
 
     <footer>
       <div class="footer-content">
-        <div class="footer-brand"><span class="logo-icon">🏗️</span><strong>{companyName}</strong></div>
+        <div class="footer-brand">
+          <img src="/logo.png" alt="Lara Bear Construction logo" class="brand-logo-footer" />
+        </div>
         <p>Restoration / Remodeling</p>
         <nav class="footer-nav">
           <a href="/restoration-remodeling">Restoration / Remodeling</a>
+          <a href="/quote">Free Quote</a>
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
         </nav>
@@ -147,12 +153,25 @@ const services = [
 
     <style is:global>
       *{margin:0;padding:0;box-sizing:border-box;}
-      body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6;color:#1a1a1a;scroll-behavior:smooth;}
+      body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6;color:#1a1a1a;scroll-behavior:smooth; background:#f7f7f7;}
       a{text-decoration:none;color:inherit;}
       .site-header{position:sticky;top:0;z-index:100;background:rgba(26,26,26,0.95);backdrop-filter:blur(10px);}
       .nav{display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;max-width:1200px;margin:0 auto;}
-      .logo{color:#fff;font-size:1.25rem;font-weight:700;display:flex;align-items:center;gap:0.5rem;}
-      .logo-icon{font-size:1.5rem;}
+      .logo{display:flex;align-items:center;justify-content:center;min-width:0;}
+      .brand-logo{
+        display:block;
+        width:clamp(180px, 24vw, 420px);
+        height:auto;
+        object-fit:contain;
+        max-height:90px;
+      }
+      .brand-logo-footer{
+        display:block;
+        width:clamp(150px, 18vw, 300px);
+        height:auto;
+        object-fit:contain;
+        max-height:70px;
+      }
       .nav-links{list-style:none;display:flex;gap:1.5rem;}
       .nav-links a{color:#fff;opacity:0.8;font-weight:500;font-size:0.95rem;transition:opacity 0.2s;}
       .nav-links a:hover{opacity:1;}
