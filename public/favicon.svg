@@ -1,63 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Lara Bear Construction logo">
   <defs>
-    <style>
-      .blue { fill: #002b6b; }
-      .gold { fill: #b8860b; }
-      .outline { fill: none; stroke: #002b6b; stroke-width: 4; }
-    </style>
+    <linearGradient id="gold" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#E4B52E"/>
+      <stop offset="100%" stop-color="#C89012"/>
+    </linearGradient>
   </defs>
 
-  <!-- LB Monogram -->
-  <text x="600"
-        y="600"
-        text-anchor="middle"
-        font-family="Arial Black, Arial, sans-serif"
-        font-size="520"
-        class="blue">
-    LB
-  </text>
+  <rect width="128" height="128" rx="26" fill="#F8F9FA"/>
 
-  <!-- Bear Silhouette Placeholder -->
-  <path fill="#ffffff"
-        d="M430 620
-           L520 500
-           L660 450
-           L760 470
-           L820 520
-           L780 560
-           L700 580
-           L650 620
-           L740 760
-           L660 760
-           L600 680
-           L540 760
-           L470 760
-           L450 700
-           L490 620
-           Z"/>
+  <path d="M22 41L64 18L106 41V52H22V41Z" fill="url(#gold)"/>
 
-  <!-- Divider -->
-  <rect x="240" y="800" width="720" height="10" class="blue"/>
+  <path d="M28 52h72c12 0 20 8 20 20v17c0 15-12 27-27 27H35C20 116 8 104 8 89V72c0-12 8-20 20-20z" fill="#1A1A1A"/>
 
-  <!-- Company Name -->
-  <text x="600"
-        y="930"
-        text-anchor="middle"
-        font-family="Montserrat, Arial, sans-serif"
-        font-size="110"
-        font-weight="700"
-        letter-spacing="10"
-        class="blue">
-    LARA BEAR
-  </text>
+  <path d="M35 52l10 18h38l10-18H35Z" fill="none" stroke="url(#gold)" stroke-width="4" stroke-linejoin="round"/>
 
-  <text x="600"
-        y="1020"
-        text-anchor="middle"
-        font-family="Montserrat, Arial, sans-serif"
-        font-size="60"
-        letter-spacing="18"
-        class="gold">
-    CONSTRUCTION
-  </text>
+  <circle cx="47" cy="67" r="5" fill="#F8F9FA"/>
+  <circle cx="81" cy="67" r="5" fill="#F8F9FA"/>
+  <circle cx="64" cy="75" r="4.5" fill="#F8F9FA"/>
+  <path d="M55 85c6 7 12 7 18 0" fill="none" stroke="#F8F9FA" stroke-width="4" stroke-linecap="round"/>
+
+  <path d="M38 94h52v8c0 7-6 13-13 13H51c-7 0-13-6-13-13v-8z" fill="url(#gold)"/>
 </svg>
