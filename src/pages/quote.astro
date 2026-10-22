@@ -142,73 +142,6 @@ const estimateMap = {
   }
 };
 
-/*
-Legacy renovation-focused options kept here for quick rollback if needed.
-
-const legacyEstimateMap = {
-  bathroom: {
-    label: "Bathroom Remodel",
-    options: {
-      basic: {
-        label: "Basic Remodel",
-        price: "$10,000 - $20,000",
-        scope: ["Vanity", "Toilet", "Fixtures", "Paint", "Basic flooring"]
-      },
-      midRange: {
-        label: "Mid-Range Remodel",
-        price: "$20,000 - $40,000",
-        scope: ["Custom vanity", "Tile shower", "Flooring replacement", "Lighting upgrades"]
-      },
-      luxury: {
-        label: "Luxury Remodel",
-        price: "$40,000 - $80,000+",
-        scope: ["Custom tile work", "Frameless shower", "Premium fixtures", "Structural modifications"]
-      }
-    }
-  },
-  kitchen: {
-    label: "Kitchen Remodel",
-    options: {
-      basic: {
-        label: "Basic",
-        price: "$20,000 - $45,000",
-        scope: ["Cabinet refacing or replacement", "Countertops", "Fixtures", "Paint"]
-      },
-      midRange: {
-        label: "Mid-Range",
-        price: "$45,000 - $85,000",
-        scope: ["Semi-custom cabinets", "New flooring", "Lighting updates", "Appliance relocation"]
-      },
-      highEnd: {
-        label: "High-End",
-        price: "$85,000 - $200,000+",
-        scope: ["Custom cabinetry", "Luxury countertops", "Structural modifications", "Premium appliances"]
-      }
-    }
-  },
-  generalRemodeling: {
-    label: "General Remodeling",
-    options: {
-      singleRoom: {
-        label: "Single Room Remodel",
-        price: "$5,000 - $25,000",
-        scope: ["Finish updates", "Painting", "Flooring improvements", "Minor fixture changes"]
-      },
-      multipleRooms: {
-        label: "Multiple Room Remodel",
-        price: "$25,000 - $75,000",
-        scope: ["Multi-room updates", "Cabinet and countertop changes", "Floor and finish replacements", "Lighting and fixture upgrades"]
-      },
-      majorInterior: {
-        label: "Major Interior Remodel",
-        price: "$75,000 - $250,000+",
-        scope: ["Interior reconfiguration", "Electrical upgrades", "Plumbing improvements", "Ceiling and wall renovations"]
-      }
-    }
-  }
-};
-*/
-
 const projectParam = Astro.url.searchParams.get('project') || 'waterDamageRestoration';
 const scopeParam = Astro.url.searchParams.get('scope') || Object.keys(estimateMap[projectParam]?.options || {})[0];
 const selectedProjectLabel = estimateMap[projectParam]?.label || 'Water Damage Restoration';
@@ -250,13 +183,18 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
         <div class="hero-content">
           <p class="eyebrow">Detailed quote request</p>
           <h1>Tell us about your project</h1>
-          <p>We’ll review your restoration or remodeling project and follow up with a personalized estimate and scope of work.</p>
+          <p>We'll review your restoration or remodeling project and follow up with a personalized estimate and scope of work.</p>
         </div>
       </section>
 
       <section class="request-layout">
         <div class="request-panel panel">
-          <form class="request-form" onsubmit="event.preventDefault(); window.location.href='mailto:larabearco@outlook.com?subject=Detailed Quote Request';">
+          <form class="request-form" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="access_key" value="8031d5d4-983d-43c6-949f-3c547975a65c" />
+            <input type="hidden" name="subject" value="New Quote Request - Lara Bear Construction" />
+            <input type="hidden" name="from_name" value="Lara Bear Construction Website" />
+            <input type="hidden" name="redirect" value="https://larabearconstruction.com/quote?sent=1" />
+
             <div class="form-grid">
               <label>
                 Full name
@@ -299,10 +237,21 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
                 Project details
                 <textarea name="details" rows="6" placeholder="Tell us about the project, timeline, and any concerns"></textarea>
               </label>
+
+              <label class="full-width">
+                Upload a photo (optional)
+                <input type="file" name="photo" accept="image/jpeg,image/png,image/webp" style="margin-top: 0.5rem;" />
+              </label>
             </div>
 
             <button type="submit" class="btn btn-primary btn-full">Send Request</button>
           </form>
+
+          {Astro.url.searchParams.get('sent') === '1' && (
+            <div class="success-message" style="margin-top: 1rem; padding: 1rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; color: #166534;">
+              ✓ Your quote request has been sent! We'll get back to you soon.
+            </div>
+          )}
         </div>
 
         <aside class="summary-panel panel">
@@ -352,7 +301,7 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
       </div>
     </footer>
 
-    <script>
+    <script is:inline define:vars={{ estimateMap }}>
       const projectType = document.getElementById('project-type');
       const projectScope = document.getElementById('project-scope');
       const summaryScope = document.getElementById('summary-scope');
@@ -396,13 +345,13 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
       function buildDetailCards() {
         detailedPricingList.innerHTML = Object.entries(estimateMap)
           .map(([key, project]) => {
-            const cards = Object.values(project.options)
-              .map((option) => `
+            const cards = Object.entries(project.options)
+              .map(([scopeKey, option]) => `
                 <div class="price-card">
                   <h4>${option.label}</h4>
                   <p class="price-range">${option.price}</p>
                   <ul>
-                    ${(estimateMap[key].options[Object.keys(estimateMap[key].options).find((scopeKey) => estimateMap[key].options[scopeKey].label === option.label)]?.scope || []).map((item) => `<li>${item}</li>`).join('')}
+                    ${option.scope.map((item) => `<li>${item}</li>`).join('')}
                   </ul>
                 </div>
               `)
