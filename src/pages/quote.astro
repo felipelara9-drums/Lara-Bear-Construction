@@ -55,6 +55,7 @@ const estimateMap = {
           <li><a href="/">Home</a></li>
           <li><a href="/restoration-remodeling">Restoration</a></li>
           <li><a href="/quote" class="active">Free Quote</a></li>
+          <li><a href="/quote-request">Detailed Quote</a></li>
           <li><a href="/#about">About</a></li>
           <li><a href="/#contact">Contact</a></li>
         </ul>
@@ -90,7 +91,17 @@ const estimateMap = {
             <label>
               Scope
               <select id="project-scope" aria-label="Project scope">
-                <option value="" disabled selected>Select scope</option>
+                <option value="small" data-project="water">Small Area</option>
+                <option value="medium" data-project="water">Medium Area</option>
+                <option value="large" data-project="water">Large Area</option>
+
+                <option value="basic" data-project="bathroom">Basic</option>
+                <option value="standard" data-project="bathroom">Standard</option>
+                <option value="premium" data-project="bathroom">Premium</option>
+
+                <option value="basic" data-project="kitchen">Basic</option>
+                <option value="standard" data-project="kitchen">Standard</option>
+                <option value="premium" data-project="kitchen">Premium</option>
               </select>
             </label>
           </div>
@@ -144,6 +155,7 @@ const estimateMap = {
           <a href="/">Home</a>
           <a href="/restoration-remodeling">Restoration</a>
           <a href="/quote">Free Quote</a>
+          <a href="/quote-request">Detailed Quote</a>
           <a href="/#about">About</a>
           <a href="/#contact">Contact</a>
         </nav>
@@ -160,19 +172,18 @@ const estimateMap = {
         const estimateTotal = document.getElementById('estimate-total');
 
         function syncScopeOptions() {
-          const selected = projectType.value;
-          const options = estimateMap[selected]?.options || {};
-          const scopeOptions = Object.entries(options);
+          const selectedKey = projectType.value;
+          const options = [...projectScope.options];
 
-          projectScope.innerHTML = `
-            <option value="" disabled ${scopeOptions.length ? '' : 'selected'}>Select scope</option>
-            ${scopeOptions
-              .map(([key, value]) => `<option value="${key}">${value.label}</option>`)
-              .join('')}
-          `;
+          options.forEach((option) => {
+            const show = option.dataset.project === selectedKey;
+            option.hidden = !show;
+            option.disabled = !show;
+          });
 
-          if (scopeOptions.length) {
-            projectScope.value = scopeOptions[0][0];
+          const firstVisible = options.find((option) => option.dataset.project === selectedKey);
+          if (firstVisible) {
+            projectScope.value = firstVisible.value;
           }
 
           updateEstimate();
