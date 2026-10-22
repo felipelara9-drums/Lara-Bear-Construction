@@ -327,7 +327,7 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
 
       <section class="request-layout">
         <div class="request-panel panel">
-          <form class="request-form" onsubmit="event.preventDefault(); window.location.href='mailto:larabearco@outlook.com?subject=Detailed Quote Request';">
+          <form class="request-form" onsubmit="event.preventDefault(); const form = event.currentTarget; const project = form.querySelector('#project-type').value; const scope = form.querySelector('#project-scope').value; const insurance = form.querySelector('#insurance-job').value === 'yes' ? 'Yes' : 'No'; const projectLabel = projectValues[project]?.label || 'Project'; const scopeLabel = projectValues[project]?.options?.[scope]?.label || 'Project Scope'; const subject = encodeURIComponent('Detailed Quote Request - ' + projectLabel); const body = encodeURIComponent('Project Type: ' + projectLabel + '\nScope of Work: ' + scopeLabel + '\nInsurance Job: ' + insurance + '\n\nPlease send me a detailed quote and next steps.'); window.location.href = `mailto:larabearco@outlook.com?subject=${subject}&body=${body}`;">
             <div class="form-grid">
               <label>
                 Full name
@@ -365,6 +365,14 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
               </label>
 
               <label>
+                Insurance job?
+                <select id="insurance-job" name="insuranceJob">
+                  <option value="yes">Yes</option>
+                  <option value="no" selected>No</option>
+                </select>
+              </label>
+
+              <label>
                 Service area
                 <input type="text" name="location" placeholder="City / Neighborhood" />
               </label>
@@ -389,6 +397,10 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
           <div class="summary-item highlight">
             <span>Estimated range</span>
             <strong id="summary-price">{selectedPrice}</strong>
+          </div>
+          <div class="summary-item">
+            <span>Insurance job</span>
+            <strong id="summary-insurance">No</strong>
           </div>
           <p>
             This estimate is a starting point for planning. Final pricing depends on site conditions, materials, access, code requirements, and project details.
@@ -429,8 +441,10 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
     <script>
       const projectType = document.getElementById('project-type');
       const projectScope = document.getElementById('project-scope');
+      const insuranceJob = document.getElementById('insurance-job');
       const summaryScope = document.getElementById('summary-scope');
       const summaryPrice = document.getElementById('summary-price');
+      const summaryInsurance = document.getElementById('summary-insurance');
       const detailedPricingList = document.getElementById('detailed-pricing-list');
 
       const projectValues = {
@@ -443,16 +457,292 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
         structural: { label: 'Structural Damage Repair', options: { localized: { label: 'Localized Structural Repair', price: '$5,000 - $25,000' }, major: { label: 'Major Structural Repair', price: '$25,000 - $100,000+' } } }
       };
 
+      const detailData = {
+        waterDamageRestoration: {
+          label: 'Water Damage Restoration',
+          options: {
+            minor: {
+              label: 'Minor Water Damage',
+              price: '$1,500 - $5,000',
+              scope: [
+                'Water extraction',
+                'Moisture detection',
+                'Drying equipment setup',
+                'Minor drywall removal',
+                'Sanitization'
+              ]
+            },
+            moderate: {
+              label: 'Moderate Water Damage',
+              price: '$5,000 - $15,000',
+              scope: [
+                'Water extraction',
+                'Drying and dehumidification',
+                'Drywall replacement',
+                'Baseboard replacement',
+                'Flooring repairs',
+                'Paint touch-up'
+              ]
+            },
+            major: {
+              label: 'Major Water Damage',
+              price: '$15,000 - $50,000+',
+              scope: [
+                'Emergency mitigation',
+                'Demolition of affected areas',
+                'Structural drying',
+                'Flooring replacement',
+                'Cabinet replacement',
+                'Interior reconstruction'
+              ]
+            }
+          }
+        },
+        waterDamageReconstruction: {
+          label: 'Water Damage Reconstruction',
+          options: {
+            singleRoom: {
+              label: 'Single Room',
+              price: '$5,000 - $12,000',
+              scope: [
+                'Drywall',
+                'Paint',
+                'Flooring',
+                'Trim installation'
+              ]
+            },
+            multipleRooms: {
+              label: 'Multiple Rooms',
+              price: '$12,000 - $35,000',
+              scope: [
+                'Flooring replacement',
+                'Wall reconstruction',
+                'Interior painting',
+                'Finish carpentry'
+              ]
+            },
+            wholeHome: {
+              label: 'Whole-Home Restoration',
+              price: '$35,000 - $150,000+',
+              scope: [
+                'Whole-home water mitigation',
+                'Interior reconstruction',
+                'Finish replacement',
+                'Cabinet and flooring restoration'
+              ]
+            }
+          }
+        },
+        bathroom: {
+          label: 'Bathroom Remodel',
+          options: {
+            basic: {
+              label: 'Basic Remodel',
+              price: '$10,000 - $20,000',
+              scope: [
+                'Vanity',
+                'Toilet',
+                'Fixtures',
+                'Paint',
+                'Basic flooring'
+              ]
+            },
+            midRange: {
+              label: 'Mid-Range Remodel',
+              price: '$20,000 - $40,000',
+              scope: [
+                'Custom vanity',
+                'Tile shower',
+                'Flooring replacement',
+                'Lighting upgrades'
+              ]
+            },
+            luxury: {
+              label: 'Luxury Remodel',
+              price: '$40,000 - $80,000+',
+              scope: [
+                'Custom tile work',
+                'Frameless shower',
+                'Premium fixtures',
+                'Structural modifications'
+              ]
+            }
+          }
+        },
+        kitchen: {
+          label: 'Kitchen Remodel',
+          options: {
+            basic: {
+              label: 'Basic',
+              price: '$20,000 - $45,000',
+              scope: [
+                'Cabinet refacing or replacement',
+                'Countertops',
+                'Fixtures',
+                'Paint'
+              ]
+            },
+            midRange: {
+              label: 'Mid-Range',
+              price: '$45,000 - $85,000',
+              scope: [
+                'Semi-custom cabinets',
+                'New flooring',
+                'Lighting updates',
+                'Appliance relocation'
+              ]
+            },
+            highEnd: {
+              label: 'High-End',
+              price: '$85,000 - $200,000+',
+              scope: [
+                'Custom cabinetry',
+                'Luxury countertops',
+                'Structural modifications',
+                'Premium appliances'
+              ]
+            }
+          }
+        },
+        generalRemodeling: {
+          label: 'General Remodeling',
+          options: {
+            singleRoom: {
+              label: 'Single Room Remodel',
+              price: '$5,000 - $25,000',
+              scope: [
+                'Finish updates',
+                'Painting',
+                'Flooring improvements',
+                'Minor fixture changes'
+              ]
+            },
+            multipleRooms: {
+              label: 'Multiple Room Remodel',
+              price: '$25,000 - $75,000',
+              scope: [
+                'Multi-room updates',
+                'Cabinet and countertop changes',
+                'Floor and finish replacements',
+                'Lighting and fixture upgrades'
+              ]
+            },
+            majorInterior: {
+              label: 'Major Interior Remodel',
+              price: '$75,000 - $250,000+',
+              scope: [
+                'Interior reconfiguration',
+                'Electrical upgrades',
+                'Plumbing improvements',
+                'Ceiling and wall renovations'
+              ]
+            },
+            cosmeticRenovation: {
+              label: 'Cosmetic Renovation',
+              price: '$50,000 - $150,000',
+              scope: [
+                'Paint',
+                'Flooring',
+                'Fixtures',
+                'Cabinet updates'
+              ]
+            },
+            fullRenovation: {
+              label: 'Full Renovation',
+              price: '$150,000 - $350,000',
+              scope: [
+                'Kitchen',
+                'Bathrooms',
+                'Flooring',
+                'Electrical',
+                'Plumbing',
+                'Interior finishes'
+              ]
+            },
+            highEndWholeHome: {
+              label: 'High-End Whole Home Renovation',
+              price: '$350,000 - $750,000+',
+              scope: [
+                'Structural modifications',
+                'Complete redesign',
+                'Premium materials',
+                'Custom finishes'
+              ]
+            }
+          }
+        },
+        fire: {
+          label: 'Fire & Smoke Damage Repair',
+          options: {
+            minor: {
+              label: 'Minor',
+              price: '$3,000 - $15,000',
+              scope: [
+                'Smoke and soot assessment',
+                'Surface cleaning',
+                'Odor mitigation',
+                'Minor finish repairs'
+              ]
+            },
+            moderate: {
+              label: 'Moderate',
+              price: '$15,000 - $50,000',
+              scope: [
+                'Interior cleaning',
+                'Debris removal',
+                'Repair of damaged drywall and finishes',
+                'Odor remediation'
+              ]
+            },
+            severe: {
+              label: 'Severe',
+              price: '$50,000 - $250,000+',
+              scope: [
+                'Extensive material removal',
+                'Deep cleaning and deodorization',
+                'Reconstruction of affected rooms',
+                'Full restoration coordination'
+              ]
+            }
+          }
+        },
+        structural: {
+          label: 'Structural Damage Repair',
+          options: {
+            localized: {
+              label: 'Localized Structural Repair',
+              price: '$5,000 - $25,000',
+              scope: [
+                'Structural assessment',
+                'Localized framing repair',
+                'Material replacement',
+                'Code-compliance review'
+              ]
+            },
+            major: {
+              label: 'Major Structural Repair',
+              price: '$25,000 - $100,000+',
+              scope: [
+                'Framing and load-bearing repairs',
+                'Sheathing replacement',
+                'Structural reinforcement',
+                'Finish restoration'
+              ]
+            }
+          }
+        }
+      };
+
       function buildDetailCards() {
-        detailedPricingList.innerHTML = Object.entries(estimateMap)
+        detailedPricingList.innerHTML = Object.entries(detailData)
           .map(([key, project]) => {
-            const cards = Object.values(project.options)
-              .map((option) => `
+            const cards = Object.entries(project.options)
+              .map(([scopeKey, option]) => `
                 <div class="price-card">
                   <h4>${option.label}</h4>
                   <p class="price-range">${option.price}</p>
                   <ul>
-                    ${(estimateMap[key].options[Object.keys(estimateMap[key].options).find((scopeKey) => estimateMap[key].options[scopeKey].label === option.label)]?.scope || []).map((item) => `<li>${item}</li>`).join('') || '<li>Project-specific scope discussed during estimate review.</li>'}
+                    ${option.scope.map((item) => `<li>${item}</li>`).join('')}
                   </ul>
                 </div>
               `)
@@ -498,10 +788,15 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
         if (summaryPrice && scopeData) {
           summaryPrice.textContent = scopeData.price;
         }
+
+        if (summaryInsurance) {
+          summaryInsurance.textContent = insuranceJob.value === 'yes' ? 'Yes' : 'No';
+        }
       }
 
       projectType.addEventListener('change', syncScopeOptions);
       projectScope.addEventListener('change', updateSummary);
+      insuranceJob.addEventListener('change', updateSummary);
 
       const initialProject = "${projectParam}";
       const initialScope = "${scopeParam}";
