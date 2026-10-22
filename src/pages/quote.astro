@@ -42,175 +42,6 @@ const estimateMap = {
           "Cabinet replacement",
           "Interior reconstruction"
         ]
-      },
-      singleRoom: {
-        label: "Water Damage Reconstruction - Single Room",
-        price: "$5,000 - $12,000",
-        scope: [
-          "Drywall",
-          "Paint",
-          "Flooring",
-          "Trim installation"
-        ]
-      },
-      multipleRooms: {
-        label: "Water Damage Reconstruction - Multiple Rooms",
-        price: "$12,000 - $35,000",
-        scope: [
-          "Flooring replacement",
-          "Wall reconstruction",
-          "Interior painting",
-          "Finish carpentry"
-        ]
-      },
-      wholeHome: {
-        label: "Whole-Home Restoration",
-        price: "$35,000 - $150,000+",
-        scope: [
-          "Comprehensive mitigation",
-          "Large-scale drying and dehumidification",
-          "Multiple room reconstruction",
-          "Finish replacements",
-          "Full interior restoration"
-        ]
-      }
-    }
-  },
-  bathroom: {
-    label: "Bathroom Remodel",
-    options: {
-      basic: {
-        label: "Basic Remodel",
-        price: "$10,000 - $20,000",
-        scope: [
-          "Vanity",
-          "Toilet",
-          "Fixtures",
-          "Paint",
-          "Basic flooring"
-        ]
-      },
-      midRange: {
-        label: "Mid-Range Remodel",
-        price: "$20,000 - $40,000",
-        scope: [
-          "Custom vanity",
-          "Tile shower",
-          "Flooring replacement",
-          "Lighting upgrades"
-        ]
-      },
-      luxury: {
-        label: "Luxury Remodel",
-        price: "$40,000 - $80,000+",
-        scope: [
-          "Custom tile work",
-          "Frameless shower",
-          "Premium fixtures",
-          "Structural modifications"
-        ]
-      }
-    }
-  },
-  kitchen: {
-    label: "Kitchen Remodel",
-    options: {
-      basic: {
-        label: "Basic",
-        price: "$20,000 - $45,000",
-        scope: [
-          "Cabinet refacing or replacement",
-          "Countertops",
-          "Fixtures",
-          "Paint"
-        ]
-      },
-      midRange: {
-        label: "Mid-Range",
-        price: "$45,000 - $85,000",
-        scope: [
-          "Semi-custom cabinets",
-          "New flooring",
-          "Lighting updates",
-          "Appliance relocation"
-        ]
-      },
-      highEnd: {
-        label: "High-End",
-        price: "$85,000 - $200,000+",
-        scope: [
-          "Custom cabinetry",
-          "Luxury countertops",
-          "Structural modifications",
-          "Premium appliances"
-        ]
-      }
-    }
-  },
-  general: {
-    label: "General Remodeling",
-    options: {
-      singleRoom: {
-        label: "Single Room Remodel",
-        price: "$5,000 - $25,000",
-        scope: [
-          "Finish updates",
-          "Painting",
-          "Flooring improvements",
-          "Minor fixture changes"
-        ]
-      },
-      multipleRooms: {
-        label: "Multiple Room Remodel",
-        price: "$25,000 - $75,000",
-        scope: [
-          "Multi-room updates",
-          "Cabinet and countertop changes",
-          "Floor and finish replacements",
-          "Lighting and fixture upgrades"
-        ]
-      },
-      majorInterior: {
-        label: "Major Interior Remodel",
-        price: "$75,000 - $250,000+",
-        scope: [
-          "Interior reconfiguration",
-          "Electrical upgrades",
-          "Plumbing improvements",
-          "Ceiling and wall renovations"
-        ]
-      },
-      cosmeticRenovation: {
-        label: "Cosmetic Renovation",
-        price: "$50,000 - $150,000",
-        scope: [
-          "Paint",
-          "Flooring",
-          "Fixtures",
-          "Cabinet updates"
-        ]
-      },
-      fullRenovation: {
-        label: "Full Renovation",
-        price: "$150,000 - $350,000",
-        scope: [
-          "Kitchen",
-          "Bathrooms",
-          "Flooring",
-          "Electrical",
-          "Plumbing",
-          "Interior finishes"
-        ]
-      },
-      highEndWholeHome: {
-        label: "High-End Whole Home Renovation",
-        price: "$350,000 - $750,000+",
-        scope: [
-          "Structural modifications",
-          "Complete redesign",
-          "Premium materials",
-          "Custom finishes"
-        ]
       }
     }
   },
@@ -244,6 +75,41 @@ const estimateMap = {
           "Extensive material removal",
           "Deep cleaning and deodorization",
           "Reconstruction of affected rooms",
+          "Full restoration coordination"
+        ]
+      }
+    }
+  },
+  storm: {
+    label: "Storm Damage Repair",
+    options: {
+      minor: {
+        label: "Minor Storm Damage",
+        price: "$2,500 - $10,000",
+        scope: [
+          "Temporary tarping",
+          "Leak assessment",
+          "Exterior patching",
+          "Weatherproof sealing"
+        ]
+      },
+      moderate: {
+        label: "Moderate Storm Damage",
+        price: "$10,000 - $35,000",
+        scope: [
+          "Roof and siding repairs",
+          "Window replacement",
+          "Exterior trim repair",
+          "Interior water mitigation"
+        ]
+      },
+      major: {
+        label: "Major Storm Damage",
+        price: "$35,000 - $150,000+",
+        scope: [
+          "Extensive roof repair",
+          "Structural stabilization",
+          "Exterior rebuild",
           "Full restoration coordination"
         ]
       }
@@ -312,7 +178,7 @@ const estimateMap = {
         <div class="hero-content">
           <p class="eyebrow">Free estimate</p>
           <h1>Get your project priced in minutes</h1>
-          <p class="hero-copy">Tell us a few details and we’ll estimate what your restoration or remodeling project may cost in the Sacramento / Northern California market.</p>
+          <p class="hero-copy">Tell us a few details and we’ll estimate what your restoration project may cost in the Central Valley market.</p>
         </div>
       </section>
 
@@ -328,10 +194,8 @@ const estimateMap = {
               Project type
               <select id="project-type" aria-label="Project type">
                 <option value="water">Water Damage Restoration</option>
-                <option value="bathroom">Bathroom Remodel</option>
-                <option value="kitchen">Kitchen Remodel</option>
-                <option value="general">General Remodeling</option>
                 <option value="fire">Fire & Smoke Damage Repair</option>
+                <option value="storm">Storm Damage Repair</option>
                 <option value="structural">Structural Damage Repair</option>
               </select>
             </label>
@@ -352,7 +216,7 @@ const estimateMap = {
           </a>
 
           <p class="disclaimer">
-            These estimates are provided for budgeting purposes only. Final pricing depends on site conditions, material selections, accessibility, permit requirements, and project scope. Labor rates and material pricing are based on the 2026 California market, with emphasis on the Sacramento / Northern California region.
+            These estimates are provided for budgeting purposes only. Final pricing depends on site conditions, material selections, accessibility, permit requirements, and project scope. Labor rates, mitigation needs, and restoration complexity may vary.
           </p>
         </div>
 
@@ -1004,11 +868,7 @@ const estimateMap = {
         }
         .nav-links.open { display: flex; }
 
-        .quote-layout {
-          grid-template-columns: 1fr;
-        }
-
-        .calculator-grid {
+        .quote-layout, .calculator-grid {
           grid-template-columns: 1fr;
         }
       }
