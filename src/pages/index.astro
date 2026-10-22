@@ -30,7 +30,7 @@ const services = [
     <header class="site-header">
       <nav class="nav">
         <a href="/" class="logo" aria-label="Lara Bear Construction home">
-          <img src="/logo.svg" alt="Lara Bear Construction logo" class="brand-logo" />
+          <span class="site-name">{companyName}</span>
         </a>
 
         <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
@@ -68,9 +68,8 @@ const services = [
       <div class="section-header">
         <span class="section-tag">What We Do</span>
         <h2>Our Services</h2>
-        <p>One area of expertise — built to meet your property’s needs.</p>
+        <p>One area of expertise — click to learn more.</p>
       </div>
-
       <div class="service-cards">
         {services.map((service) => (
           <a href={service.link} class="service-card">
@@ -92,7 +91,7 @@ const services = [
           <span class="section-tag">Who We Are</span>
           <h2>Built on Trust, Quality, and Hard Work</h2>
           <p>{companyName} is a full-service construction company serving homeowners and businesses with pride. We specialize in restoration and remodeling — delivering craftsmanship and reliability on every project.</p>
-          <p>Every job, big or small, gets the same attention to detail. We show up on time, communicate clearly, and stand behind our work with a satisfaction guarantee.</p>
+          <p>Every project, big or small, gets the same attention to detail. We show up on time, communicate clearly, and stand behind our work with a satisfaction guarantee.</p>
           <a href="/quote" class="btn btn-primary">Work With Us</a>
         </div>
 
@@ -146,7 +145,7 @@ const services = [
     <footer>
       <div class="footer-content">
         <div class="footer-brand">
-          <img src="/logo.svg" alt="Lara Bear Construction logo" class="brand-logo-footer" />
+          <span class="footer-wordmark">{companyName}</span>
         </div>
         <p>Restoration / Remodeling</p>
 
@@ -215,27 +214,19 @@ const services = [
         margin:0 auto;
       }
 
-      .logo{
+      .logo {
         display:flex;
         align-items:center;
         justify-content:center;
-        min-width:0;
+        min-height: 44px;
       }
 
-      .brand-logo{
-        display:block;
-        width:clamp(200px, 26vw, 500px);
-        height:auto;
-        object-fit:contain;
-        filter: drop-shadow(0 6px 10px rgba(15, 29, 43, 0.08));
-      }
-
-      .brand-logo-footer{
-        display:block;
-        width:clamp(150px, 18vw, 310px);
-        height:auto;
-        object-fit:contain;
-        filter: drop-shadow(0 6px 10px rgba(15, 29, 43, 0.08));
+      .site-name {
+        color:#fff;
+        font-size: 1.2rem;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        text-transform: none;
       }
 
       .nav-links{
@@ -678,11 +669,18 @@ const services = [
         text-align:center;
       }
 
-      .footer-brand{
+      .footer-brand {
         display:flex;
         align-items:center;
         justify-content:center;
         margin-bottom:0.75rem;
+      }
+
+      .footer-wordmark{
+        color: #fff;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        font-size: 1.15rem;
       }
 
       .footer-content > p{
@@ -698,7 +696,7 @@ const services = [
         margin-bottom:1.5rem;
       }
 
-      .footer-nav a{
+      .footer-nav a {
         opacity:0.8;
         transition:opacity 0.2s ease;
       }
