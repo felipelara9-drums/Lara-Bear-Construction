@@ -8,25 +8,148 @@ const estimateMap = {
   water: {
     label: "Water Damage",
     options: {
-      small: { label: "Small Area", price: "$1,500 - $4,000" },
-      medium: { label: "Medium Area", price: "$4,000 - $15,000" },
-      large: { label: "Large Area", price: "$15,000 - $30,000+" }
+      small: {
+        label: "Small Area",
+        price: "$1,500 - $4,000",
+        scope: [
+          "Perform on-site inspection and moisture assessment.",
+          "Identify affected building materials and water intrusion sources.",
+          "Extract standing water using commercial-grade equipment.",
+          "Deploy air movers and dehumidifiers to stabilize the affected areas.",
+          "Monitor moisture levels throughout the drying process.",
+          "Remove and dispose of non-salvageable materials as needed.",
+          "Perform antimicrobial treatment to reduce the risk of microbial growth.",
+          "Document drying progress and restoration activities.",
+          "Conduct final moisture verification to confirm dry standards have been met.",
+          "Prepare affected areas for reconstruction or repairs."
+        ]
+      },
+      medium: {
+        label: "Medium Area",
+        price: "$4,000 - $15,000",
+        scope: [
+          "Evaluate water-damaged structural and finish materials.",
+          "Remove damaged drywall, insulation, flooring, and trim as necessary.",
+          "Replace drywall and texture to match existing surfaces.",
+          "Install replacement flooring materials.",
+          "Replace damaged millwork, trim, and baseboards.",
+          "Prime and paint repaired areas.",
+          "Perform final quality inspection and cleanup.",
+          "Restore affected areas to pre-loss condition whenever possible."
+        ]
+      },
+      large: {
+        label: "Large Area",
+        price: "$15,000 - $30,000+",
+        scope: [
+          "Protect adjacent work areas and establish dust containment.",
+          "Demolish and remove existing cabinets, countertops, and fixtures.",
+          "Inspect existing plumbing and electrical systems.",
+          "Perform required framing modifications.",
+          "Install new cabinetry and hardware.",
+          "Install countertops and backsplash.",
+          "Upgrade plumbing fixtures and connections.",
+          "Install lighting and electrical components.",
+          "Install flooring materials as specified.",
+          "Complete painting, trim work, and final finishes.",
+          "Conduct final walkthrough and project completion inspection."
+        ]
+      }
     }
   },
   bathroom: {
     label: "Bathroom Remodel",
     options: {
-      basic: { label: "Basic", price: "$8,000 - $15,000" },
-      standard: { label: "Standard", price: "$15,000 - $30,000" },
-      premium: { label: "Premium", price: "$30,000+" }
+      basic: {
+        label: "Basic",
+        price: "$8,000 - $15,000",
+        scope: [
+          "Remove existing fixtures, cabinetry, and finishes.",
+          "Repair or modify plumbing and electrical systems as needed.",
+          "Install new shower, bathtub, vanity, and fixtures.",
+          "Install tile flooring and wall finishes.",
+          "Repair and finish drywall surfaces.",
+          "Install ventilation upgrades if required.",
+          "Perform painting and finish carpentry.",
+          "Conduct testing of all plumbing fixtures and systems.",
+          "Complete final cleaning and walkthrough."
+        ]
+      },
+      standard: {
+        label: "Standard",
+        price: "$15,000 - $30,000",
+        scope: [
+          "Perform comprehensive site evaluation.",
+          "Protect occupied and unaffected areas.",
+          "Demolish designated walls, finishes, flooring, and fixtures.",
+          "Complete structural modifications as required.",
+          "Upgrade electrical, plumbing, and HVAC systems.",
+          "Install new drywall and insulation.",
+          "Install flooring throughout designated areas.",
+          "Install new cabinetry, countertops, fixtures, and finish materials.",
+          "Complete painting and trim installation.",
+          "Conduct quality control inspections throughout construction.",
+          "Perform final punch-list completion and project walkthrough."
+        ]
+      },
+      premium: {
+        label: "Premium",
+        price: "$30,000+",
+        scope: [
+          "Conduct site inspection and project planning.",
+          "Remove existing materials as required.",
+          "Complete framing, drywall, and finish carpentry work.",
+          "Upgrade electrical and plumbing systems as needed.",
+          "Install flooring, cabinetry, and finish materials.",
+          "Complete painting and touch-up work.",
+          "Perform final cleaning and quality assurance inspection."
+        ]
+      }
     }
   },
   kitchen: {
     label: "Kitchen Remodel",
     options: {
-      basic: { label: "Basic", price: "$15,000 - $35,000" },
-      standard: { label: "Standard", price: "$35,000 - $75,000" },
-      premium: { label: "Premium", price: "$75,000+" }
+      basic: {
+        label: "Basic",
+        price: "$15,000 - $35,000",
+        scope: [
+          "Assess damaged structural components.",
+          "Develop repair strategy for affected framing and load-bearing elements.",
+          "Remove damaged materials.",
+          "Repair or replace framing, sheathing, and structural members.",
+          "Reinforce affected areas as required by code.",
+          "Coordinate inspections where applicable.",
+          "Restore interior and exterior finishes impacted by repairs.",
+          "Conduct final structural review and project walkthrough."
+        ]
+      },
+      standard: {
+        label: "Standard",
+        price: "$35,000 - $75,000",
+        scope: [
+          "Assess fire, smoke, and soot damage.",
+          "Remove damaged materials and debris.",
+          "Clean affected surfaces using specialized restoration methods.",
+          "Deodorize impacted areas using industry-standard techniques.",
+          "Repair or replace damaged drywall, insulation, and finishes.",
+          "Prime and repaint affected surfaces.",
+          "Complete reconstruction and final cleanup activities."
+        ]
+      },
+      premium: {
+        label: "Premium",
+        price: "$75,000+",
+        scope: [
+          "Complete tear-out and removal of existing kitchen finishes and fixtures.",
+          "Perform structural, plumbing, and electrical upgrades as needed.",
+          "Install cabinetry, countertops, and backsplash systems.",
+          "Install new flooring, lighting, and ventilation improvements.",
+          "Finish drywall, trim, and paint throughout the space.",
+          "Coordinate final installation of appliances and accessories.",
+          "Conduct final walkthrough and project punch-list review."
+        ]
+      }
     }
   }
 };
@@ -90,19 +213,7 @@ const estimateMap = {
 
             <label>
               Scope
-              <select id="project-scope" aria-label="Project scope">
-                <option value="small" data-project="water">Small Area</option>
-                <option value="medium" data-project="water">Medium Area</option>
-                <option value="large" data-project="water">Large Area</option>
-
-                <option value="basic" data-project="bathroom">Basic</option>
-                <option value="standard" data-project="bathroom">Standard</option>
-                <option value="premium" data-project="bathroom">Premium</option>
-
-                <option value="basic" data-project="kitchen">Basic</option>
-                <option value="standard" data-project="kitchen">Standard</option>
-                <option value="premium" data-project="kitchen">Premium</option>
-              </select>
+              <select id="project-scope" aria-label="Project scope"></select>
             </label>
           </div>
 
@@ -111,7 +222,7 @@ const estimateMap = {
             <strong id="estimate-total">$1,500 - $4,000</strong>
           </div>
 
-          <a class="btn btn-primary btn-full btn-quote" href={`mailto:${email}?subject=Detailed Quote Request`}>
+          <a href={`/quote-request?project=${encodeURIComponent('water')}&scope=${encodeURIComponent('small')}`} class="btn btn-primary btn-full btn-quote" id="detailed-quote-link">
             GET MY DETAILED QUOTE
           </a>
 
@@ -122,24 +233,52 @@ const estimateMap = {
 
         <div class="contact-panel panel">
           <div class="panel-header">
-            <span class="section-tag">Request form</span>
-            <h2>Tell us about your project</h2>
+            <span class="section-tag">Project work scope</span>
+            <h2 id="selected-project-label">Water Damage</h2>
           </div>
 
-          <form class="contact-form" onsubmit="event.preventDefault(); window.location.href='mailto:larabearco@outlook.com?subject=Free Quote Request';">
-            <input type="text" placeholder="Your Name" required />
-            <input type="email" placeholder="Your Email" required />
-            <input type="tel" placeholder="Your Phone" />
-            <select required>
-              <option value="" disabled selected>Select a Service</option>
-              <option>Water Damage</option>
-              <option>Bathroom Remodel</option>
-              <option>Kitchen Remodel</option>
-              <option>Restoration / Remodeling</option>
-            </select>
-            <textarea placeholder="Tell us about your project" rows="4"></textarea>
-            <button type="submit" class="btn btn-primary btn-full">Send Request</button>
-          </form>
+          <div class="selected-scope-summary">
+            <div class="scope-price-row">
+              <span>Selected scope</span>
+              <strong id="selected-scope-name">Small Area</strong>
+            </div>
+
+            <div class="scope-price-row highlight">
+              <span>Estimated range</span>
+              <strong id="selected-price">$1,500 - $4,000</strong>
+            </div>
+          </div>
+
+          <ul id="scope-list" class="scope-list">
+            <li>Perform on-site inspection and moisture assessment.</li>
+            <li>Identify affected building materials and water intrusion sources.</li>
+            <li>Extract standing water using commercial-grade equipment.</li>
+          </ul>
+
+          <div class="terms-block">
+            <h3>Exclusions</h3>
+            <ul>
+              <li>Unforeseen structural deficiencies.</li>
+              <li>Hazardous material abatement unless specifically included.</li>
+              <li>Permit fees unless otherwise noted.</li>
+              <li>Engineering services unless otherwise specified.</li>
+              <li>Customer-requested changes after project commencement.</li>
+            </ul>
+          </div>
+
+          <div class="terms-block">
+            <h3>Assumptions</h3>
+            <ul>
+              <li>Work will be completed during normal business hours.</li>
+              <li>Site access will be available throughout construction.</li>
+              <li>Existing utilities are functional unless otherwise noted.</li>
+            </ul>
+          </div>
+
+          <div class="terms-block">
+            <h3>Warranty</h3>
+            <p>All workmanship is backed by Lara Bear Construction's workmanship warranty. Manufacturer warranties apply to installed products and materials.</p>
+          </div>
         </div>
       </section>
     </main>
@@ -170,20 +309,24 @@ const estimateMap = {
         const projectType = document.getElementById('project-type');
         const projectScope = document.getElementById('project-scope');
         const estimateTotal = document.getElementById('estimate-total');
+        const selectedProjectLabel = document.getElementById('selected-project-label');
+        const selectedScopeName = document.getElementById('selected-scope-name');
+        const selectedPrice = document.getElementById('selected-price');
+        const scopeList = document.getElementById('scope-list');
+        const detailedQuoteLink = document.getElementById('detailed-quote-link');
 
         function syncScopeOptions() {
-          const selectedKey = projectType.value;
-          const options = [...projectScope.options];
+          const selected = projectType.value;
+          const options = estimateMap[selected].options;
+          const entries = Object.entries(options);
 
-          options.forEach((option) => {
-            const show = option.dataset.project === selectedKey;
-            option.hidden = !show;
-            option.disabled = !show;
-          });
+          projectScope.innerHTML = entries
+            .map(([key, value]) => `<option value="${key}">${value.label}</option>`)
+            .join('');
 
-          const firstVisible = options.find((option) => option.dataset.project === selectedKey);
-          if (firstVisible) {
-            projectScope.value = firstVisible.value;
+          const firstKey = entries[0]?.[0];
+          if (firstKey) {
+            projectScope.value = firstKey;
           }
 
           updateEstimate();
@@ -192,12 +335,16 @@ const estimateMap = {
         function updateEstimate() {
           const selected = projectType.value;
           const scope = projectScope.value;
-          const choice = estimateMap[selected]?.options?.[scope];
+          const project = estimateMap[selected];
+          const choice = project.options[scope];
 
           if (choice) {
             estimateTotal.textContent = choice.price;
-          } else {
-            estimateTotal.textContent = '$0 - $0';
+            selectedProjectLabel.textContent = project.label;
+            selectedScopeName.textContent = choice.label;
+            selectedPrice.textContent = choice.price;
+            scopeList.innerHTML = choice.scope.map((item) => `<li>${item}</li>`).join('');
+            detailedQuoteLink.href = `/quote-request?project=${encodeURIComponent(selected)}&scope=${encodeURIComponent(scope)}`;
           }
         }
 
@@ -331,7 +478,7 @@ const estimateMap = {
         margin: 0 auto;
         padding: 4rem 2rem 5rem;
         display: grid;
-        grid-template-columns: 1.15fr 0.85fr;
+        grid-template-columns: 1.05fr 0.95fr;
         gap: 2rem;
       }
 
@@ -420,6 +567,90 @@ const estimateMap = {
         color: #f8d36a;
       }
 
+      .selected-scope-summary {
+        margin-top: 1.5rem;
+      }
+
+      .scope-price-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        align-items: center;
+        padding: 0.9rem 1rem;
+        border-radius: 12px;
+        background: #f5f7fa;
+        margin-bottom: 0.75rem;
+      }
+
+      .scope-price-row span {
+        color: var(--muted);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .scope-price-row strong {
+        color: #122d3d;
+        font-size: 1.2rem;
+      }
+
+      .scope-price-row.highlight {
+        background: linear-gradient(135deg, #0d1f2f 0%, #17395a 100%);
+      }
+
+      .scope-price-row.highlight span,
+      .scope-price-row.highlight strong {
+        color: #fff;
+      }
+
+      .scope-list {
+        list-style: none;
+        display: grid;
+        gap: 0.65rem;
+        margin-top: 1rem;
+        padding-left: 0;
+      }
+
+      .scope-list li {
+        position: relative;
+        padding-left: 1.25rem;
+        line-height: 1.6;
+        color: var(--text);
+      }
+
+      .scope-list li::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: var(--gold-600);
+        font-weight: 800;
+      }
+
+      .terms-block {
+        margin-top: 1.5rem;
+      }
+
+      .terms-block h3 {
+        font-size: 1.02rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #142e40;
+        margin-bottom: 0.7rem;
+      }
+
+      .terms-block ul {
+        list-style: disc;
+        padding-left: 1.2rem;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .terms-block p {
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
       .btn {
         display: inline-block;
         padding: 0.9rem 1.5rem;
@@ -456,17 +687,6 @@ const estimateMap = {
         color: var(--muted);
         font-size: 0.92rem;
         line-height: 1.6;
-      }
-
-      .contact-form {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        margin-top: 2rem;
-      }
-
-      .contact-form textarea {
-        resize: vertical;
       }
 
       footer {
