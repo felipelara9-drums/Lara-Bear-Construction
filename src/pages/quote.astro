@@ -374,13 +374,15 @@ const estimateMap = {
             </div>
           </div>
 
-          <ul id="scope-list" class="scope-list">
-            <li>Water extraction</li>
-            <li>Moisture detection</li>
-            <li>Drying equipment setup</li>
-            <li>Minor drywall removal</li>
-            <li>Sanitization</li>
-          </ul>
+          <div class="scope-list-wrap">
+            <ul id="scope-list" class="scope-list">
+              <li>Water extraction</li>
+              <li>Moisture detection</li>
+              <li>Drying equipment setup</li>
+              <li>Minor drywall removal</li>
+              <li>Sanitization</li>
+            </ul>
+          </div>
 
           <div class="terms-block">
             <h3>Exclusions</h3>
@@ -452,7 +454,9 @@ const estimateMap = {
             .join('');
 
           const firstKey = entries[0]?.[0];
-          if (firstKey) projectScope.value = firstKey;
+          if (firstKey) {
+            projectScope.value = firstKey;
+          }
 
           updateEstimate();
         }
@@ -470,6 +474,7 @@ const estimateMap = {
           selectedScopeName.textContent = choice.label;
           selectedPrice.textContent = choice.price;
           scopeList.innerHTML = choice.scope.map((item) => `<li>${item}</li>`).join('');
+          scopeList.scrollTop = 0;
           detailedQuoteLink.href = `/quote-request?project=${encodeURIComponent(selectedProjectKey)}&scope=${encodeURIComponent(selectedScopeKey)}`;
         }
 
@@ -728,11 +733,17 @@ const estimateMap = {
         color: #fff;
       }
 
+      .scope-list-wrap {
+        margin-top: 1rem;
+        max-height: 360px;
+        overflow-y: auto;
+        padding-right: 0.5rem;
+      }
+
       .scope-list {
         list-style: none;
         display: grid;
         gap: 0.65rem;
-        margin-top: 1rem;
         padding-left: 0;
       }
 
