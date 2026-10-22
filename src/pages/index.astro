@@ -29,9 +29,7 @@ const services = [
   <body>
     <header class="site-header">
       <nav class="nav">
-        <a href="/" class="logo" aria-label="Lara Bear Construction home">
-          <img src="/logo2.svg" alt="Lara Bear Construction logo" class="brand-logo" />
-        </a>
+        <a href="/" class="site-brand" aria-label="Lara Bear Construction home">Lara Bear Construction</a>
 
         <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
 
@@ -145,7 +143,7 @@ const services = [
     <footer>
       <div class="footer-content">
         <div class="footer-brand">
-          <img src="/logo2.svg" alt="Lara Bear Construction logo" class="brand-logo-footer" />
+          <span class="footer-brand-text">Lara Bear Construction</span>
         </div>
         <p>Restoration / Remodeling</p>
 
@@ -214,25 +212,31 @@ const services = [
         margin:0 auto;
       }
 
-      .logo {
+      .site-brand {
         display:flex;
         align-items:center;
         justify-content:center;
-        min-height: 44px;
+        min-height:44px;
+        color:#fff;
+        font-weight:800;
+        font-size:1.1rem;
+        letter-spacing:0.08em;
+        text-transform:uppercase;
       }
 
-      .brand-logo {
-        display:block;
-        width: clamp(160px, 16vw, 260px);
-        height:auto;
-        object-fit:contain;
+      .footer-brand {
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        margin-bottom:0.75rem;
       }
 
-      .brand-logo-footer {
-        display:block;
-        width: clamp(130px, 12vw, 200px);
-        height:auto;
-        object-fit:contain;
+      .footer-brand-text {
+        color:#fff;
+        font-weight:800;
+        font-size:1.05rem;
+        letter-spacing:0.08em;
+        text-transform:uppercase;
       }
 
       .nav-links{
@@ -673,20 +677,6 @@ const services = [
         max-width:1200px;
         margin:0 auto;
         text-align:center;
-      }
-
-      .footer-brand {
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        margin-bottom:0.75rem;
-      }
-
-      .footer-wordmark{
-        color: #fff;
-        font-weight: 800;
-        letter-spacing: 0.02em;
-        font-size: 1.15rem;
       }
 
       .footer-content > p{

@@ -20,9 +20,7 @@ const phoneClean = "5598926331";
   <body>
     <header class="site-header">
       <nav class="nav">
-        <a href="/" class="logo" aria-label="Lara Bear Construction home">
-          <img src="/logo.svg" alt="Lara Bear Construction logo" class="brand-logo" />
-        </a>
+        <a href="/" class="site-brand" aria-label="Lara Bear Construction home">Lara Bear Construction</a>
 
         <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
 
@@ -89,7 +87,7 @@ const phoneClean = "5598926331";
     <footer>
       <div class="footer-content">
         <div class="footer-brand">
-          <img src="/logo.svg" alt="Lara Bear Construction logo" class="brand-logo-footer" />
+          <span class="footer-brand-text">Lara Bear Construction</span>
         </div>
         <p>Restoration / Remodeling</p>
         <nav class="footer-nav">
@@ -217,18 +215,29 @@ const phoneClean = "5598926331";
         align-items: center;
       }
 
-      .brand-logo {
-        display: block;
-        width: clamp(170px, 22vw, 340px);
-        height: auto;
-        object-fit: contain;
+      .site-brand {
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        min-height:44px;
+        color:#fff;
+        font-size:1.05rem;
+        font-weight:800;
+        letter-spacing:0.08em;
+        text-transform:uppercase;
       }
 
-      .brand-logo-footer {
-        display: block;
-        width: clamp(150px, 18vw, 260px);
-        height: auto;
-        object-fit: contain;
+      .footer-brand {
+        display:flex;
+        justify-content:center;
+        margin-bottom:0.75rem;
+      }
+
+      .footer-brand-text {
+        color:#fff;
+        font-weight:800;
+        letter-spacing:0.08em;
+        text-transform:uppercase;
       }
 
       .nav-links {
@@ -389,12 +398,6 @@ const phoneClean = "5598926331";
         text-align: center;
         max-width: 1200px;
         margin: 0 auto;
-      }
-
-      .footer-brand {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 0.75rem;
       }
 
       .footer-content > p {
