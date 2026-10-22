@@ -410,6 +410,15 @@ const estimateMap = {
           </div>
         </div>
       </section>
+
+      <section class="detailed-pricing-section">
+        <div class="section-header-row">
+          <p class="eyebrow eyebrow-dark">Detailed quote pricing</p>
+          <h2>Scope of work and pricing guide</h2>
+        </div>
+
+        <div id="detailed-pricing-list" class="detailed-pricing-list"></div>
+      </section>
     </main>
 
     <footer>
@@ -443,6 +452,32 @@ const estimateMap = {
         const selectedPrice = document.getElementById('selected-price');
         const scopeList = document.getElementById('scope-list');
         const detailedQuoteLink = document.getElementById('detailed-quote-link');
+        const detailedPricingList = document.getElementById('detailed-pricing-list');
+
+        function createDetailedPricingList() {
+          detailedPricingList.innerHTML = Object.entries(estimateMap)
+            .map(([key, project]) => {
+              const cards = Object.values(project.options)
+                .map((option) => `
+                  <div class="price-card">
+                    <h4>${option.label}</h4>
+                    <p class="price-range">${option.price}</p>
+                    <ul>
+                      ${option.scope.map((item) => `<li>${item}</li>`).join('')}
+                    </ul>
+                  </div>
+                `)
+                .join('');
+
+              return `
+                <div class="pricing-group">
+                  <h3>${project.label}</h3>
+                  <div class="pricing-grid">${cards}</div>
+                </div>
+              `;
+            })
+            .join('');
+        }
 
         function syncScopeOptions() {
           const selectedProjectKey = projectType.value;
@@ -481,6 +516,7 @@ const estimateMap = {
         projectType.addEventListener('change', syncScopeOptions);
         projectScope.addEventListener('change', updateEstimate);
 
+        createDetailedPricingList();
         syncScopeOptions();
       });
     </script>
@@ -586,6 +622,10 @@ const estimateMap = {
         font-weight: 800;
         letter-spacing: 0.18em;
         text-transform: uppercase;
+      }
+
+      .eyebrow-dark {
+        color: var(--gold-600);
       }
 
       .hero h1 {
@@ -783,6 +823,76 @@ const estimateMap = {
       }
 
       .terms-block p {
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .detailed-pricing-section {
+        max-width: 1200px;
+        margin: 0 auto 5rem;
+        padding: 0 2rem;
+      }
+
+      .section-header-row {
+        margin-bottom: 1.5rem;
+      }
+
+      .section-header-row h2 {
+        font-size: clamp(2rem, 3vw, 3rem);
+        color: #142e40;
+      }
+
+      .detailed-pricing-list {
+        display: grid;
+        gap: 2rem;
+        max-height: 900px;
+        overflow-y: auto;
+        padding-right: 0.5rem;
+      }
+
+      .pricing-group {
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid rgba(20, 46, 64, 0.08);
+        border-radius: 22px;
+        padding: 1.5rem;
+        box-shadow: 0 18px 38px rgba(13, 29, 45, 0.06);
+      }
+
+      .pricing-group h3 {
+        margin-bottom: 1rem;
+        font-size: 1.4rem;
+        color: #142e40;
+      }
+
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1rem;
+      }
+
+      .price-card {
+        background: #f8fafb;
+        border: 1px solid #dfe8ee;
+        border-radius: 16px;
+        padding: 1rem;
+      }
+
+      .price-card h4 {
+        font-size: 1.05rem;
+        color: #142e40;
+        margin-bottom: 0.5rem;
+      }
+
+      .price-range {
+        color: var(--gold-700);
+        font-weight: 800;
+        font-size: 1.15rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .price-card ul {
+        list-style: disc;
+        padding-left: 1.2rem;
         color: var(--muted);
         line-height: 1.7;
       }
