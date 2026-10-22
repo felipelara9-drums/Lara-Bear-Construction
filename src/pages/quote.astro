@@ -6,53 +6,72 @@ const phoneClean = "5598926331";
 
 const estimateMap = {
   water: {
-    label: "Water Damage",
+    label: "Water Damage Restoration",
     options: {
-      small: {
-        label: "Small Area",
-        price: "$1,500 - $4,000",
+      minor: {
+        label: "Minor Water Damage",
+        price: "$1,500 - $5,000",
         scope: [
-          "Perform on-site inspection and moisture assessment.",
-          "Identify affected building materials and water intrusion sources.",
-          "Extract standing water using commercial-grade equipment.",
-          "Deploy air movers and dehumidifiers to stabilize the affected areas.",
-          "Monitor moisture levels throughout the drying process.",
-          "Remove and dispose of non-salvageable materials as needed.",
-          "Perform antimicrobial treatment to reduce the risk of microbial growth.",
-          "Document drying progress and restoration activities.",
-          "Conduct final moisture verification to confirm dry standards have been met.",
-          "Prepare affected areas for reconstruction or repairs."
+          "Water extraction",
+          "Moisture detection",
+          "Drying equipment setup",
+          "Minor drywall removal",
+          "Sanitization"
         ]
       },
-      medium: {
-        label: "Medium Area",
-        price: "$4,000 - $15,000",
+      moderate: {
+        label: "Moderate Water Damage",
+        price: "$5,000 - $15,000",
         scope: [
-          "Evaluate water-damaged structural and finish materials.",
-          "Remove damaged drywall, insulation, flooring, and trim as necessary.",
-          "Replace drywall and texture to match existing surfaces.",
-          "Install replacement flooring materials.",
-          "Replace damaged millwork, trim, and baseboards.",
-          "Prime and paint repaired areas.",
-          "Perform final quality inspection and cleanup.",
-          "Restore affected areas to pre-loss condition whenever possible."
+          "Water extraction",
+          "Drying and dehumidification",
+          "Drywall replacement",
+          "Baseboard replacement",
+          "Flooring repairs",
+          "Paint touch-up"
         ]
       },
-      large: {
-        label: "Large Area",
-        price: "$15,000 - $30,000+",
+      major: {
+        label: "Major Water Damage",
+        price: "$15,000 - $50,000+",
         scope: [
-          "Protect adjacent work areas and establish dust containment.",
-          "Demolish and remove existing cabinets, countertops, and fixtures.",
-          "Inspect existing plumbing and electrical systems.",
-          "Perform required framing modifications.",
-          "Install new cabinetry and hardware.",
-          "Install countertops and backsplash.",
-          "Upgrade plumbing fixtures and connections.",
-          "Install lighting and electrical components.",
-          "Install flooring materials as specified.",
-          "Complete painting, trim work, and final finishes.",
-          "Conduct final walkthrough and project completion inspection."
+          "Emergency mitigation",
+          "Demolition of affected areas",
+          "Structural drying",
+          "Flooring replacement",
+          "Cabinet replacement",
+          "Interior reconstruction"
+        ]
+      },
+      singleRoom: {
+        label: "Water Damage Reconstruction - Single Room",
+        price: "$5,000 - $12,000",
+        scope: [
+          "Drywall",
+          "Paint",
+          "Flooring",
+          "Trim installation"
+        ]
+      },
+      multipleRooms: {
+        label: "Water Damage Reconstruction - Multiple Rooms",
+        price: "$12,000 - $35,000",
+        scope: [
+          "Flooring replacement",
+          "Wall reconstruction",
+          "Interior painting",
+          "Finish carpentry"
+        ]
+      },
+      wholeHome: {
+        label: "Whole-Home Restoration",
+        price: "$35,000 - $150,000+",
+        scope: [
+          "Comprehensive mitigation",
+          "Large-scale drying and dehumidification",
+          "Multiple room reconstruction",
+          "Finish replacements",
+          "Full interior restoration"
         ]
       }
     }
@@ -61,48 +80,34 @@ const estimateMap = {
     label: "Bathroom Remodel",
     options: {
       basic: {
-        label: "Basic",
-        price: "$8,000 - $15,000",
+        label: "Basic Remodel",
+        price: "$10,000 - $20,000",
         scope: [
-          "Remove existing fixtures, cabinetry, and finishes.",
-          "Repair or modify plumbing and electrical systems as needed.",
-          "Install new shower, bathtub, vanity, and fixtures.",
-          "Install tile flooring and wall finishes.",
-          "Repair and finish drywall surfaces.",
-          "Install ventilation upgrades if required.",
-          "Perform painting and finish carpentry.",
-          "Conduct testing of all plumbing fixtures and systems.",
-          "Complete final cleaning and walkthrough."
+          "Vanity",
+          "Toilet",
+          "Fixtures",
+          "Paint",
+          "Basic flooring"
         ]
       },
-      standard: {
-        label: "Standard",
-        price: "$15,000 - $30,000",
+      midRange: {
+        label: "Mid-Range Remodel",
+        price: "$20,000 - $40,000",
         scope: [
-          "Perform comprehensive site evaluation.",
-          "Protect occupied and unaffected areas.",
-          "Demolish designated walls, finishes, flooring, and fixtures.",
-          "Complete structural modifications as required.",
-          "Upgrade electrical, plumbing, and HVAC systems.",
-          "Install new drywall and insulation.",
-          "Install flooring throughout designated areas.",
-          "Install new cabinetry, countertops, fixtures, and finish materials.",
-          "Complete painting and trim installation.",
-          "Conduct quality control inspections throughout construction.",
-          "Perform final punch-list completion and project walkthrough."
+          "Custom vanity",
+          "Tile shower",
+          "Flooring replacement",
+          "Lighting upgrades"
         ]
       },
-      premium: {
-        label: "Premium",
-        price: "$30,000+",
+      luxury: {
+        label: "Luxury Remodel",
+        price: "$40,000 - $80,000+",
         scope: [
-          "Conduct site inspection and project planning.",
-          "Remove existing materials as required.",
-          "Complete framing, drywall, and finish carpentry work.",
-          "Upgrade electrical and plumbing systems as needed.",
-          "Install flooring, cabinetry, and finish materials.",
-          "Complete painting and touch-up work.",
-          "Perform final cleaning and quality assurance inspection."
+          "Custom tile work",
+          "Frameless shower",
+          "Premium fixtures",
+          "Structural modifications"
         ]
       }
     }
@@ -112,42 +117,159 @@ const estimateMap = {
     options: {
       basic: {
         label: "Basic",
-        price: "$15,000 - $35,000",
+        price: "$20,000 - $45,000",
         scope: [
-          "Assess damaged structural components.",
-          "Develop repair strategy for affected framing and load-bearing elements.",
-          "Remove damaged materials.",
-          "Repair or replace framing, sheathing, and structural members.",
-          "Reinforce affected areas as required by code.",
-          "Coordinate inspections where applicable.",
-          "Restore interior and exterior finishes impacted by repairs.",
-          "Conduct final structural review and project walkthrough."
+          "Cabinet refacing or replacement",
+          "Countertops",
+          "Fixtures",
+          "Paint"
         ]
       },
-      standard: {
-        label: "Standard",
-        price: "$35,000 - $75,000",
+      midRange: {
+        label: "Mid-Range",
+        price: "$45,000 - $85,000",
         scope: [
-          "Assess fire, smoke, and soot damage.",
-          "Remove damaged materials and debris.",
-          "Clean affected surfaces using specialized restoration methods.",
-          "Deodorize impacted areas using industry-standard techniques.",
-          "Repair or replace damaged drywall, insulation, and finishes.",
-          "Prime and repaint affected surfaces.",
-          "Complete reconstruction and final cleanup activities."
+          "Semi-custom cabinets",
+          "New flooring",
+          "Lighting updates",
+          "Appliance relocation"
         ]
       },
-      premium: {
-        label: "Premium",
-        price: "$75,000+",
+      highEnd: {
+        label: "High-End",
+        price: "$85,000 - $200,000+",
         scope: [
-          "Complete tear-out and removal of existing kitchen finishes and fixtures.",
-          "Perform structural, plumbing, and electrical upgrades as needed.",
-          "Install cabinetry, countertops, and backsplash systems.",
-          "Install new flooring, lighting, and ventilation improvements.",
-          "Finish drywall, trim, and paint throughout the space.",
-          "Coordinate final installation of appliances and accessories.",
-          "Conduct final walkthrough and project punch-list review."
+          "Custom cabinetry",
+          "Luxury countertops",
+          "Structural modifications",
+          "Premium appliances"
+        ]
+      }
+    }
+  },
+  general: {
+    label: "General Remodeling",
+    options: {
+      singleRoom: {
+        label: "Single Room Remodel",
+        price: "$5,000 - $25,000",
+        scope: [
+          "Finish updates",
+          "Painting",
+          "Flooring improvements",
+          "Minor fixture changes"
+        ]
+      },
+      multipleRooms: {
+        label: "Multiple Room Remodel",
+        price: "$25,000 - $75,000",
+        scope: [
+          "Multi-room updates",
+          "Cabinet and countertop changes",
+          "Floor and finish replacements",
+          "Lighting and fixture upgrades"
+        ]
+      },
+      majorInterior: {
+        label: "Major Interior Remodel",
+        price: "$75,000 - $250,000+",
+        scope: [
+          "Interior reconfiguration",
+          "Electrical upgrades",
+          "Plumbing improvements",
+          "Ceiling and wall renovations"
+        ]
+      },
+      cosmeticRenovation: {
+        label: "Cosmetic Renovation",
+        price: "$50,000 - $150,000",
+        scope: [
+          "Paint",
+          "Flooring",
+          "Fixtures",
+          "Cabinet updates"
+        ]
+      },
+      fullRenovation: {
+        label: "Full Renovation",
+        price: "$150,000 - $350,000",
+        scope: [
+          "Kitchen",
+          "Bathrooms",
+          "Flooring",
+          "Electrical",
+          "Plumbing",
+          "Interior finishes"
+        ]
+      },
+      highEndWholeHome: {
+        label: "High-End Whole Home Renovation",
+        price: "$350,000 - $750,000+",
+        scope: [
+          "Structural modifications",
+          "Complete redesign",
+          "Premium materials",
+          "Custom finishes"
+        ]
+      }
+    }
+  },
+  fire: {
+    label: "Fire & Smoke Damage Repair",
+    options: {
+      minor: {
+        label: "Minor",
+        price: "$3,000 - $15,000",
+        scope: [
+          "Smoke and soot assessment",
+          "Surface cleaning",
+          "Odor mitigation",
+          "Minor finish repairs"
+        ]
+      },
+      moderate: {
+        label: "Moderate",
+        price: "$15,000 - $50,000",
+        scope: [
+          "Interior cleaning",
+          "Debris removal",
+          "Repair of damaged drywall and finishes",
+          "Odor remediation"
+        ]
+      },
+      severe: {
+        label: "Severe",
+        price: "$50,000 - $250,000+",
+        scope: [
+          "Extensive material removal",
+          "Deep cleaning and deodorization",
+          "Reconstruction of affected rooms",
+          "Full restoration coordination"
+        ]
+      }
+    }
+  },
+  structural: {
+    label: "Structural Damage Repair",
+    options: {
+      localized: {
+        label: "Localized Structural Repair",
+        price: "$5,000 - $25,000",
+        scope: [
+          "Structural assessment",
+          "Localized framing repair",
+          "Material replacement",
+          "Code-compliance review"
+        ]
+      },
+      major: {
+        label: "Major Structural Repair",
+        price: "$25,000 - $100,000+",
+        scope: [
+          "Framing and load-bearing repairs",
+          "Sheathing replacement",
+          "Structural reinforcement",
+          "Finish restoration"
         ]
       }
     }
@@ -190,7 +312,7 @@ const estimateMap = {
         <div class="hero-content">
           <p class="eyebrow">Free estimate</p>
           <h1>Get your project priced in minutes</h1>
-          <p class="hero-copy">Tell us a few details and we’ll estimate what your restoration or remodeling project may cost.</p>
+          <p class="hero-copy">Tell us a few details and we’ll estimate what your restoration or remodeling project may cost in the Sacramento / Northern California market.</p>
         </div>
       </section>
 
@@ -205,9 +327,12 @@ const estimateMap = {
             <label>
               Project type
               <select id="project-type" aria-label="Project type">
-                <option value="water">Water Damage</option>
+                <option value="water">Water Damage Restoration</option>
                 <option value="bathroom">Bathroom Remodel</option>
                 <option value="kitchen">Kitchen Remodel</option>
+                <option value="general">General Remodeling</option>
+                <option value="fire">Fire & Smoke Damage Repair</option>
+                <option value="structural">Structural Damage Repair</option>
               </select>
             </label>
 
@@ -219,40 +344,42 @@ const estimateMap = {
 
           <div class="estimate-box">
             <span>Estimated range</span>
-            <strong id="estimate-total">$1,500 - $4,000</strong>
+            <strong id="estimate-total">$1,500 - $5,000</strong>
           </div>
 
-          <a href={`/quote-request?project=${encodeURIComponent('water')}&scope=${encodeURIComponent('small')}`} class="btn btn-primary btn-full btn-quote" id="detailed-quote-link">
+          <a href="/quote-request?project=water&scope=minor" class="btn btn-primary btn-full btn-quote" id="detailed-quote-link">
             GET MY DETAILED QUOTE
           </a>
 
           <p class="disclaimer">
-            These estimates are provided for budgeting purposes only. Final pricing depends on site conditions, material selections, accessibility, permit requirements, and project scope. A detailed walkthrough from our team confirms final pricing before work begins.
+            These estimates are provided for budgeting purposes only. Final pricing depends on site conditions, material selections, accessibility, permit requirements, and project scope. Labor rates and material pricing are based on the 2026 California market, with emphasis on the Sacramento / Northern California region.
           </p>
         </div>
 
         <div class="contact-panel panel">
           <div class="panel-header">
             <span class="section-tag">Project work scope</span>
-            <h2 id="selected-project-label">Water Damage</h2>
+            <h2 id="selected-project-label">Water Damage Restoration</h2>
           </div>
 
           <div class="selected-scope-summary">
             <div class="scope-price-row">
               <span>Selected scope</span>
-              <strong id="selected-scope-name">Small Area</strong>
+              <strong id="selected-scope-name">Minor Water Damage</strong>
             </div>
 
             <div class="scope-price-row highlight">
               <span>Estimated range</span>
-              <strong id="selected-price">$1,500 - $4,000</strong>
+              <strong id="selected-price">$1,500 - $5,000</strong>
             </div>
           </div>
 
           <ul id="scope-list" class="scope-list">
-            <li>Perform on-site inspection and moisture assessment.</li>
-            <li>Identify affected building materials and water intrusion sources.</li>
-            <li>Extract standing water using commercial-grade equipment.</li>
+            <li>Water extraction</li>
+            <li>Moisture detection</li>
+            <li>Drying equipment setup</li>
+            <li>Minor drywall removal</li>
+            <li>Sanitization</li>
           </ul>
 
           <div class="terms-block">
@@ -316,36 +443,34 @@ const estimateMap = {
         const detailedQuoteLink = document.getElementById('detailed-quote-link');
 
         function syncScopeOptions() {
-          const selected = projectType.value;
-          const options = estimateMap[selected].options;
-          const entries = Object.entries(options);
+          const selectedProjectKey = projectType.value;
+          const currentProject = estimateMap[selectedProjectKey];
+          const entries = Object.entries(currentProject.options);
 
           projectScope.innerHTML = entries
             .map(([key, value]) => `<option value="${key}">${value.label}</option>`)
             .join('');
 
           const firstKey = entries[0]?.[0];
-          if (firstKey) {
-            projectScope.value = firstKey;
-          }
+          if (firstKey) projectScope.value = firstKey;
 
           updateEstimate();
         }
 
         function updateEstimate() {
-          const selected = projectType.value;
-          const scope = projectScope.value;
-          const project = estimateMap[selected];
-          const choice = project.options[scope];
+          const selectedProjectKey = projectType.value;
+          const selectedScopeKey = projectScope.value;
+          const project = estimateMap[selectedProjectKey];
+          const choice = project.options[selectedScopeKey];
 
-          if (choice) {
-            estimateTotal.textContent = choice.price;
-            selectedProjectLabel.textContent = project.label;
-            selectedScopeName.textContent = choice.label;
-            selectedPrice.textContent = choice.price;
-            scopeList.innerHTML = choice.scope.map((item) => `<li>${item}</li>`).join('');
-            detailedQuoteLink.href = `/quote-request?project=${encodeURIComponent(selected)}&scope=${encodeURIComponent(scope)}`;
-          }
+          if (!choice) return;
+
+          estimateTotal.textContent = choice.price;
+          selectedProjectLabel.textContent = project.label;
+          selectedScopeName.textContent = choice.label;
+          selectedPrice.textContent = choice.price;
+          scopeList.innerHTML = choice.scope.map((item) => `<li>${item}</li>`).join('');
+          detailedQuoteLink.href = `/quote-request?project=${encodeURIComponent(selectedProjectKey)}&scope=${encodeURIComponent(selectedScopeKey)}`;
         }
 
         projectType.addEventListener('change', syncScopeOptions);
