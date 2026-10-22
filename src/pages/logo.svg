@@ -1,0 +1,34 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" fill="#F3F2EE"/>
+
+  <g transform="translate(105 80)">
+    <path d="M205 0H490C715 0 788 120 774 226C770 245 760 265 748 302L654 531H525L604 318C611 297 612 282 608 265C601 238 560 208 490 208H340V598H205V0Z" fill="#0E2C47"/>
+    <path d="M505 74H650C761 74 835 141 835 234C835 314 780 369 669 409L563 452L619 597H483L430 472L333 472L396 306L472 306C530 306 570 284 570 246C570 214 538 195 490 195H447V74H505Z" fill="#0E2C47"/>
+
+    <path d="M544 136L640 152L723 240L649 304L544 136Z" fill="#0E2C47"/>
+
+    <path d="M333 0H451V598H333V0Z" fill="#0E2C47"/>
+
+    <path d="M164 90C195 90 220 114 220 145V292C220 323 195 348 164 348H107C76 348 51 323 51 292V145C51 114 76 90 107 90H164Z" fill="#0E2C47"/>
+    <path d="M73 148C91 137 106 132 127 132H154C178 132 200 140 215 156L210 180L165 170L156 183C151 189 146 195 140 200L116 220L86 207L120 181L91 173L79 161L73 148Z" fill="#F3F2EE"/>
+
+    <path d="M300 178C369 178 424 230 424 300C424 371 369 424 300 424C231 424 176 371 176 300C176 230 231 178 300 178Z" fill="#F3F2EE"/>
+    <path d="M217 127L270 100L305 127L308 196L263 222L221 210L217 127Z" fill="#F3F2EE"/>
+    <path d="M349 104L440 128L423 210L349 180L349 104Z" fill="#F3F2EE"/>
+    <path d="M203 303L281 276L378 320L372 405L237 429L203 303Z" fill="#F3F2EE"/>
+    <path d="M214 152H320C335 152 347 164 347 179V241C347 257 335 269 320 269H214C199 269 187 257 187 241V179C187 164 199 152 214 152Z" fill="#0E2C47"/>
+
+    <path d="M356 411L481 387L589 449L506 561H399L356 411Z" fill="#F3F2EE"/>
+    <path d="M589 449L638 420L670 468L635 569H536L506 561L589 449Z" fill="#F3F2EE"/>
+  </g>
+
+  <g transform="translate(110 670)">
+    <path d="M0 23H980" stroke="#0E2C47" stroke-width="8" stroke-linecap="round"/>
+  </g>
+
+  <g transform="translate(95 470)">
+    <text x="0" y="0" fill="#0E2C47" font-family="Arial, Helvetica, sans-serif" font-size="140" font-weight="800" letter-spacing="10">LARA BEAR</text>
+    <path d="M0 62H566" stroke="#D4A017" stroke-width="8" stroke-linecap="round"/>
+    <text x="280" y="156" fill="#D4A017" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700" letter-spacing="8">CONSTRUCTION</text>
+  </g>
+</svg>
