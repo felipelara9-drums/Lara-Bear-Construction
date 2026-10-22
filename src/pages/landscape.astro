@@ -3,24 +3,6 @@ const companyName = "Lara Bear Construction";
 const email = "larabearco@outlook.com";
 const phone = "559-892-6331";
 const phoneClean = "5598926331";
-
-const landscapeServices = [
-  { title: "Lawn Maintenance", description: "Regular mowing, edging, fertilizing, and weed control to keep your lawn healthy and green all season.", icon: "🌱" },
-  { title: "Landscape Design", description: "Custom landscape design — from plant selection to hardscaping, we create outdoor spaces you'll love.", icon: "🌳" },
-  { title: "Tree Trimming & Removal", description: "Safe tree trimming, pruning, and removal to protect your property and improve curb appeal.", icon: "🌲" },
-  { title: "Sod Installation", description: "Fresh sod installation for an instant, lush green lawn — properly graded and installed for long-term health.", icon: "🟩" },
-  { title: "Irrigation Systems", description: "Installation and repair of sprinkler and drip irrigation systems to keep your landscape thriving.", icon: "💧" },
-  { title: "Hardscaping", description: "Patios, walkways, retaining walls, and decorative stonework to enhance your outdoor living space.", icon: "🧱" },
-];
-
-const galleryImages = [
-  { label: "Lawn Maintenance", placeholder: "Freshly Mowed Lawn" },
-  { label: "Landscape Design", placeholder: "Custom Garden Design" },
-  { label: "Tree Trimming", placeholder: "Tree Pruning Service" },
-  { label: "Sod Installation", placeholder: "New Sod Installation" },
-  { label: "Hardscaping", placeholder: "Stone Patio & Walkway" },
-  { label: "Irrigation System", placeholder: "Sprinkler Installation" },
-];
 ---
 
 <!doctype html>
@@ -28,7 +10,7 @@ const galleryImages = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Landscape services by Lara Bear Construction — lawn maintenance, landscape design, tree trimming, sod installation, irrigation, and hardscaping." />
+    <meta name="description" content="Landscape services are temporarily unavailable. Please contact Lara Bear Construction for restoration and remodeling services." />
     <title>Landscape Services | {companyName}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -47,71 +29,23 @@ const galleryImages = [
         </button>
         <ul class="nav-links">
           <li><a href="/restoration-remodeling">Restoration / Remodeling</a></li>
-          <li><a href="/landscape">Landscape</a></li>
-          <li><a href="/roofing">Roofing</a></li>
           <li><a href="/#about">About</a></li>
           <li><a href="/#contact">Contact</a></li>
         </ul>
       </nav>
     </header>
 
-    <section class="page-hero">
-      <div class="page-hero-overlay"></div>
-      <div class="page-hero-content">
+    <main class="coming-soon-page">
+      <div class="coming-soon-card">
         <span class="section-tag">🌿 Landscape Services</span>
-        <h1>Your Outdoor Space, Beautifully Maintained</h1>
-        <p>From routine lawn care to full landscape design — we keep your property looking its best in every season.</p>
-        <a href="/#contact" class="btn btn-primary">Get a Free Quote</a>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-header">
-        <span class="section-tag">What We Offer</span>
-        <h2>Our Landscape Services</h2>
-        <p>Complete lawn and landscape solutions for homes and businesses.</p>
-      </div>
-      <div class="service-cards">
-        {landscapeServices.map((service) => (
-          <div class="service-card">
-            <div class="service-icon">{service.icon}</div>
-            <h3>{service.title}</h3>
-            <p>{service.description}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <section class="section section-alt">
-      <div class="section-header">
-        <span class="section-tag">Our Work</span>
-        <h2>Project Gallery</h2>
-        <p>See our landscaping and lawn care projects.</p>
-      </div>
-      <div class="gallery">
-        {galleryImages.map((img) => (
-          <div class="gallery-item">
-            <div class="gallery-placeholder">
-              <span class="gallery-icon">📷</span>
-              <p>{img.placeholder}</p>
-            </div>
-            <div class="gallery-label">{img.label}</div>
-          </div>
-        ))}
-      </div>
-      <p class="gallery-note">📸 Replace these placeholders with your project photos — just upload images to the <code>public/gallery/</code> folder and update the image paths in the code.</p>
-    </section>
-
-    <section class="cta-bar">
-      <div class="cta-content">
-        <h2>Ready to Transform Your Yard?</h2>
-        <p>Get a free estimate today.</p>
+        <h1>Coming Soon</h1>
+        <p>We are temporarily pausing this service while we complete licensing and trade requirements. We appreciate your patience.</p>
         <div class="cta-buttons">
-          <a href={`tel:+1${phoneClean}`} class="btn btn-primary">📞 {phone}</a>
-          <a href={`mailto:${email}`} class="btn btn-outline-light">📧 Email Us</a>
+          <a href="/" class="btn btn-primary">Return Home</a>
+          <a href={`mailto:${email}`} class="btn btn-outline">Email Us</a>
         </div>
       </div>
-    </section>
+    </main>
 
     <footer>
       <div class="footer-content">
@@ -119,11 +53,9 @@ const galleryImages = [
           <span class="logo-icon">🏗️</span>
           <strong>{companyName}</strong>
         </div>
-        <p>Restoration / Remodeling • Landscape • Roofing</p>
+        <p>Restoration / Remodeling</p>
         <nav class="footer-nav">
           <a href="/restoration-remodeling">Restoration / Remodeling</a>
-          <a href="/landscape">Landscape</a>
-          <a href="/roofing">Roofing</a>
           <a href="/#about">About</a>
           <a href="/#contact">Contact</a>
         </nav>
@@ -138,6 +70,7 @@ const galleryImages = [
         line-height: 1.6;
         color: #1a1a1a;
         scroll-behavior: smooth;
+        background: #f7f7f7;
       }
       a { text-decoration: none; color: inherit; }
 
@@ -180,39 +113,23 @@ const galleryImages = [
       .nav-links a:hover { opacity: 1; }
       .nav-toggle { display: none; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
 
-      .page-hero {
-        position: relative;
-        min-height: 450px;
+      .coming-soon-page {
+        min-height: calc(100vh - 180px);
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, #1e5128 0%, #0d2818 100%);
-        overflow: hidden;
+        padding: 3rem 1.5rem;
       }
-      .page-hero-overlay {
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(ellipse at top, rgba(46, 204, 113, 0.15), transparent 60%);
-      }
-      .page-hero-content {
-        position: relative;
+      .coming-soon-card {
+        max-width: 700px;
+        width: 100%;
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+        padding: 4rem 2rem;
         text-align: center;
-        color: #fff;
-        max-width: 800px;
-        padding: 2rem;
-        z-index: 1;
+        border: 1px solid #e8e8e8;
       }
-      .page-hero h1 {
-        font-size: 2.75rem;
-        font-weight: 800;
-        margin-bottom: 1rem;
-      }
-      .page-hero p {
-        font-size: 1.2rem;
-        opacity: 0.9;
-        margin-bottom: 2rem;
-      }
-
       .section-tag {
         display: inline-block;
         color: #d4a017;
@@ -222,7 +139,23 @@ const galleryImages = [
         letter-spacing: 2px;
         margin-bottom: 0.5rem;
       }
-
+      .coming-soon-card h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        color: #1a1a1a;
+      }
+      .coming-soon-card p {
+        font-size: 1.1rem;
+        color: #555;
+        margin-bottom: 2rem;
+      }
+      .cta-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
       .btn {
         display: inline-block;
         padding: 0.875rem 2rem;
@@ -241,139 +174,14 @@ const galleryImages = [
         background: #e6b530;
         transform: translateY(-2px);
       }
-      .btn-outline-light {
+      .btn-outline {
         background: transparent;
-        color: #fff;
-        border: 2px solid rgba(255, 255, 255, 0.4);
+        color: #1a1a1a;
+        border: 2px solid #d0d0d0;
       }
-      .btn-outline-light:hover {
-        border-color: #fff;
-        background: rgba(255, 255, 255, 0.1);
-      }
-
-      .section {
-        padding: 5rem 2rem;
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-      .section-alt {
-        background: #f8f9fa;
-        max-width: 100%;
-      }
-      .section-header {
-        text-align: center;
-        margin-bottom: 3rem;
-      }
-      .section-header h2 {
-        font-size: 2.5rem;
-        font-weight: 800;
-        margin-bottom: 1rem;
-      }
-      .section-header p { font-size: 1.1rem; color: #666; }
-
-      .service-cards {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-      }
-      .service-card {
-        background: #fff;
-        border: 1px solid #e8e8e8;
-        border-radius: 16px;
-        padding: 2.5rem 2rem;
-        transition: all 0.3s;
-        position: relative;
-        overflow: hidden;
-      }
-      .service-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: #2ecc71;
-        transform: scaleX(0);
-        transition: transform 0.3s;
-      }
-      .service-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
-        border-color: transparent;
-      }
-      .service-card:hover::before { transform: scaleX(1); }
-      .service-icon { font-size: 3rem; margin-bottom: 1rem; }
-      .service-card h3 {
-        font-size: 1.5rem;
-        margin-bottom: 0.75rem;
-        font-weight: 700;
-      }
-      .service-card p { color: #666; }
-
-      .gallery {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 1.5rem;
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-      .gallery-item {
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        background: #fff;
-      }
-      .gallery-placeholder {
-        height: 220px;
-        background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-        color: #6b8e6b;
-      }
-      .gallery-icon { font-size: 2.5rem; }
-      .gallery-placeholder p { font-size: 0.9rem; padding: 0 1rem; text-align: center; }
-      .gallery-label {
-        padding: 1rem;
-        font-weight: 600;
-        text-align: center;
-        color: #333;
-      }
-      .gallery-note {
-        text-align: center;
-        margin-top: 2rem;
-        color: #888;
-        font-size: 0.9rem;
-      }
-      .gallery-note code {
-        background: #e8e8e8;
-        padding: 0.15rem 0.4rem;
-        border-radius: 4px;
-        font-size: 0.85rem;
-      }
-
-      .cta-bar {
-        background: #1a1a1a;
-        color: #fff;
-        padding: 4rem 2rem;
-        text-align: center;
-      }
-      .cta-content h2 {
-        font-size: 2rem;
-        font-weight: 800;
-        margin-bottom: 0.5rem;
-      }
-      .cta-content p {
-        opacity: 0.7;
-        margin-bottom: 2rem;
-      }
-      .cta-buttons {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        flex-wrap: wrap;
+      .btn-outline:hover {
+        border-color: #1a1a1a;
+        background: #f3f3f3;
       }
 
       footer {
@@ -411,9 +219,7 @@ const galleryImages = [
           gap: 1rem;
         }
         .nav-links.open { display: flex; }
-        .page-hero h1 { font-size: 2rem; }
-        .page-hero p { font-size: 1rem; }
-        .section-header h2 { font-size: 1.75rem; }
+        .coming-soon-card h1 { font-size: 2.25rem; }
       }
     </style>
   </body>
