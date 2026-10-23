@@ -196,6 +196,273 @@ const scopeParam = Astro.url.searchParams.get('scope') || Object.keys(estimateMa
 const selectedProjectLabel = estimateMap[projectParam]?.label || 'Water Damage Restoration';
 const selectedScopeLabel = estimateMap[projectParam]?.options?.[scopeParam]?.label || 'Tier 1: Minor Water Loss';
 const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price || '$1,500 - $4,500';
+
+const serviceScopeDetails = {
+  waterDamageRestoration: [
+    {
+      title: 'Tier 1: Single Room Water Damage',
+      price: '$1,500 - $5,000',
+      items: [
+        'Emergency response and site assessment',
+        'Moisture mapping and documentation',
+        'Water extraction',
+        'Removal of damaged baseboards',
+        'Limited drywall removal (up to 100 SF)',
+        'Floor protection',
+        'Antimicrobial treatment',
+        'Air movers and dehumidifiers',
+        'Daily moisture monitoring',
+        'Final moisture verification',
+        'Debris disposal',
+        'Insurance documentation assistance'
+      ],
+      examples: ['Bathroom overflow', 'Dishwasher leak', 'Washing machine leak', 'Small pipe burst']
+    },
+    {
+      title: 'Tier 2: Multi-Room Water Damage',
+      price: '$5,000 - $20,000',
+      items: [
+        'Everything in Tier 1 plus:',
+        'Multiple room mitigation',
+        'Drywall demolition',
+        'Insulation removal',
+        'Cabinet toe-kick removal',
+        'Flooring removal if necessary',
+        'Containment barriers',
+        'HEPA air filtration',
+        'Structural drying',
+        'Crawlspace inspection',
+        'Subfloor drying',
+        'Documentation for insurance carrier'
+      ],
+      examples: ['Water heater failure', 'Slab leak', 'Supply line rupture', 'Appliance discharge affecting multiple rooms']
+    },
+    {
+      title: 'Tier 3: Whole House Water Restoration',
+      price: '$20,000 - $100,000+',
+      items: [
+        'Complete water extraction',
+        'Whole-house moisture mapping',
+        'Structural drying',
+        'Interior demolition',
+        'Flooring removal',
+        'Drywall removal',
+        'Insulation replacement',
+        'Mold prevention treatment',
+        'Framing inspection',
+        'Reconstruction planning',
+        'Permit coordination if required',
+        'Full rebuild estimate'
+      ],
+      examples: ['Flooding', 'Major pipe burst', 'Extended leak damage', 'Insurance claim reconstruction']
+    }
+  ],
+  smokeFireRestoration: [
+    {
+      title: 'Tier 1: Minor Smoke Damage',
+      price: '$3,000 - $10,000',
+      items: [
+        'Smoke damage assessment',
+        'HEPA vacuuming',
+        'Surface cleaning',
+        'Odor neutralization',
+        'HVAC vent cleaning',
+        'Ozone treatment',
+        'Sealing affected surfaces',
+        'Content cleaning consultation'
+      ],
+      examples: []
+    },
+    {
+      title: 'Tier 2: Moderate Smoke Damage',
+      price: '$10,000 - $40,000',
+      items: [
+        'Complete smoke remediation',
+        'Wall cleaning',
+        'Ceiling cleaning',
+        'Cabinet cleaning',
+        'Duct cleaning',
+        'Thermal fogging',
+        'Ozone treatment',
+        'Smoke seal primer application',
+        'Drywall replacement as necessary',
+        'Interior painting'
+      ],
+      examples: []
+    },
+    {
+      title: 'Tier 3: Severe Smoke & Fire Restoration',
+      price: '$40,000 - $200,000+',
+      items: [
+        'Emergency board-up',
+        'Structural stabilization',
+        'Smoke remediation',
+        'Charred material removal',
+        'Reconstruction planning',
+        'Interior rebuilding',
+        'Roofing repair',
+        'Framing replacement',
+        'Drywall installation',
+        'Finish restoration',
+        'Insurance scope coordination'
+      ],
+      examples: []
+    },
+    {
+      title: 'Fire Damage Repair',
+      price: '$15,000 - $75,000',
+      items: [
+        'Damage inspection',
+        'Demolition',
+        'Smoke remediation',
+        'Framing repairs',
+        'Drywall replacement',
+        'Electrical inspection',
+        'HVAC inspection',
+        'Interior painting',
+        'Flooring replacement',
+        'Final cleanup'
+      ],
+      examples: []
+    },
+    {
+      title: 'Major Fire Reconstruction',
+      price: '$75,000 - $350,000+',
+      items: [
+        'Structural engineer review',
+        'Demolition',
+        'Debris removal',
+        'Permit acquisition',
+        'Framing reconstruction',
+        'Roof repairs',
+        'Electrical replacement',
+        'Plumbing replacement',
+        'Mechanical system replacement',
+        'Insulation',
+        'Drywall',
+        'Interior finishes',
+        'Exterior restoration'
+      ],
+      examples: []
+    }
+  ],
+  structuralDamageRepair: [
+    {
+      title: 'Minor Structural Repair',
+      price: '$3,500 - $15,000',
+      items: [
+        'Structural assessment',
+        'Engineer consultation if needed',
+        'Beam reinforcement',
+        'Post replacement',
+        'Dry rot repair',
+        'Joist repair',
+        'Framing restoration',
+        'Finish repair'
+      ],
+      examples: ['Sagging beam', 'Dry rot repair', 'Settling cracks']
+    },
+    {
+      title: 'Moderate Structural Repair',
+      price: '$15,000 - $50,000',
+      items: [
+        'Load-bearing wall repair',
+        'Foundation crack repair',
+        'Floor framing replacement',
+        'Roof framing repair',
+        'Structural hardware replacement',
+        'Engineering coordination',
+        'Permit handling'
+      ],
+      examples: ['Load-bearing wall repair', 'Floor framing repair', 'Deck structural repairs']
+    },
+    {
+      title: 'Major Structural Repair',
+      price: '$50,000 - $300,000+',
+      items: [
+        'Foundation stabilization',
+        'Major framing replacement',
+        'Roof structure reconstruction',
+        'Engineer-certified plans',
+        'City permitting',
+        'Demolition',
+        'Full restoration'
+      ],
+      examples: ['Foundation settlement', 'Fire-damaged framing', 'Multiple beam replacements']
+    }
+  ],
+  remodelRefresh: [
+    {
+      title: 'Single Room Remodel Packages',
+      price: '$12,000 - $175,000',
+      items: [
+        'Bathroom Refresh — $12,000 - $25,000',
+        'Premium Bathroom Remodel — $25,000 - $60,000',
+        'Kitchen Remodel — $30,000 - $80,000',
+        'Luxury Kitchen Remodel — $80,000 - $175,000'
+      ],
+      examples: ['Bathroom', 'Kitchen', 'Bedroom', 'Living Room']
+    },
+    {
+      title: 'Multi-Room Remodel',
+      price: '$40,000 - $250,000',
+      items: [
+        'Essential Home Upgrade — $40,000 - $100,000',
+        'Two to four rooms',
+        'Flooring replacement',
+        'Interior painting',
+        'Lighting upgrades',
+        'Doors and trim',
+        'Minor electrical work',
+        'Minor plumbing updates',
+        'Premium Interior Renovation — $100,000 - $250,000',
+        'Kitchen remodel',
+        'Two bathrooms',
+        'Flooring throughout',
+        'Paint throughout',
+        'Lighting package',
+        'Interior doors',
+        'Trim package',
+        'Cabinetry upgrades'
+      ],
+      examples: ['Two to four rooms', 'Whole-home refresh']
+    },
+    {
+      title: 'Whole House Remodel Packages',
+      price: '$100 - $350+/SF',
+      items: [
+        'Bronze Package — $100-$150/SF',
+        'Paint',
+        'Flooring',
+        'Fixtures',
+        'Trim',
+        'Hardware',
+        'Lighting',
+        'Minor repairs',
+        'Silver Package — $150-$225/SF',
+        'Kitchen renovation',
+        'Bathroom renovations',
+        'Flooring throughout',
+        'Doors',
+        'Trim',
+        'Lighting',
+        'Minor layout modifications',
+        'Gold Package — $225-$350+/SF',
+        'Full redesign',
+        'Structural changes',
+        'Open floor plan conversion',
+        'Custom cabinetry',
+        'Custom tile work',
+        'Luxury countertops',
+        'High-end flooring',
+        'Designer lighting',
+        'Smart home upgrades',
+        'Premium finishes'
+      ],
+      examples: ['2,000 SF Home $200,000-$300,000', '2,000 SF Home $300,000-$450,000', '2,000 SF Home $450,000-$700,000+']
+    }
+  ]
+};
 ---
 
 <!doctype html>
@@ -318,6 +585,14 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
         </div>
 
         <div id="detailed-pricing-list" class="detailed-pricing-list"></div>
+      </section>
+
+      <section class="scope-details-section">
+        <div class="scope-header-row">
+          <p class="eyebrow eyebrow-dark">What you are paying for</p>
+          <h2>Included scope of work</h2>
+        </div>
+        <div id="scope-detail-panel" class="scope-detail-panel"></div>
       </section>
     </main>
 
@@ -598,28 +873,37 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
         color: rgba(255,255,255,0.8);
       }
 
-      .detailed-pricing-section {
+      .detailed-pricing-section,
+      .scope-details-section {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 0 2rem 4rem;
+        padding: 0 2rem 2rem;
       }
 
-      .section-header-row {
+      .scope-details-section {
+        padding-top: 0.5rem;
+      }
+
+      .section-header-row,
+      .scope-header-row {
         text-align: center;
         margin-bottom: 2rem;
       }
 
-      .section-header-row h2 {
+      .section-header-row h2,
+      .scope-header-row h2 {
         font-size: clamp(2rem, 3vw, 2.8rem);
         color: #142e40;
       }
 
-      .detailed-pricing-list {
+      .detailed-pricing-list,
+      .scope-detail-panel {
         display: grid;
         gap: 2rem;
       }
 
-      .pricing-group {
+      .pricing-group,
+      .scope-tier {
         background: rgba(255,255,255,0.8);
         border: 1px solid rgba(20,46,64,0.08);
         border-radius: 18px;
@@ -627,10 +911,20 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
         box-shadow: 0 12px 28px rgba(13,29,45,0.04);
       }
 
+      .pricing-group h3,
+      .scope-tier h3,
+      .scope-tier h4 {
+        color: #173953;
+      }
+
       .pricing-group h3 {
         margin-bottom: 1rem;
-        color: #173953;
         font-size: 1.4rem;
+      }
+
+      .scope-tier h3 {
+        margin-bottom: 0.5rem;
+        font-size: 1.3rem;
       }
 
       .pricing-grid {
@@ -657,17 +951,57 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
         margin-bottom: 0.75rem;
       }
 
-      .price-card ul {
+      .price-card ul,
+      .scope-tier ul {
         list-style: none;
         display: grid;
-        gap: 0.4rem;
+        gap: 0.45rem;
         color: #536070;
       }
 
-      .price-card li::before {
+      .price-card li::before,
+      .scope-tier li::before {
         content: '✓ ';
         color: var(--gold-600);
         font-weight: 700;
+      }
+
+      .scope-tier {
+        padding: 1.5rem;
+      }
+
+      .scope-tier-header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .scope-tier-price {
+        color: var(--gold-600);
+        font-weight: 800;
+      }
+
+      .scope-tier p {
+        margin: 0.5rem 0 0.75rem;
+        color: var(--muted);
+      }
+
+      .scope-tier h4 {
+        margin-bottom: 0.4rem;
+        font-size: 1.05rem;
+      }
+
+      .scope-tier .examples {
+        margin-top: 0.75rem;
+      }
+
+      .scope-tier .examples strong {
+        display: block;
+        color: #173953;
+        margin-bottom: 0.5rem;
       }
 
       .form-status {
@@ -805,6 +1139,7 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
       const detailedPricingList = document.getElementById('detailed-pricing-list');
       const quoteForm = document.getElementById('quote-form');
       const quoteStatus = document.getElementById('quote-status');
+      const scopeDetailPanel = document.getElementById('scope-detail-panel');
 
       const projectValues = {
         waterDamageRestoration: {
@@ -869,6 +1204,34 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
           .join('');
       }
 
+      function buildScopeDetails() {
+        if (!scopeDetailPanel) return;
+
+        const selected = projectType.value;
+        const tiles = serviceScopeDetails[selected] || serviceScopeDetails.waterDamageRestoration;
+
+        scopeDetailPanel.innerHTML = tiles.map((tier) => `
+          <div class="scope-tier">
+            <div class="scope-tier-header">
+              <h3>${tier.title}</h3>
+              <span class="scope-tier-price">${tier.price}</span>
+            </div>
+            <p>Included scope of work</p>
+            <ul>
+              ${tier.items.map((item) => `<li>${item}</li>`).join('')}
+            </ul>
+            ${tier.examples && tier.examples.length ? `
+              <div class="examples">
+                <strong>Typical projects</strong>
+                <ul>
+                  ${tier.examples.map((example) => `<li>${example}</li>`).join('')}
+                </ul>
+              </div>
+            ` : ''}
+          </div>
+        `).join('');
+      }
+
       function syncScopeOptions() {
         const selected = projectType.value;
         const options = projectValues[selected]?.options || {};
@@ -885,6 +1248,7 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
         }
 
         updateSummary();
+        buildScopeDetails();
       }
 
       function updateSummary() {
@@ -933,7 +1297,10 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
       }
 
       projectType.addEventListener('change', syncScopeOptions);
-      projectScope.addEventListener('change', updateSummary);
+      projectScope.addEventListener('change', function () {
+        updateSummary();
+        buildScopeDetails();
+      });
 
       buildDetailCards();
       syncScopeOptions();
