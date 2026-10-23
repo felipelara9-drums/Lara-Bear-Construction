@@ -11,133 +11,180 @@ const estimateMap = {
     label: "Water Damage Restoration",
     options: {
       minor: {
-        label: "Minor Water Damage",
-        price: "$1,500 - $5,000",
+        label: "Tier 1: Minor Water Loss",
+        price: "$1,500 - $4,500",
         scope: [
+          "Moisture inspection",
           "Water extraction",
-          "Moisture detection",
-          "Drying equipment setup",
-          "Minor drywall removal",
-          "Sanitization"
+          "Drying equipment",
+          "Antimicrobial treatment",
+          "Minor drywall removal"
         ]
       },
       moderate: {
-        label: "Moderate Water Damage",
-        price: "$5,000 - $15,000",
+        label: "Tier 2: Moderate Water Damage",
+        price: "$4,500 - $15,000",
         scope: [
-          "Water extraction",
-          "Drying and dehumidification",
-          "Drywall replacement",
-          "Baseboard replacement",
-          "Flooring repairs",
-          "Paint touch-up"
+          "Demo drywall",
+          "Remove insulation",
+          "Dry framing",
+          "Sanitize",
+          "Restore affected finishes"
         ]
       },
       major: {
-        label: "Major Water Damage",
-        price: "$15,000 - $50,000+",
+        label: "Tier 3: Major Water Damage",
+        price: "$15,000 - $75,000+",
         scope: [
-          "Emergency mitigation",
-          "Demolition of affected areas",
+          "Full mitigation",
+          "Mold prevention",
           "Structural drying",
-          "Flooring replacement",
-          "Cabinet replacement",
-          "Interior reconstruction"
+          "Rebuild interior finishes",
+          "Emergency response coordination"
         ]
       }
     }
   },
-  waterDamageReconstruction: {
-    label: "Water Damage Reconstruction",
+  smokeFireRestoration: {
+    label: "Smoke & Fire Restoration",
     options: {
-      singleRoom: {
-        label: "Single Room",
-        price: "$5,000 - $12,000",
+      smokeOnly: {
+        label: "Smoke Damage Only",
+        price: "$3,000 - $12,000",
         scope: [
-          "Drywall",
-          "Paint",
-          "Flooring",
-          "Trim installation"
+          "HEPA vacuuming",
+          "Smoke cleanup",
+          "Odor removal",
+          "Duct cleaning",
+          "Sealing affected surfaces"
         ]
       },
-      multipleRooms: {
-        label: "Multiple Rooms",
-        price: "$12,000 - $35,000",
+      partialFire: {
+        label: "Partial Fire Damage",
+        price: "$15,000 - $75,000",
         scope: [
-          "Flooring replacement",
-          "Wall reconstruction",
-          "Interior painting",
-          "Finish carpentry"
+          "Smoke remediation",
+          "Framing replacement",
+          "Drywall replacement",
+          "Paint restoration",
+          "Finish repairs"
         ]
       },
-      wholeHome: {
-        label: "Whole-Home Restoration",
-        price: "$35,000 - $150,000+",
+      majorFire: {
+        label: "Major Fire Reconstruction",
+        price: "$75,000 - $300,000+",
         scope: [
-          "Whole-home water mitigation",
-          "Interior reconstruction",
-          "Finish replacement",
-          "Cabinet and flooring restoration"
+          "Structural stabilization",
+          "Roof replacement",
+          "Framing rebuild",
+          "Complete interior reconstruction",
+          "Insurance claim coordination"
         ]
       }
     }
   },
-  fire: {
-    label: "Fire & Smoke Damage Repair",
-    options: {
-      minor: {
-        label: "Minor",
-        price: "$3,000 - $15,000",
-        scope: [
-          "Smoke and soot assessment",
-          "Surface cleaning",
-          "Odor mitigation",
-          "Minor finish repairs"
-        ]
-      },
-      moderate: {
-        label: "Moderate",
-        price: "$15,000 - $50,000",
-        scope: [
-          "Interior cleaning",
-          "Debris removal",
-          "Repair of damaged drywall and finishes",
-          "Odor remediation"
-        ]
-      },
-      severe: {
-        label: "Severe",
-        price: "$50,000 - $250,000+",
-        scope: [
-          "Extensive material removal",
-          "Deep cleaning and deodorization",
-          "Reconstruction of affected rooms",
-          "Full restoration coordination"
-        ]
-      }
-    }
-  },
-  structural: {
+  structuralDamageRepair: {
     label: "Structural Damage Repair",
     options: {
-      localized: {
-        label: "Localized Structural Repair",
-        price: "$5,000 - $25,000",
+      minor: {
+        label: "Minor Structural",
+        price: "$3,500 - $12,000",
         scope: [
-          "Structural assessment",
-          "Localized framing repair",
-          "Material replacement",
-          "Code-compliance review"
+          "Sagging beam repair",
+          "Dry rot repair",
+          "Settling crack remediation",
+          "Structural assessment"
+        ]
+      },
+      moderate: {
+        label: "Moderate Structural",
+        price: "$12,000 - $40,000",
+        scope: [
+          "Load-bearing wall repair",
+          "Floor framing repair",
+          "Deck structural repair",
+          "Code compliance review"
         ]
       },
       major: {
-        label: "Major Structural Repair",
-        price: "$25,000 - $100,000+",
+        label: "Major Structural",
+        price: "$40,000 - $250,000+",
         scope: [
-          "Framing and load-bearing repairs",
-          "Sheathing replacement",
-          "Structural reinforcement",
-          "Finish restoration"
+          "Foundation settlement repair",
+          "Fire-damaged framing replacement",
+          "Multiple beam replacements",
+          "Full structural rebuild"
+        ]
+      }
+    }
+  },
+  remodelRefresh: {
+    label: "Remodeling Packages",
+    options: {
+      refreshPackage: {
+        label: "Refresh Package",
+        price: "$5,000 - $25,000",
+        scope: [
+          "Paint",
+          "Flooring",
+          "Trim",
+          "Lighting",
+          "Fixtures"
+        ]
+      },
+      premiumRoom: {
+        label: "Premium Room Remodel",
+        price: "$25,000 - $120,000",
+        scope: [
+          "Custom cabinetry",
+          "Luxury finishes",
+          "Plumbing upgrades",
+          "Electrical updates",
+          "Premium fixtures"
+        ]
+      },
+      multiRoom: {
+        label: "Multi-Room Remodel",
+        price: "$35,000 - $200,000",
+        scope: [
+          "Kitchen and baths",
+          "Interior refresh",
+          "Flooring replacement",
+          "Doors and trim",
+          "Lighting package"
+        ]
+      },
+      bronze: {
+        label: "Bronze Remodel",
+        price: "$200,000 - $300,000",
+        scope: [
+          "Paint",
+          "Flooring",
+          "Fixtures",
+          "Hardware",
+          "Cosmetic enhancements"
+        ]
+      },
+      silver: {
+        label: "Silver Remodel",
+        price: "$300,000 - $450,000",
+        scope: [
+          "Kitchen renovation",
+          "Bathroom renovation",
+          "Flooring installation",
+          "Electrical updates",
+          "Plumbing updates"
+        ]
+      },
+      gold: {
+        label: "Gold Remodel",
+        price: "$450,000 - $700,000+",
+        scope: [
+          "Layout changes",
+          "Structural modifications",
+          "Custom cabinetry",
+          "Premium finishes",
+          "Luxury whole-home transformation"
         ]
       }
     }
@@ -147,8 +194,8 @@ const estimateMap = {
 const projectParam = Astro.url.searchParams.get('project') || 'waterDamageRestoration';
 const scopeParam = Astro.url.searchParams.get('scope') || Object.keys(estimateMap[projectParam]?.options || {})[0];
 const selectedProjectLabel = estimateMap[projectParam]?.label || 'Water Damage Restoration';
-const selectedScopeLabel = estimateMap[projectParam]?.options?.[scopeParam]?.label || 'Minor Water Damage';
-const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price || '$1,500 - $5,000';
+const selectedScopeLabel = estimateMap[projectParam]?.options?.[scopeParam]?.label || 'Tier 1: Minor Water Loss';
+const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price || '$1,500 - $4,500';
 ---
 
 <!doctype html>
@@ -212,9 +259,9 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
                 Project type
                 <select id="project-type" name="projectType">
                   <option value="waterDamageRestoration" selected={projectParam === 'waterDamageRestoration'}>Water Damage Restoration</option>
-                  <option value="waterDamageReconstruction" selected={projectParam === 'waterDamageReconstruction'}>Water Damage Reconstruction</option>
-                  <option value="fire" selected={projectParam === 'fire'}>Fire & Smoke Damage Repair</option>
-                  <option value="structural" selected={projectParam === 'structural'}>Structural Damage Repair</option>
+                  <option value="smokeFireRestoration" selected={projectParam === 'smokeFireRestoration'}>Smoke & Fire Restoration</option>
+                  <option value="structuralDamageRepair" selected={projectParam === 'structuralDamageRepair'}>Structural Damage Repair</option>
+                  <option value="remodelRefresh" selected={projectParam === 'remodelRefresh'}>Remodeling Packages</option>
                 </select>
               </label>
 
@@ -763,32 +810,36 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
         waterDamageRestoration: {
           label: 'Water Damage Restoration',
           options: {
-            minor: { label: 'Minor Water Damage', price: '$1,500 - $5,000' },
-            moderate: { label: 'Moderate Water Damage', price: '$5,000 - $15,000' },
-            major: { label: 'Major Water Damage', price: '$15,000 - $50,000+' }
+            minor: { label: 'Tier 1: Minor Water Loss', price: '$1,500 - $4,500' },
+            moderate: { label: 'Tier 2: Moderate Water Damage', price: '$4,500 - $15,000' },
+            major: { label: 'Tier 3: Major Water Damage', price: '$15,000 - $75,000+' }
           }
         },
-        waterDamageReconstruction: {
-          label: 'Water Damage Reconstruction',
+        smokeFireRestoration: {
+          label: 'Smoke & Fire Restoration',
           options: {
-            singleRoom: { label: 'Single Room', price: '$5,000 - $12,000' },
-            multipleRooms: { label: 'Multiple Rooms', price: '$12,000 - $35,000' },
-            wholeHome: { label: 'Whole-Home Restoration', price: '$35,000 - $150,000+' }
+            smokeOnly: { label: 'Smoke Damage Only', price: '$3,000 - $12,000' },
+            partialFire: { label: 'Partial Fire Damage', price: '$15,000 - $75,000' },
+            majorFire: { label: 'Major Fire Reconstruction', price: '$75,000 - $300,000+' }
           }
         },
-        fire: {
-          label: 'Fire & Smoke Damage Repair',
-          options: {
-            minor: { label: 'Minor', price: '$3,000 - $15,000' },
-            moderate: { label: 'Moderate', price: '$15,000 - $50,000' },
-            severe: { label: 'Severe', price: '$50,000 - $250,000+' }
-          }
-        },
-        structural: {
+        structuralDamageRepair: {
           label: 'Structural Damage Repair',
           options: {
-            localized: { label: 'Localized Structural Repair', price: '$5,000 - $25,000' },
-            major: { label: 'Major Structural Repair', price: '$25,000 - $100,000+' }
+            minor: { label: 'Minor Structural', price: '$3,500 - $12,000' },
+            moderate: { label: 'Moderate Structural', price: '$12,000 - $40,000' },
+            major: { label: 'Major Structural', price: '$40,000 - $250,000+' }
+          }
+        },
+        remodelRefresh: {
+          label: 'Remodeling Packages',
+          options: {
+            refreshPackage: { label: 'Refresh Package', price: '$5,000 - $25,000' },
+            premiumRoom: { label: 'Premium Room Remodel', price: '$25,000 - $120,000' },
+            multiRoom: { label: 'Multi-Room Remodel', price: '$35,000 - $200,000' },
+            bronze: { label: 'Bronze Remodel', price: '$200,000 - $300,000' },
+            silver: { label: 'Silver Remodel', price: '$300,000 - $450,000' },
+            gold: { label: 'Gold Remodel', price: '$450,000 - $700,000+' }
           }
         }
       };
