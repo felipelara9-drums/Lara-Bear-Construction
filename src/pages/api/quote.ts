@@ -11,7 +11,7 @@ async function analyzeWithOpenAI(files: File[]) {
     return 'AI pricing review is ready once an OpenAI API key is configured in the environment.';
   }
 
-  const prompt = `Review the uploaded project photos and provide a brief, practical estimate recommendation for a construction or restoration quote. Focus on type of damage or scope, likely severity, and any pricing considerations such as water damage, structural concerns, kitchen or bathroom work, or remodel complexity. Keep it concise and easy for a contractor to review.`;
+  const prompt = `Review the uploaded project photos and provide a brief, practical estimate recommendation for a construction or restoration quote. Focus on type of damage or scope, likely severity, and any obvious issues for pricing or planning. Keep the response concise and practical for a homeowner or contractor.`;
 
   const messages = [{
     role: 'user',
@@ -106,11 +106,13 @@ export async function POST({ request }: { request: Request }) {
       to: contactEmail,
       subject: `Detailed Quote Request - ${projectType}`,
       text: emailText,
-      attachments: imageFiles.map((file) => ({
-        filename: file.name,
-        content: Buffer.from(await file.arrayBuffer()),
-        contentType: file.type || 'application/octet-stream'
-      }))
+      attachments: await Promise.all(
+        imageFiles.map(async (file) => ({
+          filename: file.name,
+          content: Buffer.from(await file.arrayBuffer()),
+          contentType: file.type || 'application/octet-stream'
+        }))
+      )
     });
 
     return Response.json({
