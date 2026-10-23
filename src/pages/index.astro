@@ -5,10 +5,31 @@ const phone = "559-892-6331";
 const phoneClean = "5598926331";
 const services = [
   {
-    title: "Restoration / Remodeling",
-    description: "Full-service restoration and remodeling. Water damage repair, kitchen and bathroom remodels, and whole-home renovations.",
-    icon: "🔨",
-    features: ["Water Damage Restoration", "Kitchen Remodel", "Bathroom Remodel", "Whole-Home Renovation"],
+    title: "Structural Repair",
+    description: "Restore strength and stability with repairs tailored to your home's structural needs.",
+    icon: "⌂",
+    features: ["Structural damage repair", "Framing and reinforcement", "Repair planning"],
+    link: "/restoration-remodeling"
+  },
+  {
+    title: "Home Remodeling",
+    description: "Refresh a single room or reimagine your entire home with thoughtful, quality construction.",
+    icon: "▧",
+    features: ["Single-room remodels", "Kitchen and bathroom updates", "Full-home renovations"],
+    link: "/restoration-remodeling"
+  },
+  {
+    title: "Water Damage Repair",
+    description: "Repair damaged areas and help bring your home back to a clean, functional condition.",
+    icon: "◌",
+    features: ["Interior damage repairs", "Rebuild and finish work", "Restoration after leaks"],
+    link: "/restoration-remodeling"
+  },
+  {
+    title: "Smoke Damage Repair",
+    description: "Repair and rebuild affected spaces after smoke damage, with care from start to finish.",
+    icon: "≋",
+    features: ["Damage repairs", "Interior restoration", "Reconstruction and finishes"],
     link: "/restoration-remodeling"
   }
 ];
@@ -19,8 +40,8 @@ const services = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={`${companyName} — Restoration and remodeling services. Quality construction you can trust.`} />
-    <title>{companyName} | Restoration & Remodeling</title>
+    <meta name="description" content="Lara Bear Construction provides structural repairs, home remodeling from one room to a full home, and water and smoke damage repair." />
+    <title>{companyName} | Structural Repair, Remodeling & Restoration</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -45,9 +66,9 @@ const services = [
     <section class="hero">
       <div class="hero-overlay"></div>
       <div class="hero-content">
-        <p class="eyebrow">Built for strength. Built to last.</p>
-        <h1>Quality Construction<br /><span class="hero-accent">Done Right the First Time</span></h1>
-        <p class="hero-copy">{companyName} delivers dependable restoration and remodeling services with craftsmanship that holds up.</p>
+        <p class="eyebrow">Repair • Restore • Reimagine</p>
+        <h1>From Essential Repairs<br /><span class="hero-accent">to Whole-Home Transformations</span></h1>
+        <p class="hero-copy">Structural repair, room-by-room remodeling, and water or smoke damage restoration — handled with care and built around your home.</p>
         <div class="hero-buttons">
           <a href="/quote" class="btn btn-primary">Get a Free Quote</a>
           <a href="#services" class="btn btn-outline">Our Services</a>
@@ -56,17 +77,17 @@ const services = [
     </section>
 
     <section class="trust-bar">
-      <div class="trust-item"><strong>10+</strong><span>Years Experience</span></div>
-      <div class="trust-item"><strong>500+</strong><span>Projects Completed</span></div>
-      <div class="trust-item"><strong>100%</strong><span>Satisfaction Guaranteed</span></div>
-      <div class="trust-item"><strong>24/7</strong><span>Emergency Service</span></div>
+      <div class="trust-item"><strong>Structural</strong><span>Repair & Reinforcement</span></div>
+      <div class="trust-item"><strong>Room to Home</strong><span>Remodeling Projects</span></div>
+      <div class="trust-item"><strong>Water</strong><span>Damage Repair</span></div>
+      <div class="trust-item"><strong>Smoke</strong><span>Damage Repair</span></div>
     </section>
 
     <section id="services" class="section">
       <div class="section-header">
         <span class="section-tag">What We Do</span>
         <h2>Our Services</h2>
-        <p>One area of expertise — click to learn more.</p>
+        <p>Whether you need to repair damage or improve the space you live in, we can help you plan the next step.</p>
       </div>
       <div class="service-cards">
         {services.map((service) => (
@@ -88,16 +109,16 @@ const services = [
         <div class="about-text">
           <span class="section-tag">Who We Are</span>
           <h2>Built on Trust, Quality, and Hard Work</h2>
-          <p>{companyName} is a full-service construction company serving homeowners and businesses with pride. We specialize in restoration and remodeling — delivering craftsmanship and reliability that lasts.</p>
-          <p>Every project, big or small, gets the same attention to detail. We show up on time, communicate clearly, and stand behind our work with a satisfaction guarantee.</p>
+          <p>From structural repairs to a fresh new room or a complete home remodel, Lara Bear Construction helps homeowners move forward with confidence.</p>
+          <p>Damage can be stressful, and remodeling can feel like a big undertaking. We aim to make the process clear, keep communication open, and give every project thoughtful attention — from the first conversation through the finishing details.</p>
           <a href="/quote" class="btn btn-primary">Work With Us</a>
         </div>
 
         <div class="about-stats">
-          <div class="stat-box"><strong>10+</strong><span>Years in Business</span></div>
-          <div class="stat-box"><strong>500+</strong><span>Happy Clients</span></div>
-          <div class="stat-box"><strong>Licensed</strong><span>& Insured</span></div>
-          <div class="stat-box"><strong>Free</strong><span>Estimates</span></div>
+          <div class="stat-box"><strong>Repair</strong><span>Structural concerns</span></div>
+          <div class="stat-box"><strong>Remodel</strong><span>One room or the whole home</span></div>
+          <div class="stat-box"><strong>Restore</strong><span>Water damage</span></div>
+          <div class="stat-box"><strong>Rebuild</strong><span>Smoke damage</span></div>
         </div>
       </div>
     </section>
@@ -132,7 +153,12 @@ const services = [
           <input type="tel" placeholder="Your Phone" />
           <select required>
             <option value="" disabled selected>Select a Service</option>
-            <option>Restoration / Remodeling</option>
+            <option>Structural Repair</option>
+            <option>Single-Room Remodel</option>
+            <option>Full-Home Remodel</option>
+            <option>Water Damage Repair</option>
+            <option>Smoke Damage Repair</option>
+            <option>Other / Not Sure Yet</option>
           </select>
           <textarea placeholder="Tell us about your project" rows="4"></textarea>
           <button type="submit" class="btn btn-primary btn-full">Send Request</button>
@@ -276,7 +302,8 @@ const services = [
         align-items:center;
         justify-content:center;
         background:
-          linear-gradient(120deg, rgba(8, 23, 33, 0.76), rgba(17, 39, 60, 0.82)),
+          linear-gradient(90deg, rgba(7, 20, 31, 0.90) 0%, rgba(12, 31, 45, 0.78) 52%, rgba(12, 31, 45, 0.30) 100%),
+          url("https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2000&q=85") center 55% / cover no-repeat,
           linear-gradient(135deg, #0d2a3d 0%, #153c5c 36%, #111b2a 100%);
         overflow:hidden;
       }
@@ -713,6 +740,23 @@ const services = [
         opacity:0.55;
       }
 
+      .hero { min-height: 660px; }
+      .hero-content { max-width: 1000px; text-align: left; margin: 0 auto; width: 100%; padding: 5rem 2rem; }
+      .hero-copy { margin: 0 0 2rem; max-width: 650px; }
+      .hero-buttons { justify-content: flex-start; }
+      .eyebrow { color: #f2c75c; }
+      .section-header { max-width: 760px; margin: 0 auto 3rem; }
+      .service-card { border-radius: 14px; padding: 2rem; min-height: 100%; }
+      .service-icon { display: grid; place-items: center; width: 58px; height: 58px; border-radius: 14px; background: #f7f0df; color: #173953; font-size: 2rem; font-weight: 800; }
+      .service-card h3 { line-height: 1.25; }
+      .service-link { color: #9b7210; }
+      .btn { border-radius: 6px; }
+      .btn-outline { border-color: rgba(255,255,255,0.65); }
+      .contact-form { border-radius: 14px; }
+      .site-brand { letter-spacing: 0.045em; }
+      a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid #e6b83f; outline-offset: 3px; }
+      @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; } }
+
       @media (max-width: 768px){
         .nav-toggle{display:block;}
         .nav-links{
@@ -728,8 +772,14 @@ const services = [
           z-index:10;
         }
         .nav-links.open{display:flex;}
+        .hero { min-height: 580px; background-position: 58% center; }
+        .hero-content { text-align: center; padding: 4rem 1.25rem; }
         .hero h1{font-size:2.3rem;}
         .hero p{font-size:1rem;}
+        .hero-copy { margin: 0 auto 2rem; }
+        .hero-buttons { justify-content: center; }
+        .nav { padding: 0.85rem 1.1rem; }
+        .site-brand { font-size: 0.9rem; }
         .section-header h2,.about-text h2,.contact-info-block h2{font-size:1.9rem;}
         .about-container,.contact-container{grid-template-columns:1fr;}
         .trust-bar{flex-direction:column;}
