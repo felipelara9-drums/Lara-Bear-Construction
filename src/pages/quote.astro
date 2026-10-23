@@ -144,73 +144,6 @@ const estimateMap = {
   }
 };
 
-/*
-Legacy renovation-focused options kept here for quick rollback if needed.
-
-const legacyEstimateMap = {
-  bathroom: {
-    label: "Bathroom Remodel",
-    options: {
-      basic: {
-        label: "Basic Remodel",
-        price: "$10,000 - $20,000",
-        scope: ["Vanity", "Toilet", "Fixtures", "Paint", "Basic flooring"]
-      },
-      midRange: {
-        label: "Mid-Range Remodel",
-        price: "$20,000 - $40,000",
-        scope: ["Custom vanity", "Tile shower", "Flooring replacement", "Lighting upgrades"]
-      },
-      luxury: {
-        label: "Luxury Remodel",
-        price: "$40,000 - $80,000+",
-        scope: ["Custom tile work", "Frameless shower", "Premium fixtures", "Structural modifications"]
-      }
-    }
-  },
-  kitchen: {
-    label: "Kitchen Remodel",
-    options: {
-      basic: {
-        label: "Basic",
-        price: "$20,000 - $45,000",
-        scope: ["Cabinet refacing or replacement", "Countertops", "Fixtures", "Paint"]
-      },
-      midRange: {
-        label: "Mid-Range",
-        price: "$45,000 - $85,000",
-        scope: ["Semi-custom cabinets", "New flooring", "Lighting updates", "Appliance relocation"]
-      },
-      highEnd: {
-        label: "High-End",
-        price: "$85,000 - $200,000+",
-        scope: ["Custom cabinetry", "Luxury countertops", "Structural modifications", "Premium appliances"]
-      }
-    }
-  },
-  generalRemodeling: {
-    label: "General Remodeling",
-    options: {
-      singleRoom: {
-        label: "Single Room Remodel",
-        price: "$5,000 - $25,000",
-        scope: ["Finish updates", "Painting", "Flooring improvements", "Minor fixture changes"]
-      },
-      multipleRooms: {
-        label: "Multiple Room Remodel",
-        price: "$25,000 - $75,000",
-        scope: ["Multi-room updates", "Cabinet and countertop changes", "Floor and finish replacements", "Lighting and fixture upgrades"]
-      },
-      majorInterior: {
-        label: "Major Interior Remodel",
-        price: "$75,000 - $250,000+",
-        scope: ["Interior reconfiguration", "Electrical upgrades", "Plumbing improvements", "Ceiling and wall renovations"]
-      }
-    }
-  }
-};
-*/
-
 const projectParam = Astro.url.searchParams.get('project') || 'waterDamageRestoration';
 const scopeParam = Astro.url.searchParams.get('scope') || Object.keys(estimateMap[projectParam]?.options || {})[0];
 const selectedProjectLabel = estimateMap[projectParam]?.label || 'Water Damage Restoration';
@@ -258,7 +191,7 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
 
       <section class="request-layout">
         <div class="request-panel panel">
-          <form class="request-form" onsubmit="event.preventDefault(); window.location.href='mailto:larabearco@outlook.com?subject=Detailed Quote Request';">
+          <form id="quote-form" class="request-form" enctype="multipart/form-data">
             <div class="form-grid">
               <label>
                 Full name
@@ -301,9 +234,16 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
                 Project details
                 <textarea name="details" rows="6" placeholder="Tell us about the project, timeline, and any concerns"></textarea>
               </label>
+
+              <label class="full-width upload-field">
+                Upload project photos
+                <input type="file" name="images" accept="image/*" multiple />
+                <small>Attach before-and-after photos, damage photos, or room images.</small>
+              </label>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-full">Send Request</button>
+            <div id="quote-status" class="form-status" aria-live="polite"></div>
+            <button type="submit" class="btn btn-primary btn-full">Submit Quote Request</button>
           </form>
         </div>
 
@@ -354,12 +294,470 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
       </div>
     </footer>
 
+    <style is:global>
+      :root {
+        --navy-950: #0b1d2d;
+        --navy-900: #102c40;
+        --navy-800: #163d5d;
+        --navy-700: #1b4d73;
+        --gold-600: #d4a017;
+        --gold-700: #c6941b;
+        --text: #1a1a1a;
+        --muted: #556274;
+        --warm: #f5f1eb;
+        --light: #f9f9f7;
+        --panel: #ffffff;
+        --error: #b42318;
+        --success: #0f766e;
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1.6;
+        color: var(--text);
+        background: radial-gradient(circle at top, rgba(212,160,23,0.07), transparent 30%), linear-gradient(135deg, #f5f1eb 0%, #f9f9f7 100%);
+        letter-spacing: 0.01em;
+      }
+      a { text-decoration: none; color: inherit; }
+      img { max-width: 100%; display: block; }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(15, 29, 43, 0.96);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(212, 160, 23, 0.5);
+        box-shadow: 0 10px 30px rgba(12, 26, 38, 0.18);
+      }
+
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        max-width: 1220px;
+        margin: 0 auto;
+      }
+
+      .site-brand {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        color: #fff;
+        font-weight: 800;
+        font-size: 1.1rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .nav-links a {
+        color: #fff;
+        opacity: 0.85;
+        font-weight: 600;
+        font-size: 0.9rem;
+        letter-spacing: 0.04em;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+        opacity: 1;
+        transform: translateY(-1px);
+      }
+
+      .nav-toggle {
+        display: none;
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 1.7rem;
+        cursor: pointer;
+      }
+
+      .page-hero {
+        position: relative;
+        min-height: 260px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(120deg, rgba(8, 23, 33, 0.78), rgba(17, 39, 60, 0.82)), linear-gradient(135deg, #0d2a3d 0%, #153c5c 36%, #111b2a 100%);
+        overflow: hidden;
+      }
+
+      .page-hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(212,160,23,0.14), transparent 34%), repeating-linear-gradient(45deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02) 2px, transparent 2px, transparent 12px);
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        color: #fff;
+        max-width: 760px;
+        padding: 2rem 1.5rem;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        margin-bottom: 1rem;
+        color: var(--gold-600);
+        font-size: 0.8rem;
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow-dark {
+        color: var(--gold-600);
+      }
+
+      .hero-content h1 {
+        font-size: clamp(2.4rem, 5vw, 4rem);
+        line-height: 1.08;
+        margin-bottom: 1rem;
+        letter-spacing: -0.04em;
+      }
+
+      .hero-content p {
+        font-size: 1.08rem;
+        opacity: 0.92;
+      }
+
+      .request-layout {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 2rem 2rem;
+        display: grid;
+        grid-template-columns: 1.5fr 0.85fr;
+        gap: 2rem;
+      }
+
+      .panel {
+        background: rgba(255,255,255,0.9);
+        border: 1px solid rgba(20, 46, 64, 0.08);
+        border-radius: 22px;
+        box-shadow: 0 18px 40px rgba(13,29,45,0.08);
+      }
+
+      .request-panel {
+        padding: 2rem;
+      }
+
+      .request-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.25rem;
+      }
+
+      label {
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+        font-weight: 600;
+        color: #173953;
+      }
+
+      .full-width {
+        grid-column: 1 / -1;
+      }
+
+      input, select, textarea {
+        width: 100%;
+        padding: 0.85rem 1rem;
+        border: 2px solid #dfe5ea;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-family: inherit;
+        background: #fbfbfb;
+        color: var(--text);
+      }
+
+      input:focus, select:focus, textarea:focus {
+        outline: none;
+        border-color: var(--gold-600);
+        box-shadow: 0 0 0 3px rgba(212,160,23,0.12);
+      }
+
+      textarea {
+        resize: vertical;
+      }
+
+      .upload-field small {
+        color: var(--muted);
+        font-weight: 500;
+      }
+
+      .summary-panel {
+        padding: 2rem;
+        height: fit-content;
+        background: linear-gradient(135deg, #17395a 0%, #0e2134 100%);
+        color: #fff;
+      }
+
+      .summary-panel .section-tag {
+        color: var(--gold-600);
+      }
+
+      .summary-panel h2 {
+        margin: 0.5rem 0 1.5rem;
+        font-size: clamp(1.8rem, 3vw, 2.4rem);
+        color: #fff;
+      }
+
+      .summary-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.9rem 0;
+        border-bottom: 1px solid rgba(255,255,255,0.15);
+      }
+
+      .summary-item span {
+        opacity: 0.75;
+      }
+
+      .summary-item strong {
+        text-align: right;
+        color: #fff;
+      }
+
+      .summary-item.highlight {
+        margin-top: 0.25rem;
+        padding-top: 1rem;
+      }
+
+      .summary-panel p {
+        margin-top: 1.25rem;
+        color: rgba(255,255,255,0.8);
+      }
+
+      .detailed-pricing-section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem 4rem;
+      }
+
+      .section-header-row {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .section-header-row h2 {
+        font-size: clamp(2rem, 3vw, 2.8rem);
+        color: #142e40;
+      }
+
+      .detailed-pricing-list {
+        display: grid;
+        gap: 2rem;
+      }
+
+      .pricing-group {
+        background: rgba(255,255,255,0.8);
+        border: 1px solid rgba(20,46,64,0.08);
+        border-radius: 18px;
+        padding: 1.5rem;
+        box-shadow: 0 12px 28px rgba(13,29,45,0.04);
+      }
+
+      .pricing-group h3 {
+        margin-bottom: 1rem;
+        color: #173953;
+        font-size: 1.4rem;
+      }
+
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+      }
+
+      .price-card {
+        border: 1px solid rgba(20,46,64,0.12);
+        border-radius: 14px;
+        padding: 1rem;
+        background: #fff;
+      }
+
+      .price-card h4 {
+        color: #173953;
+        margin-bottom: 0.5rem;
+      }
+
+      .price-range {
+        color: var(--gold-600);
+        font-weight: 800;
+        margin-bottom: 0.75rem;
+      }
+
+      .price-card ul {
+        list-style: none;
+        display: grid;
+        gap: 0.4rem;
+        color: #536070;
+      }
+
+      .price-card li::before {
+        content: '✓ ';
+        color: var(--gold-600);
+        font-weight: 700;
+      }
+
+      .form-status {
+        min-height: 1.5rem;
+        font-size: 0.96rem;
+        font-weight: 600;
+        display: none;
+      }
+
+      .form-status.success {
+        display: block;
+        color: var(--success);
+      }
+
+      .form-status.error {
+        display: block;
+        color: var(--error);
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 0.875rem 2rem;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        border: none;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--gold-600), var(--gold-700));
+        color: #1a1a1a;
+        box-shadow: 0 10px 24px rgba(212,160,23,0.28);
+      }
+
+      .btn-primary:hover {
+        background: linear-gradient(135deg, #e7b93f, #d1a02c);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px rgba(212,160,23,0.35);
+      }
+
+      .btn-full {
+        width: 100%;
+        text-align: center;
+      }
+
+      footer {
+        background: linear-gradient(135deg, #0b1d2d 0%, #162f46 100%);
+        color: #fff;
+        padding: 3rem 2rem 2rem;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .footer-brand {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 0.75rem;
+      }
+
+      .footer-brand-text {
+        color: #fff;
+        font-weight: 800;
+        font-size: 1.05rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .footer-content > p {
+        opacity: 0.7;
+        margin-bottom: 1rem;
+      }
+
+      .footer-nav {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.5rem;
+      }
+
+      .footer-nav a {
+        opacity: 0.8;
+        transition: opacity 0.2s ease;
+      }
+
+      .footer-nav a:hover {
+        opacity: 1;
+      }
+
+      .license-number {
+        margin-top: 1rem;
+        color: var(--gold-600);
+        font-weight: 700;
+        letter-spacing: 0.03em;
+      }
+
+      .copyright {
+        font-size: 0.875rem;
+        opacity: 0.55;
+      }
+
+      @media (max-width: 768px) {
+        .nav-toggle { display: block; }
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: rgba(15, 29, 43, 0.98);
+          flex-direction: column;
+          padding: 1rem 2rem;
+          gap: 1rem;
+          z-index: 10;
+        }
+        .nav-links.open { display: flex; }
+        .request-layout,
+        .form-grid { grid-template-columns: 1fr; }
+        .request-layout { padding-top: 2rem; }
+      }
+    </style>
+
     <script>
       const projectType = document.getElementById('project-type');
       const projectScope = document.getElementById('project-scope');
       const summaryScope = document.getElementById('summary-scope');
       const summaryPrice = document.getElementById('summary-price');
       const detailedPricingList = document.getElementById('detailed-pricing-list');
+      const quoteForm = document.getElementById('quote-form');
+      const quoteStatus = document.getElementById('quote-status');
 
       const projectValues = {
         waterDamageRestoration: {
@@ -450,6 +848,37 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
         if (summaryPrice && scopeData) {
           summaryPrice.textContent = scopeData.price;
         }
+      }
+
+      if (quoteForm && quoteStatus) {
+        quoteForm.addEventListener('submit', async (event) => {
+          event.preventDefault();
+
+          const formData = new FormData(quoteForm);
+          quoteStatus.className = 'form-status';
+          quoteStatus.textContent = 'Sending your quote request...';
+          quoteStatus.style.display = 'block';
+
+          try {
+            const response = await fetch('/api/quote', {
+              method: 'POST',
+              body: formData
+            });
+
+            const result = await response.json();
+            if (!response.ok) {
+              throw new Error(result?.message || 'There was a problem sending your request.');
+            }
+
+            quoteStatus.className = 'form-status success';
+            quoteStatus.textContent = result?.message || 'Your quote request was sent successfully.';
+            quoteForm.reset();
+            syncScopeOptions();
+          } catch (error) {
+            quoteStatus.className = 'form-status error';
+            quoteStatus.textContent = error instanceof Error ? error.message : 'There was a problem sending your request.';
+          }
+        });
       }
 
       projectType.addEventListener('change', syncScopeOptions);
