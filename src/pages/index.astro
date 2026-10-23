@@ -68,7 +68,7 @@ const services = [
         <video class="hero-video hero-video-front is-active" autoplay muted loop playsinline preload="metadata">
           <source src="/videos/front-home.mp4" type="video/mp4" />
         </video>
-        <video class="hero-video hero-video-kitchen" autoplay muted loop playsinline preload="metadata">
+        <video class="hero-video hero-video-kitchen" muted loop playsinline preload="metadata">
           <source src="/videos/kitchen-remodel.mp4" type="video/mp4" />
         </video>
       </div>
@@ -754,10 +754,12 @@ const services = [
       }
 
       .hero { min-height: 660px; isolation: isolate; }
-      .hero-video-stage { position: absolute; inset: 0; overflow: hidden; background: #0b1d2d; z-index: -2; }
-      .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 55%; opacity: 0; transition: opacity 1.8s ease-in-out; }
+      .hero-video-stage { position: absolute; inset: 0; overflow: hidden; background: #0b1d2d; z-index: 0; }
+      .hero-video { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 55%; opacity: 0; transition: opacity 1.8s ease-in-out; }
       .hero-video.is-active { opacity: 1; }
-      .hero-overlay { z-index: -1; }
+      .hero::before { z-index: 1; pointer-events: none; }
+      .hero-overlay { z-index: 1; pointer-events: none; }
+      .hero-content { position: relative; z-index: 2; }
       .concept-disclosure { max-width: 1200px; margin: 0 auto; padding: 0.85rem 2rem; color: #5b6570; font-size: 0.86rem; text-align: center; background: #f7f5ef; border-bottom: 1px solid rgba(20,46,64,0.08); }
       .concept-disclosure strong { color: #173953; }
       .concept-disclosure span { color: #b88a18; margin-right: 0.35rem; }
@@ -815,16 +817,59 @@ const services = [
       }
     </style>
     <script>
-      const heroVideos = Array.from(document.querySelectorAll(".hero-video"));
-      if (heroVideos.length > 1 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        let activeVideo = 0;
-        window.setInterval(() => {
-          heroVideos[activeVideo].classList.remove("is-active");
-          activeVideo = (activeVideo + 1) % heroVideos.length;
-          heroVideos[activeVideo].classList.add("is-active");
-          const nextVideo = heroVideos[activeVideo];
-          if (nextVideo.paused) nextVideo.play().catch(() => {});
-        }, 9000);
+      function initHeroVideoRotation() {
+        const frontVideo = document.querySelector(".hero-video-front");
+        const kitchenVideo = document.querySelector(".hero-video-kitchen");
+
+        if (!frontVideo || !kitchenVideo) return;
+
+        // Clear an existing timer if the page script is initialized again.
+        if (window.heroVideoRotationTimer) {
+          window.clearInterval(window.heroVideoRotationTimer);
+        }
+
+        const videos = [frontVideo, kitchenVideo];
+        let activeIndex = 0;
+        const reducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+        // The front video is the initial visible video.
+        frontVideo.classList.add("is-active");
+        kitchenVideo.classList.remove("is-active");
+        frontVideo.play().catch(() => {});
+
+        // Respect reduced-motion preferences by keeping the first video visible.
+        if (reducedMotion) return;
+
+        window.heroVideoRotationTimer = window.setInterval(() => {
+          const nextIndex = activeIndex === 0 ? 1 : 0;
+          const currentVideo = videos[activeIndex];
+          const nextVideo = videos[nextIndex];
+
+          // Restart the incoming video for a clean transition.
+          try {
+            nextVideo.currentTime = 0;
+          } catch (error) {
+            // The browser may not have loaded enough video data yet.
+          }
+
+          nextVideo.play()
+            .then(() => {
+              nextVideo.classList.add("is-active");
+              currentVideo.classList.remove("is-active");
+              activeIndex = nextIndex;
+            })
+            .catch(() => {
+              // Keep the current video visible if the next video cannot play.
+            });
+        }, 10000);
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initHeroVideoRotation, { once: true });
+      } else {
+        initHeroVideoRotation();
       }
     </script>
   </body>
