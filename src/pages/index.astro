@@ -65,10 +65,10 @@ const services = [
 
     <section class="hero" aria-label="Lara Bear Construction project inspiration">
       <div class="hero-video-stage" aria-hidden="true">
-        <video class="hero-video hero-video-front is-active" autoplay muted loop playsinline preload="metadata">
+        <video class="hero-video hero-video-front is-active" autoplay muted loop playsinline preload="auto">
           <source src="/videos/front-home.mp4" type="video/mp4" />
         </video>
-        <video class="hero-video hero-video-kitchen" muted loop playsinline preload="metadata">
+        <video class="hero-video hero-video-kitchen" autoplay muted loop playsinline preload="auto">
           <source src="/videos/kitchen-remodel.mp4" type="video/mp4" />
         </video>
       </div>
@@ -823,7 +823,7 @@ const services = [
 
         if (!frontVideo || !kitchenVideo) return;
 
-        // Clear an existing timer if the page script is initialized again.
+        // Avoid duplicate timers if this script is initialized more than once.
         if (window.heroVideoRotationTimer) {
           window.clearInterval(window.heroVideoRotationTimer);
         }
@@ -834,12 +834,17 @@ const services = [
           "(prefers-reduced-motion: reduce)"
         ).matches;
 
-        // The front video is the initial visible video.
         frontVideo.classList.add("is-active");
         kitchenVideo.classList.remove("is-active");
-        frontVideo.play().catch(() => {});
 
-        // Respect reduced-motion preferences by keeping the first video visible.
+        // Start both muted videos up front so the next clip is ready to fade in.
+        // Keep the current video visible if a browser blocks playback of the next.
+        videos.forEach((video) => {
+          video.muted = true;
+          video.playsInline = true;
+          video.play().catch(() => {});
+        });
+
         if (reducedMotion) return;
 
         window.heroVideoRotationTimer = window.setInterval(() => {
@@ -847,22 +852,20 @@ const services = [
           const currentVideo = videos[activeIndex];
           const nextVideo = videos[nextIndex];
 
-          // Restart the incoming video for a clean transition.
-          try {
-            nextVideo.currentTime = 0;
-          } catch (error) {
-            // The browser may not have loaded enough video data yet.
-          }
+          const showNextVideo = () => {
+            nextVideo.classList.add("is-active");
+            currentVideo.classList.remove("is-active");
+            activeIndex = nextIndex;
+          };
 
-          nextVideo.play()
-            .then(() => {
-              nextVideo.classList.add("is-active");
-              currentVideo.classList.remove("is-active");
-              activeIndex = nextIndex;
-            })
-            .catch(() => {
-              // Keep the current video visible if the next video cannot play.
+          // If the hidden video has paused, resume it before crossfading.
+          if (nextVideo.paused) {
+            nextVideo.play().then(showNextVideo).catch(() => {
+              // Keep the currently visible video if playback is blocked.
             });
+          } else {
+            showNextVideo();
+          }
         }, 10000);
       }
 
