@@ -191,12 +191,6 @@ const estimateMap = {
   }
 };
 
-const projectParam = Astro.url.searchParams.get('project') || 'waterDamageRestoration';
-const scopeParam = Astro.url.searchParams.get('scope') || Object.keys(estimateMap[projectParam]?.options || {})[0];
-const selectedProjectLabel = estimateMap[projectParam]?.label || 'Water Damage Restoration';
-const selectedScopeLabel = estimateMap[projectParam]?.options?.[scopeParam]?.label || 'Tier 1: Minor Water Loss';
-const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price || '$1,500 - $4,500';
-
 const serviceScopeDetails = {
   waterDamageRestoration: [
     {
@@ -463,6 +457,12 @@ const serviceScopeDetails = {
     }
   ]
 };
+
+const defaultProject = 'waterDamageRestoration';
+const defaultScope = 'minor';
+const defaultProjectLabel = estimateMap[defaultProject].label;
+const defaultScopeLabel = estimateMap[defaultProject].options[defaultScope].label;
+const defaultPrice = estimateMap[defaultProject].options[defaultScope].price;
 ---
 
 <!doctype html>
@@ -505,7 +505,7 @@ const serviceScopeDetails = {
 
       <section class="request-layout">
         <div class="request-panel panel">
-          <form id="quote-form" class="request-form" enctype="multipart/form-data">
+          <form id="quote-form" class="request-form">
             <div class="form-grid">
               <label>
                 Full name
@@ -525,17 +525,17 @@ const serviceScopeDetails = {
               <label>
                 Project type
                 <select id="project-type" name="projectType">
-                  <option value="waterDamageRestoration" selected={projectParam === 'waterDamageRestoration'}>Water Damage Restoration</option>
-                  <option value="smokeFireRestoration" selected={projectParam === 'smokeFireRestoration'}>Smoke & Fire Restoration</option>
-                  <option value="structuralDamageRepair" selected={projectParam === 'structuralDamageRepair'}>Structural Damage Repair</option>
-                  <option value="remodelRefresh" selected={projectParam === 'remodelRefresh'}>Remodeling Packages</option>
+                  <option value="waterDamageRestoration">Water Damage Restoration</option>
+                  <option value="smokeFireRestoration">Smoke & Fire Restoration</option>
+                  <option value="structuralDamageRepair">Structural Damage Repair</option>
+                  <option value="remodelRefresh">Remodeling Packages</option>
                 </select>
               </label>
 
               <label>
                 Scope of work
                 <select id="project-scope" name="scope">
-                  <option value="" disabled selected={!scopeParam}>Select scope</option>
+                  <option value="" disabled selected>Select scope</option>
                 </select>
               </label>
 
@@ -546,7 +546,7 @@ const serviceScopeDetails = {
 
               <label class="full-width">
                 Project details
-                <textarea name="details" rows="6" placeholder="Tell us about the project, timeline, and any concerns"></textarea>
+                <textarea name="details" rows="5" placeholder="Tell us about the project, timeline, and any concerns"></textarea>
               </label>
 
               <label class="full-width upload-field">
@@ -563,16 +563,16 @@ const serviceScopeDetails = {
 
         <aside class="summary-panel panel">
           <span class="section-tag">Selected estimate</span>
-          <h2>{selectedProjectLabel}</h2>
+          <h2 id="summary-project">{defaultProjectLabel}</h2>
           <div class="summary-item">
             <span>Scope</span>
-            <strong id="summary-scope">{selectedScopeLabel}</strong>
+            <strong id="summary-scope">{defaultScopeLabel}</strong>
           </div>
           <div class="summary-item highlight">
             <span>Estimated range</span>
-            <strong id="summary-price">{selectedPrice}</strong>
+            <strong id="summary-price">{defaultPrice}</strong>
           </div>
-          <p>
+          <p class="summary-disclaimer">
             This estimate is a starting point for planning. Final pricing depends on site conditions, materials, access, code requirements, and project details.
           </p>
         </aside>
@@ -599,7 +599,7 @@ const serviceScopeDetails = {
     <footer>
       <div class="footer-content">
         <div class="footer-brand">
-          <span class="footer-brand-text">Lara Bear Construction</span>
+          <span class="footer-brand-text">{companyName}</span>
         </div>
         <p>Restoration / Remodeling</p>
 
@@ -616,6 +616,132 @@ const serviceScopeDetails = {
       </div>
     </footer>
 
+    <script is:inline define:vars={{ estimateMap, serviceScopeDetails }}>
+      document.addEventListener('DOMContentLoaded', () => {
+        const projectSelect = document.getElementById('project-type');
+        const scopeSelect = document.getElementById('project-scope');
+        const summaryProject = document.getElementById('summary-project');
+        const summaryScope = document.getElementById('summary-scope');
+        const summaryPrice = document.getElementById('summary-price');
+        const detailedPricingList = document.getElementById('detailed-pricing-list');
+        const scopeDetailPanel = document.getElementById('scope-detail-panel');
+        const quoteForm = document.getElementById('quote-form');
+        const quoteStatus = document.getElementById('quote-status');
+
+        const params = new URLSearchParams(window.location.search);
+        let currentProject = params.get('project') || projectSelect.value || 'waterDamageRestoration';
+        let currentScope = params.get('scope');
+
+        function updateScopeOptions(selectedKey) {
+          const projectData = estimateMap[selectedKey];
+          if (!projectData) return;
+
+          scopeSelect.innerHTML = '';
+          const options = projectData.options;
+          const optionKeys = Object.keys(options);
+
+          if (!currentScope || !options[currentScope]) {
+            currentScope = optionKeys[0];
+          }
+
+          optionKeys.forEach((key) => {
+            const opt = document.createElement('option');
+            opt.value = key;
+            opt.textContent = options[key].label;
+            if (key === currentScope) opt.selected = true;
+            scopeSelect.appendChild(opt);
+          });
+        }
+
+        function renderPricingGuide(projectKey) {
+          const projectData = estimateMap[projectKey];
+          if (!projectData || !detailedPricingList) return;
+
+          detailedPricingList.innerHTML = Object.entries(projectData.options)
+            .map(([key, opt]) => `
+              <div class="pricing-card ${key === currentScope ? 'active' : ''}">
+                <div class="pricing-header">
+                  <h3>${opt.label}</h3>
+                  <div class="pricing-badge">${opt.price}</div>
+                </div>
+                <ul class="pricing-checklist">
+                  ${opt.scope.map(s => `<li>${s}</li>`).join('')}
+                </ul>
+              </div>
+            `).join('');
+        }
+
+        function renderScopeBreakdown(projectKey) {
+          const details = serviceScopeDetails[projectKey];
+          if (!details || !scopeDetailPanel) return;
+
+          scopeDetailPanel.innerHTML = details.map((tier) => `
+            <div class="scope-tier-card">
+              <div class="scope-tier-header">
+                <div>
+                  <h3>${tier.title}</h3>
+                  ${tier.examples?.length ? `<p class="scope-examples">Typical: ${tier.examples.join(', ')}</p>` : ''}
+                </div>
+                <div class="tier-price">${tier.price}</div>
+              </div>
+              <ul class="scope-items-list">
+                ${tier.items.map(i => `<li>${i}</li>`).join('')}
+              </ul>
+            </div>
+          `).join('');
+        }
+
+        function updateSummary() {
+          const projectData = estimateMap[currentProject];
+          if (!projectData) return;
+
+          summaryProject.textContent = projectData.label;
+
+          const scopeData = projectData.options[currentScope];
+          if (scopeData) {
+            summaryScope.textContent = scopeData.label;
+            summaryPrice.textContent = scopeData.price;
+          }
+        }
+
+        function refreshAll() {
+          projectSelect.value = currentProject;
+          updateScopeOptions(currentProject);
+          updateSummary();
+          renderPricingGuide(currentProject);
+          renderScopeBreakdown(currentProject);
+        }
+
+        projectSelect.addEventListener('change', (e) => {
+          currentProject = e.target.value;
+          currentScope = null;
+          refreshAll();
+        });
+
+        scopeSelect.addEventListener('change', (e) => {
+          currentScope = e.target.value;
+          updateSummary();
+          renderPricingGuide(currentProject);
+        });
+
+        quoteForm?.addEventListener('submit', (e) => {
+          e.preventDefault();
+          quoteStatus.textContent = 'Submitting your request...';
+          quoteStatus.className = 'form-status info';
+
+          setTimeout(() => {
+            quoteStatus.textContent = 'Thank you! Your quote request has been received. We will contact you soon.';
+            quoteStatus.className = 'form-status success';
+            quoteForm.reset();
+            currentScope = null;
+            refreshAll();
+          }, 800);
+        });
+
+        refreshAll();
+      });
+    </script>
+
     <style is:global>
       :root {
         --navy-950: #0b1d2d;
@@ -629,6 +755,7 @@ const serviceScopeDetails = {
         --warm: #f5f1eb;
         --light: #f9f9f7;
         --panel: #ffffff;
+        --border: #e2e8f0;
         --error: #b42318;
         --success: #0f766e;
       }
@@ -639,671 +766,384 @@ const serviceScopeDetails = {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         line-height: 1.6;
         color: var(--text);
-        background: radial-gradient(circle at top, rgba(212,160,23,0.07), transparent 30%), linear-gradient(135deg, #f5f1eb 0%, #f9f9f7 100%);
-        letter-spacing: 0.01em;
+        background-color: var(--light);
       }
-      a { text-decoration: none; color: inherit; }
-      img { max-width: 100%; display: block; }
 
+      /* Site Header & Navigation */
       .site-header {
+        background: var(--navy-950);
+        color: #fff;
         position: sticky;
         top: 0;
         z-index: 100;
-        background: rgba(15, 29, 43, 0.96);
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid rgba(212, 160, 23, 0.5);
-        box-shadow: 0 10px 30px rgba(12, 26, 38, 0.18);
       }
-
       .nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 1.5rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 1rem 2rem;
-        max-width: 1220px;
-        margin: 0 auto;
       }
-
       .site-brand {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 44px;
         color: #fff;
-        font-weight: 800;
-        font-size: 1.1rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1.25rem;
       }
-
       .nav-links {
         list-style: none;
         display: flex;
         gap: 1.5rem;
-        align-items: center;
       }
-
       .nav-links a {
-        color: #fff;
-        opacity: 0.85;
-        font-weight: 600;
-        font-size: 0.9rem;
-        letter-spacing: 0.04em;
-        transition: opacity 0.2s ease, transform 0.2s ease;
+        color: #e2e8f0;
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: color 0.2s;
       }
-
-      .nav-links a:hover,
-      .nav-links a.active {
-        opacity: 1;
-        transform: translateY(-1px);
+      .nav-links a:hover, .nav-links a.active {
+        color: var(--gold-600);
       }
-
       .nav-toggle {
         display: none;
         background: none;
         border: none;
         color: #fff;
-        font-size: 1.7rem;
+        font-size: 1.5rem;
         cursor: pointer;
       }
 
+      /* Page Hero */
       .page-hero {
-        position: relative;
-        min-height: 260px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(120deg, rgba(8, 23, 33, 0.78), rgba(17, 39, 60, 0.82)), linear-gradient(135deg, #0d2a3d 0%, #153c5c 36%, #111b2a 100%);
-        overflow: hidden;
-      }
-
-      .page-hero::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(135deg, rgba(212,160,23,0.14), transparent 34%), repeating-linear-gradient(45deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02) 2px, transparent 2px, transparent 12px);
-      }
-
-      .hero-content {
-        position: relative;
-        z-index: 1;
-        text-align: center;
+        background: linear-gradient(135deg, var(--navy-950) 0%, var(--navy-900) 100%);
         color: #fff;
-        max-width: 760px;
-        padding: 2rem 1.5rem;
+        padding: 4rem 1.5rem;
+        text-align: center;
       }
-
+      .hero-content {
+        max-width: 720px;
+        margin: 0 auto;
+      }
       .eyebrow {
-        display: inline-block;
-        margin-bottom: 1rem;
-        color: var(--gold-600);
-        font-size: 0.8rem;
-        font-weight: 800;
-        letter-spacing: 0.18em;
         text-transform: uppercase;
-      }
-
-      .eyebrow-dark {
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
         color: var(--gold-600);
+        margin-bottom: 0.5rem;
       }
-
-      .hero-content h1 {
-        font-size: clamp(2.4rem, 5vw, 4rem);
-        line-height: 1.08;
+      .eyebrow-dark {
+        color: var(--navy-700);
+      }
+      .page-hero h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        line-height: 1.2;
         margin-bottom: 1rem;
-        letter-spacing: -0.04em;
       }
 
-      .hero-content p {
-        font-size: 1.08rem;
-        opacity: 0.92;
-      }
-
-      .request-layout {
+      /* Layout */
+      main {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 3rem 2rem 2rem;
+        padding: 2.5rem 1.5rem 5rem;
+      }
+      .request-layout {
         display: grid;
-        grid-template-columns: 1.5fr 0.85fr;
+        grid-template-columns: 2fr 1fr;
         gap: 2rem;
+        margin-top: -2rem;
+        margin-bottom: 3.5rem;
       }
 
+      /* Panels & Forms */
       .panel {
-        background: rgba(255,255,255,0.9);
-        border: 1px solid rgba(20, 46, 64, 0.08);
-        border-radius: 22px;
-        box-shadow: 0 18px 40px rgba(13,29,45,0.08);
-      }
-
-      .request-panel {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
         padding: 2rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
       }
-
-      .request-form {
-        display: flex;
-        flex-direction: column;
-        gap: 1.25rem;
-      }
-
       .form-grid {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: 1fr 1fr;
         gap: 1.25rem;
+        margin-bottom: 1.5rem;
       }
-
-      label {
+      .form-grid label {
         display: flex;
         flex-direction: column;
-        gap: 0.55rem;
+        gap: 0.4rem;
+        font-size: 0.9rem;
         font-weight: 600;
-        color: #173953;
+        color: var(--navy-900);
       }
-
       .full-width {
-        grid-column: 1 / -1;
+        grid-column: span 2;
       }
-
-      input, select, textarea {
+      .form-grid input,
+      .form-grid select,
+      .form-grid textarea {
         width: 100%;
-        padding: 0.85rem 1rem;
-        border: 2px solid #dfe5ea;
-        border-radius: 10px;
-        font-size: 1rem;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--border);
+        border-radius: 6px;
         font-family: inherit;
-        background: #fbfbfb;
-        color: var(--text);
+        font-size: 0.95rem;
+        background: #fff;
       }
-
-      input:focus, select:focus, textarea:focus {
-        outline: none;
-        border-color: var(--gold-600);
-        box-shadow: 0 0 0 3px rgba(212,160,23,0.12);
+      .upload-field input[type="file"] {
+        padding: 0.5rem 0;
       }
-
-      textarea {
-        resize: vertical;
-      }
-
       .upload-field small {
         color: var(--muted);
+        font-weight: 400;
+        font-size: 0.8rem;
+      }
+
+      /* Buttons & Status */
+      .btn {
+        display: inline-block;
+        padding: 0.85rem 1.5rem;
+        border-radius: 6px;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s;
+        text-align: center;
+      }
+      .btn-primary {
+        background: var(--navy-900);
+        color: #fff;
+      }
+      .btn-primary:hover {
+        background: var(--navy-800);
+      }
+      .btn-full {
+        width: 100%;
+      }
+      .form-status {
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
         font-weight: 500;
       }
+      .form-status.success { color: var(--success); }
+      .form-status.info { color: var(--navy-700); }
 
+      /* Summary Panel */
       .summary-panel {
-        padding: 2rem;
-        height: fit-content;
-        background: linear-gradient(135deg, #17395a 0%, #0e2134 100%);
-        color: #fff;
+        align-self: start;
+        background: var(--warm);
+        border-color: #e5ded5;
       }
-
-      .summary-panel .section-tag {
-        color: var(--gold-600);
+      .section-tag {
+        display: inline-block;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: var(--navy-700);
+        letter-spacing: 0.05em;
+        margin-bottom: 0.5rem;
       }
-
       .summary-panel h2 {
-        margin: 0.5rem 0 1.5rem;
-        font-size: clamp(1.8rem, 3vw, 2.4rem);
-        color: #fff;
+        font-size: 1.4rem;
+        color: var(--navy-950);
+        margin-bottom: 1.5rem;
       }
-
       .summary-item {
         display: flex;
         justify-content: space-between;
-        gap: 1rem;
-        padding: 0.9rem 0;
-        border-bottom: 1px solid rgba(255,255,255,0.15);
+        padding: 0.75rem 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        font-size: 0.95rem;
       }
-
-      .summary-item span {
-        opacity: 0.75;
-      }
-
-      .summary-item strong {
-        text-align: right;
-        color: #fff;
-      }
-
       .summary-item.highlight {
-        margin-top: 0.25rem;
+        border-bottom: none;
         padding-top: 1rem;
+        font-size: 1.1rem;
+      }
+      .summary-item.highlight strong {
+        color: var(--gold-700);
+      }
+      .summary-disclaimer {
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin-top: 1.5rem;
+        line-height: 1.5;
       }
 
-      .summary-panel p {
-        margin-top: 1.25rem;
-        color: rgba(255,255,255,0.8);
-      }
-
+      /* Pricing & Scope Guide Sections */
       .detailed-pricing-section,
       .scope-details-section {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 2rem 2rem;
+        margin-top: 3.5rem;
       }
-
-      .scope-details-section {
-        padding-top: 0.5rem;
-      }
-
       .section-header-row,
       .scope-header-row {
-        text-align: center;
-        margin-bottom: 2rem;
-      }
-
-      .section-header-row h2,
-      .scope-header-row h2 {
-        font-size: clamp(2rem, 3vw, 2.8rem);
-        color: #142e40;
-      }
-
-      .detailed-pricing-list,
-      .scope-detail-panel {
-        display: grid;
-        gap: 2rem;
-      }
-
-      .pricing-group,
-      .scope-tier {
-        background: rgba(255,255,255,0.8);
-        border: 1px solid rgba(20,46,64,0.08);
-        border-radius: 18px;
-        padding: 1.5rem;
-        box-shadow: 0 12px 28px rgba(13,29,45,0.04);
-      }
-
-      .pricing-group h3,
-      .scope-tier h3,
-      .scope-tier h4 {
-        color: #173953;
-      }
-
-      .pricing-group h3 {
-        margin-bottom: 1rem;
-        font-size: 1.4rem;
-      }
-
-      .scope-tier h3 {
-        margin-bottom: 0.5rem;
-        font-size: 1.3rem;
-      }
-
-      .pricing-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 1rem;
-      }
-
-      .price-card {
-        border: 1px solid rgba(20,46,64,0.12);
-        border-radius: 14px;
-        padding: 1rem;
-        background: #fff;
-      }
-
-      .price-card h4 {
-        color: #173953;
-        margin-bottom: 0.5rem;
-      }
-
-      .price-range {
-        color: var(--gold-600);
-        font-weight: 800;
-        margin-bottom: 0.75rem;
-      }
-
-      .price-card ul,
-      .scope-tier ul {
-        list-style: none;
-        display: grid;
-        gap: 0.45rem;
-        color: #536070;
-      }
-
-      .price-card li::before,
-      .scope-tier li::before {
-        content: '✓ ';
-        color: var(--gold-600);
-        font-weight: 700;
-      }
-
-      .scope-tier {
-        padding: 1.5rem;
-      }
-
-      .scope-tier-header {
-        display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 1rem;
-        margin-bottom: 0.75rem;
-        flex-wrap: wrap;
-      }
-
-      .scope-tier-price {
-        color: var(--gold-600);
-        font-weight: 800;
-      }
-
-      .scope-tier p {
-        margin: 0.5rem 0 0.75rem;
-        color: var(--muted);
-      }
-
-      .scope-tier h4 {
-        margin-bottom: 0.4rem;
-        font-size: 1.05rem;
-      }
-
-      .scope-tier .examples {
-        margin-top: 0.75rem;
-      }
-
-      .scope-tier .examples strong {
-        display: block;
-        color: #173953;
-        margin-bottom: 0.5rem;
-      }
-
-      .form-status {
-        min-height: 1.5rem;
-        font-size: 0.96rem;
-        font-weight: 600;
-        display: none;
-      }
-
-      .form-status.success {
-        display: block;
-        color: var(--success);
-      }
-
-      .form-status.error {
-        display: block;
-        color: var(--error);
-      }
-
-      .btn {
-        display: inline-block;
-        padding: 0.875rem 2rem;
-        border-radius: 10px;
-        font-weight: 700;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-        border: none;
-      }
-
-      .btn-primary {
-        background: linear-gradient(135deg, var(--gold-600), var(--gold-700));
-        color: #1a1a1a;
-        box-shadow: 0 10px 24px rgba(212,160,23,0.28);
-      }
-
-      .btn-primary:hover {
-        background: linear-gradient(135deg, #e7b93f, #d1a02c);
-        transform: translateY(-2px);
-        box-shadow: 0 12px 28px rgba(212,160,23,0.35);
-      }
-
-      .btn-full {
-        width: 100%;
-        text-align: center;
-      }
-
-      footer {
-        background: linear-gradient(135deg, #0b1d2d 0%, #162f46 100%);
-        color: #fff;
-        padding: 3rem 2rem 2rem;
-      }
-
-      .footer-content {
-        max-width: 1200px;
-        margin: 0 auto;
-        text-align: center;
-      }
-
-      .footer-brand {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 0.75rem;
-      }
-
-      .footer-brand-text {
-        color: #fff;
-        font-weight: 800;
-        font-size: 1.05rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-
-      .footer-content > p {
-        opacity: 0.7;
-        margin-bottom: 1rem;
-      }
-
-      .footer-nav {
-        display: flex;
-        justify-content: center;
-        gap: 2rem;
-        flex-wrap: wrap;
         margin-bottom: 1.5rem;
       }
-
-      .footer-nav a {
-        opacity: 0.8;
-        transition: opacity 0.2s ease;
+      .section-header-row h2,
+      .scope-header-row h2 {
+        font-size: 1.8rem;
+        color: var(--navy-950);
       }
-
-      .footer-nav a:hover {
-        opacity: 1;
+      .detailed-pricing-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
       }
-
-      .license-number {
-        margin-top: 1rem;
-        color: var(--gold-600);
+      .pricing-card {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+        transition: border-color 0.2s, transform 0.2s;
+      }
+      .pricing-card.active {
+        border: 2px solid var(--gold-600);
+        box-shadow: 0 4px 12px rgba(212, 160, 23, 0.15);
+      }
+      .pricing-header {
+        margin-bottom: 1rem;
+      }
+      .pricing-header h3 {
+        font-size: 1.15rem;
+        margin-bottom: 0.4rem;
+        color: var(--navy-950);
+      }
+      .pricing-badge {
+        font-size: 1.1rem;
         font-weight: 700;
-        letter-spacing: 0.03em;
+        color: var(--gold-700);
+      }
+      .pricing-checklist {
+        list-style: none;
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+      .pricing-checklist li::before {
+        content: "✓ ";
+        color: var(--success);
+        font-weight: bold;
       }
 
+      /* Scope Breakdown Cards */
+      .scope-detail-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+      }
+      .scope-tier-card {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1.5rem;
+      }
+      .scope-tier-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+      }
+      .scope-tier-header h3 {
+        font-size: 1.2rem;
+        color: var(--navy-950);
+      }
+      .scope-examples {
+        font-size: 0.85rem;
+        color: var(--muted);
+        margin-top: 0.25rem;
+      }
+      .tier-price {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--navy-800);
+      }
+      .scope-items-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 0.5rem;
+        list-style: none;
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+      .scope-items-list li::before {
+        content: "• ";
+        color: var(--navy-700);
+      }
+
+      /* Footer */
+      footer {
+        background: var(--navy-950);
+        color: #fff;
+        padding: 3rem 1.5rem;
+        text-align: center;
+      }
+      .footer-content {
+        max-width: 800px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        align-items: center;
+      }
+      .footer-brand-text {
+        font-weight: 700;
+        font-size: 1.25rem;
+      }
+      .footer-nav {
+        display: flex;
+        gap: 1.5rem;
+        margin: 0.75rem 0;
+      }
+      .footer-nav a {
+        color: #cbd5e1;
+        text-decoration: none;
+        font-size: 0.9rem;
+      }
+      .license-number {
+        font-size: 0.85rem;
+        color: #94a3b8;
+      }
       .copyright {
-        font-size: 0.875rem;
-        opacity: 0.55;
+        font-size: 0.8rem;
+        color: #64748b;
       }
 
-      @media (max-width: 768px) {
-        .nav-toggle { display: block; }
+      /* Responsive */
+      @media (max-width: 860px) {
+        .request-layout {
+          grid-template-columns: 1fr;
+          margin-top: 1rem;
+        }
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+        .full-width {
+          grid-column: span 1;
+        }
         .nav-links {
           display: none;
+          flex-direction: column;
           position: absolute;
           top: 100%;
           left: 0;
           right: 0;
-          background: rgba(15, 29, 43, 0.98);
-          flex-direction: column;
-          padding: 1rem 2rem;
-          gap: 1rem;
-          z-index: 10;
+          background: var(--navy-950);
+          padding: 1rem 1.5rem;
         }
-        .nav-links.open { display: flex; }
-        .request-layout,
-        .form-grid { grid-template-columns: 1fr; }
-        .request-layout { padding-top: 2rem; }
+        .nav-links.open {
+          display: flex;
+        }
+        .nav-toggle {
+          display: block;
+        }
       }
     </style>
-
-    <script>
-      const projectType = document.getElementById('project-type');
-      const projectScope = document.getElementById('project-scope');
-      const summaryScope = document.getElementById('summary-scope');
-      const summaryPrice = document.getElementById('summary-price');
-      const detailedPricingList = document.getElementById('detailed-pricing-list');
-      const quoteForm = document.getElementById('quote-form');
-      const quoteStatus = document.getElementById('quote-status');
-      const scopeDetailPanel = document.getElementById('scope-detail-panel');
-
-      const projectValues = {
-        waterDamageRestoration: {
-          label: 'Water Damage Restoration',
-          options: {
-            minor: { label: 'Tier 1: Minor Water Loss', price: '$1,500 - $4,500' },
-            moderate: { label: 'Tier 2: Moderate Water Damage', price: '$4,500 - $15,000' },
-            major: { label: 'Tier 3: Major Water Damage', price: '$15,000 - $75,000+' }
-          }
-        },
-        smokeFireRestoration: {
-          label: 'Smoke & Fire Restoration',
-          options: {
-            smokeOnly: { label: 'Smoke Damage Only', price: '$3,000 - $12,000' },
-            partialFire: { label: 'Partial Fire Damage', price: '$15,000 - $75,000' },
-            majorFire: { label: 'Major Fire Reconstruction', price: '$75,000 - $300,000+' }
-          }
-        },
-        structuralDamageRepair: {
-          label: 'Structural Damage Repair',
-          options: {
-            minor: { label: 'Minor Structural', price: '$3,500 - $12,000' },
-            moderate: { label: 'Moderate Structural', price: '$12,000 - $40,000' },
-            major: { label: 'Major Structural', price: '$40,000 - $250,000+' }
-          }
-        },
-        remodelRefresh: {
-          label: 'Remodeling Packages',
-          options: {
-            refreshPackage: { label: 'Refresh Package', price: '$5,000 - $25,000' },
-            premiumRoom: { label: 'Premium Room Remodel', price: '$25,000 - $120,000' },
-            multiRoom: { label: 'Multi-Room Remodel', price: '$35,000 - $200,000' },
-            bronze: { label: 'Bronze Remodel', price: '$200,000 - $300,000' },
-            silver: { label: 'Silver Remodel', price: '$300,000 - $450,000' },
-            gold: { label: 'Gold Remodel', price: '$450,000 - $700,000+' }
-          }
-        }
-      };
-
-      function buildDetailCards() {
-        detailedPricingList.innerHTML = Object.entries(estimateMap)
-          .map(([key, project]) => {
-            const cards = Object.values(project.options)
-              .map((option) => `
-                <div class="price-card">
-                  <h4>${option.label}</h4>
-                  <p class="price-range">${option.price}</p>
-                  <ul>
-                    ${(estimateMap[key].options[Object.keys(estimateMap[key].options).find((scopeKey) => estimateMap[key].options[scopeKey].label === option.label)]?.scope || []).map((item) => `<li>${item}</li>`).join('')}
-                  </ul>
-                </div>
-              `)
-              .join('');
-
-            return `
-              <div class="pricing-group">
-                <h3>${project.label}</h3>
-                <div class="pricing-grid">${cards}</div>
-              </div>
-            `;
-          })
-          .join('');
-      }
-
-      function buildScopeDetails() {
-        if (!scopeDetailPanel) return;
-
-        const selected = projectType.value;
-        const tiles = serviceScopeDetails[selected] || serviceScopeDetails.waterDamageRestoration;
-
-        scopeDetailPanel.innerHTML = tiles.map((tier) => `
-          <div class="scope-tier">
-            <div class="scope-tier-header">
-              <h3>${tier.title}</h3>
-              <span class="scope-tier-price">${tier.price}</span>
-            </div>
-            <p>Included scope of work</p>
-            <ul>
-              ${tier.items.map((item) => `<li>${item}</li>`).join('')}
-            </ul>
-            ${tier.examples && tier.examples.length ? `
-              <div class="examples">
-                <strong>Typical projects</strong>
-                <ul>
-                  ${tier.examples.map((example) => `<li>${example}</li>`).join('')}
-                </ul>
-              </div>
-            ` : ''}
-          </div>
-        `).join('');
-      }
-
-      function syncScopeOptions() {
-        const selected = projectType.value;
-        const options = projectValues[selected]?.options || {};
-        const entries = Object.entries(options);
-
-        projectScope.innerHTML = `
-          <option value="" disabled ${entries.length ? '' : 'selected'}>Select scope</option>
-          ${entries.map(([key, value]) => `<option value="${key}">${value.label}</option>`).join('')}
-        `;
-
-        const selectedScope = entries[0]?.[0] || '';
-        if (selectedScope) {
-          projectScope.value = selectedScope;
-        }
-
-        updateSummary();
-        buildScopeDetails();
-      }
-
-      function updateSummary() {
-        const selected = projectType.value;
-        const scope = projectScope.value;
-        const scopeData = projectValues[selected]?.options?.[scope];
-
-        if (summaryScope && scopeData) {
-          summaryScope.textContent = scopeData.label;
-        }
-
-        if (summaryPrice && scopeData) {
-          summaryPrice.textContent = scopeData.price;
-        }
-      }
-
-      if (quoteForm && quoteStatus) {
-        quoteForm.addEventListener('submit', async (event) => {
-          event.preventDefault();
-
-          const formData = new FormData(quoteForm);
-          quoteStatus.className = 'form-status';
-          quoteStatus.textContent = 'Sending your quote request...';
-          quoteStatus.style.display = 'block';
-
-          try {
-            const response = await fetch('/api/quote', {
-              method: 'POST',
-              body: formData
-            });
-
-            const result = await response.json();
-            if (!response.ok) {
-              throw new Error(result?.message || 'There was a problem sending your request.');
-            }
-
-            quoteStatus.className = 'form-status success';
-            quoteStatus.textContent = result?.message || 'Your quote request was sent successfully.';
-            quoteForm.reset();
-            syncScopeOptions();
-          } catch (error) {
-            quoteStatus.className = 'form-status error';
-            quoteStatus.textContent = error instanceof Error ? error.message : 'There was a problem sending your request.';
-          }
-        });
-      }
-
-      projectType.addEventListener('change', syncScopeOptions);
-      projectScope.addEventListener('change', function () {
-        updateSummary();
-        buildScopeDetails();
-      });
-
-      buildDetailCards();
-      syncScopeOptions();
-    </script>
   </body>
 </html>
