@@ -819,9 +819,8 @@ const services = [
         .trust-item{padding:0.5rem 0;}
       }
     </style>
-    <script>
-     ```javascript
-
+  
+<script>
 function initHeroVideoRotation() {
   const videos = [
     document.querySelector(".hero-video-front"),
@@ -856,16 +855,6 @@ function initHeroVideoRotation() {
     }
   });
 
-  function playVideo(video) {
-    return video.play().catch((error) => {
-      console.error("Could not play hero video:", error);
-    });
-  }
-
-  playVideo(videos[0]);
-
-  if (reducedMotion) return;
-
   function transitionToNext() {
     if (transitioning) return;
 
@@ -879,14 +868,11 @@ function initHeroVideoRotation() {
 
     try {
       nextVideo.currentTime = 0;
-    } catch (error) {}
+    } catch (error) {
+      console.warn("Could not reset next video:", error);
+    }
 
-    playVideo(nextVideo).then(() => {
-      if (nextVideo.paused) {
-        transitioning = false;
-        return;
-      }
-
+    nextVideo.play().then(() => {
       nextVideo.classList.add("is-active");
       currentVideo.classList.remove("is-active");
       activeIndex = nextIndex;
@@ -900,33 +886,31 @@ function initHeroVideoRotation() {
 
         try {
           currentVideo.currentTime = 0;
-        } catch (error) {}
+        } catch (error) {
+          console.warn("Could not reset previous video:", error);
+        }
 
         transitioning = false;
       }, fadeSeconds * 1000);
-    }).catch(() => {
+    }).catch((error) => {
+      console.error("Could not play next hero video:", error);
       transitioning = false;
     });
   }
 
   videos.forEach((video, index) => {
-    video.addEventListener("timeupdate", () => {
-      if (
-        index === activeIndex &&
-        !transitioning &&
-        video.duration &&
-        video.duration - video.currentTime <= fadeSeconds
-      ) {
-        transitionToNext();
-      }
-    });
-
     video.addEventListener("ended", () => {
       if (index === activeIndex && !transitioning) {
         transitionToNext();
       }
     });
   });
+
+  videos[0].play().catch((error) => {
+    console.error("Could not play first hero video:", error);
+  });
+
+  if (reducedMotion) return;
 }
 
 if (document.readyState === "loading") {
@@ -936,8 +920,7 @@ if (document.readyState === "loading") {
 } else {
   initHeroVideoRotation();
 }
+</script>
 
-      
-    </script>
   </body>
 </html>
