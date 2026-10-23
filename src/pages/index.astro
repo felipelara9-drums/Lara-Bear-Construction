@@ -820,83 +820,102 @@ const services = [
       }
     </style>
     <script>
-      function initHeroVideoRotation() {
-        const videos = [
-          document.querySelector(".hero-video-front"),
-          document.querySelector(".hero-video-kitchen")
-        ];
+     ```javascript
+function initHeroVideoRotation() {
+  const videos = [
+    document.querySelector(".hero-video-front"),
+    document.querySelector(".hero-video-kitchen"),
+    document.querySelector(".hero-video-living-room")
+  ];
 
-        if (videos.some((video) => !video)) return;
+  if (videos.some((video) => !video)) return;
 
-        // Clean up if initialization ever runs more than once.
-        videos.forEach((video) => {
-          video.muted = true;
-          video.loop = false;
-          video.playsInline = true;
-        });
+  // Prepare all videos for muted, inline playback.
+  videos.forEach((video) => {
+    video.muted = true;
+    video.loop = false;
+    video.playsInline = true;
+  });
 
-        let activeIndex = 0;
-        let transitioning = false;
-        let cleanupTimer = null;
-        const fadeSeconds = 1.8;
-        const reducedMotion = window.matchMedia(
-          "(prefers-reduced-motion: reduce)"
-        ).matches;
+  let activeIndex = 0;
+  let transitioning = false;
+  let cleanupTimer = null;
+  const fadeSeconds = 1.8;
 
-        videos[0].classList.add("is-active");
-        videos[1].classList.remove("is-active");
-        videos[1].pause();
-        try { videos[1].currentTime = 0; } catch (error) {}
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
 
-        videos[0].play().catch(() => {});
-        if (reducedMotion) return;
+  // Show the first video initially.
+  videos.forEach((video, index) => {
+    video.classList.toggle("is-active", index === 0);
 
-        function transitionToNext() {
-          if (transitioning) return;
-          transitioning = true;
+    if (index !== 0) {
+      video.pause();
+      try {
+        video.currentTime = 0;
+      } catch (error) {}
+    }
+  });
 
-          const currentVideo = videos[activeIndex];
-          const nextIndex = (activeIndex + 1) % videos.length;
-          const nextVideo = videos[nextIndex];
+  videos[0].play().catch(() => {});
 
-          // Always start the incoming clip at its first frame.
-          nextVideo.pause();
-          try { nextVideo.currentTime = 0; } catch (error) {}
+  if (reducedMotion) return;
 
-          nextVideo.play().then(() => {
-            nextVideo.classList.add("is-active");
-            currentVideo.classList.remove("is-active");
-            activeIndex = nextIndex;
+  function transitionToNext() {
+    if (transitioning) return;
 
-            if (cleanupTimer) window.clearTimeout(cleanupTimer);
-            cleanupTimer = window.setTimeout(() => {
-              currentVideo.pause();
-              try { currentVideo.currentTime = 0; } catch (error) {}
-              transitioning = false;
-            }, fadeSeconds * 1000);
-          }).catch(() => {
-            // Keep the current clip visible and try again on a later timeupdate.
-            transitioning = false;
-          });
-        }
+    transitioning = true;
 
-        // Begin the crossfade near the end of each clip instead of using a
-        // fixed timer. Each video therefore plays once, rather than looping
-        // multiple times before the next transition.
-        videos.forEach((video, index) => {
-          video.addEventListener("timeupdate", () => {
-            if (index !== activeIndex || transitioning || !video.duration) return;
-            if (video.duration - video.currentTime <= fadeSeconds) {
-              transitionToNext();
-            }
-          });
-        });
+    const currentVideo = videos[activeIndex];
+    const nextIndex = (activeIndex + 1) % videos.length;
+    const nextVideo = videos[nextIndex];
+
+    nextVideo.pause();
+
+    try {
+      nextVideo.currentTime = 0;
+    } catch (error) {}
+
+    nextVideo.play().then(() => {
+      nextVideo.classList.add("is-active");
+      currentVideo.classList.remove("is-active");
+      activeIndex = nextIndex;
+
+      if (cleanupTimer) {
+        window.clearTimeout(cleanupTimer);
       }
 
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", initHeroVideoRotation, { once: true });
-      } else {
-        initHeroVideoRotation();
+      cleanupTimer = window.setTimeout(() => {
+        currentVideo.pause();
+
+        try {
+          currentVideo.currentTime = 0;
+        } catch (error) {}
+
+        transitioning = false;
+      }, fadeSeconds * 1000);
+    }).catch(() => {
+      // Keep the current video visible if the next cannot play.
+      transitioning = false;
+    });
+  }
+
+  // Transition near the end of the currently playing clip.
+  videos.forEach((video, index) => {
+    video.addEventListener("timeupdate", () => {
+      if (index !== activeIndex || transitioning || !video.duration) {
+        return;
+      }
+
+      if (video.duration - video.currentTime <= fadeSeconds) {
+        transitionToNext();
+      }
+    });
+  });
+}
+```
+
       }
     </script>
   </body>
