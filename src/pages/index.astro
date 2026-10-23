@@ -915,8 +915,15 @@ function initHeroVideoRotation() {
   });
 }
 ```
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initHeroVideoRotation, {
+    once: true
+  });
+} else {
+  initHeroVideoRotation();
+}
 
-      }
+      
     </script>
   </body>
 </html>
