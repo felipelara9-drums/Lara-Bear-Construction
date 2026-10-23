@@ -280,11 +280,21 @@ const estimateMap = {
   }
 };
 
-const projectParam = Astro.url.searchParams.get('project') || 'waterDamageRestoration';
-const scopeParam = Astro.url.searchParams.get('scope') || Object.keys(estimateMap[projectParam]?.options || {})[0];
-const selectedProjectLabel = estimateMap[projectParam]?.label || 'Water Damage Restoration';
-const selectedScopeLabel = estimateMap[projectParam]?.options?.[scopeParam]?.label || 'Minor Water Damage';
-const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price || '$1,500 - $5,000';
+const projectParam = Astro.url.searchParams.get("project") || "waterDamageRestoration";
+const scopeParam =
+  Astro.url.searchParams.get("scope") ||
+  Object.keys(estimateMap[projectParam]?.options || {})[0];
+
+const selectedProjectLabel =
+  estimateMap[projectParam]?.label || "Water Damage Restoration";
+
+const selectedScopeLabel =
+  estimateMap[projectParam]?.options?.[scopeParam]?.label ||
+  "Minor Water Damage";
+
+const selectedPrice =
+  estimateMap[projectParam]?.options?.[scopeParam]?.price ||
+  "$1,500 - $5,000";
 ---
 
 <!doctype html>
@@ -292,19 +302,33 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Detailed quote request and pricing guide for Lara Bear Construction restoration and remodeling services." />
+    <meta
+      name="description"
+      content="Detailed quote request and pricing guide for Lara Bear Construction restoration and remodeling services."
+    />
     <title>Detailed Quote | Lara Bear Construction</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <header class="site-header">
       <nav class="nav">
-        <a href="/" class="site-brand" aria-label="Lara Bear Construction home">Lara Bear Construction</a>
+        <a href="/" class="site-brand" aria-label="Lara Bear Construction home">
+          Lara Bear Construction
+        </a>
 
-        <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+        <button
+          class="nav-toggle"
+          aria-label="Toggle menu"
+          onclick="document.querySelector('.nav-links').classList.toggle('open')"
+        >
+          ☰
+        </button>
 
         <ul class="nav-links">
           <li><a href="/">Home</a></li>
@@ -321,17 +345,42 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
         <div class="hero-content">
           <p class="eyebrow">Detailed quote request</p>
           <h1>Tell us about your project</h1>
-          <p>We'll review your restoration or remodeling project and follow up with a personalized estimate and scope of work.</p>
+          <p>
+            We'll review your restoration or remodeling project and follow up
+            with a personalized estimate and scope of work.
+          </p>
         </div>
       </section>
 
       <section class="request-layout">
         <div class="request-panel panel">
-          <form class="request-form" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="access_key" value="8031d5d4-983d-43c6-949f-3c547975a65c" />
-            <input type="hidden" name="subject" value="New Quote Request - Lara Bear Construction" />
-            <input type="hidden" name="from_name" value="Lara Bear Construction Website" />
-            <input type="hidden" name="redirect" value="https://larabearconstruction.com/quote?sent=1" />
+          <form
+            class="request-form"
+            id="quote-form"
+            action="https://api.web3forms.com/submit"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            <input
+              type="hidden"
+              name="access_key"
+              value="8031d5d4-983d-43c6-949f-3c547975a65c"
+            />
+            <input
+              type="hidden"
+              name="subject"
+              value="New Quote Request - Lara Bear Construction"
+            />
+            <input
+              type="hidden"
+              name="from_name"
+              value="Lara Bear Construction Website"
+            />
+            <input
+              type="hidden"
+              name="redirect"
+              value="https://larabearconstruction.com/quote?sent=1"
+            />
 
             <div class="form-grid">
               <label>
@@ -341,7 +390,12 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
 
               <label>
                 Email address
-                <input type="email" name="email" placeholder="you@example.com" required />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="you@example.com"
+                  required
+                />
               </label>
 
               <label>
@@ -352,13 +406,39 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
               <label>
                 Project type
                 <select id="project-type" name="projectType">
-                  <option value="waterDamageRestoration" selected={projectParam === 'waterDamageRestoration'}>Water Damage Restoration</option>
-                  <option value="waterDamageReconstruction" selected={projectParam === 'waterDamageReconstruction'}>Water Damage Reconstruction</option>
-                  <option value="bathroom" selected={projectParam === 'bathroom'}>Bathroom Remodel</option>
-                  <option value="kitchen" selected={projectParam === 'kitchen'}>Kitchen Remodel</option>
-                  <option value="generalRemodeling" selected={projectParam === 'generalRemodeling'}>General Remodeling</option>
-                  <option value="fire" selected={projectParam === 'fire'}>Fire & Smoke Damage Repair</option>
-                  <option value="structural" selected={projectParam === 'structural'}>Structural Damage Repair</option>
+                  <option
+                    value="waterDamageRestoration"
+                    selected={projectParam === "waterDamageRestoration"}
+                  >
+                    Water Damage Restoration
+                  </option>
+                  <option
+                    value="waterDamageReconstruction"
+                    selected={projectParam === "waterDamageReconstruction"}
+                  >
+                    Water Damage Reconstruction
+                  </option>
+                  <option value="bathroom" selected={projectParam === "bathroom"}>
+                    Bathroom Remodel
+                  </option>
+                  <option value="kitchen" selected={projectParam === "kitchen"}>
+                    Kitchen Remodel
+                  </option>
+                  <option
+                    value="generalRemodeling"
+                    selected={projectParam === "generalRemodeling"}
+                  >
+                    General Remodeling
+                  </option>
+                  <option value="fire" selected={projectParam === "fire"}>
+                    Fire & Smoke Damage Repair
+                  </option>
+                  <option
+                    value="structural"
+                    selected={projectParam === "structural"}
+                  >
+                    Structural Damage Repair
+                  </option>
                 </select>
               </label>
 
@@ -376,38 +456,59 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
 
               <label class="full-width">
                 Project details
-                <textarea name="details" rows="6" placeholder="Tell us about the project, timeline, and any concerns"></textarea>
+                <textarea
+                  name="details"
+                  rows="6"
+                  placeholder="Tell us about the project, timeline, and any concerns"
+                ></textarea>
               </label>
 
               <label class="full-width">
                 Upload a photo (optional)
-                <input type="file" name="photo" accept="image/jpeg,image/png,image/webp" style="margin-top: 0.5rem;" />
+                <input
+                  type="file"
+                  name="photo"
+                  accept="image/jpeg,image/png,image/webp"
+                  style="margin-top: 0.5rem;"
+                />
               </label>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-full">Send Request</button>
+            <button type="submit" class="btn btn-primary btn-full">
+              Send Request
+            </button>
           </form>
 
-          {Astro.url.searchParams.get('sent') === '1' && (
-            <div class="success-message" style="margin-top: 1rem; padding: 1rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; color: #166534;">
-              ✓ Your quote request has been sent! We'll get back to you soon.
-            </div>
-          )}
+          {
+            Astro.url.searchParams.get("sent") === "1" && (
+              <div
+                class="success-message"
+                style="margin-top: 1rem; padding: 1rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; color: #166534;"
+              >
+                ✓ Your quote request has been sent! We'll get back to you soon.
+              </div>
+            )
+          }
         </div>
 
         <aside class="summary-panel panel">
           <span class="section-tag">Selected estimate</span>
-          <h2>{selectedProjectLabel}</h2>
+          <h2 id="selected-project-label">{selectedProjectLabel}</h2>
+
           <div class="summary-item">
             <span>Scope</span>
             <strong id="summary-scope">{selectedScopeLabel}</strong>
           </div>
+
           <div class="summary-item highlight">
             <span>Estimated range</span>
             <strong id="summary-price">{selectedPrice}</strong>
           </div>
+
           <p>
-            This estimate is a starting point for planning. Final pricing depends on site conditions, materials, access, code requirements, and project details.
+            This estimate is a starting point for planning. Final pricing depends
+            on site conditions, materials, access, code requirements, and project
+            details.
           </p>
         </aside>
       </section>
@@ -438,29 +539,359 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
         </nav>
 
         <p class="license-number">CSLB License #1159060</p>
-        <p class="copyright">&copy; {new Date().getFullYear()} {companyName}. All rights reserved.</p>
+        <p class="copyright">
+          &copy; {new Date().getFullYear()} {companyName}. All rights reserved.
+        </p>
       </div>
     </footer>
 
-    <script is:inline define:vars={{ estimateMap }}>
-      const projectType = document.getElementById('project-type');
-      const projectScope = document.getElementById('project-scope');
-      const summaryScope = document.getElementById('summary-scope');
-      const summaryPrice = document.getElementById('summary-price');
-      const detailedPricingList = document.getElementById('detailed-pricing-list');
-
-      const projectValues = {
-        waterDamageRestoration: { label: 'Water Damage Restoration', options: { minor: { label: 'Minor Water Damage', price: '$1,500 - $5,000' }, moderate: { label: 'Moderate Water Damage', price: '$5,000 - $15,000' }, major: { label: 'Major Water Damage', price: '$15,000 - $50,000+' } } },
-        waterDamageReconstruction: { label: 'Water Damage Reconstruction', options: { singleRoom: { label: 'Single Room', price: '$5,000 - $12,000' }, multipleRooms: { label: 'Multiple Rooms', price: '$12,000 - $35,000' }, wholeHome: { label: 'Whole-Home Restoration', price: '$35,000 - $150,000+' } } },
-        bathroom: { label: 'Bathroom Remodel', options: { basic: { label: 'Basic Remodel', price: '$10,000 - $20,000' }, midRange: { label: 'Mid-Range Remodel', price: '$20,000 - $40,000' }, luxury: { label: 'Luxury Remodel', price: '$40,000 - $80,000+' } } },
-        kitchen: { label: 'Kitchen Remodel', options: { basic: { label: 'Basic', price: '$20,000 - $45,000' }, midRange: { label: 'Mid-Range', price: '$45,000 - $85,000' }, highEnd: { label: 'High-End', price: '$85,000 - $200,000+' } } },
-        generalRemodeling: { label: 'General Remodeling', options: { singleRoom: { label: 'Single Room Remodel', price: '$5,000 - $25,000' }, multipleRooms: { label: 'Multiple Room Remodel', price: '$25,000 - $75,000' }, majorInterior: { label: 'Major Interior Remodel', price: '$75,000 - $250,000+' }, cosmeticRenovation: { label: 'Cosmetic Renovation', price: '$50,000 - $150,000' }, fullRenovation: { label: 'Full Renovation', price: '$150,000 - $350,000' }, highEndWholeHome: { label: 'High-End Whole Home Renovation', price: '$350,000 - $750,000+' } } },
-        fire: { label: 'Fire & Smoke Damage Repair', options: { minor: { label: 'Minor', price: '$3,000 - $15,000' }, moderate: { label: 'Moderate', price: '$15,000 - $50,000' }, severe: { label: 'Severe', price: '$50,000 - $250,000+' } } },
-        structural: { label: 'Structural Damage Repair', options: { localized: { label: 'Localized Structural Repair', price: '$5,000 - $25,000' }, major: { label: 'Major Structural Repair', price: '$25,000 - $100,000+' } } }
+    <script>
+      const estimateMap = {
+        waterDamageRestoration: {
+          label: "Water Damage Restoration",
+          options: {
+            minor: { label: "Minor Water Damage", price: "$1,500 - $5,000" },
+            moderate: { label: "Moderate Water Damage", price: "$5,000 - $15,000" },
+            major: { label: "Major Water Damage", price: "$15,000 - $50,000+" }
+          }
+        },
+        waterDamageReconstruction: {
+          label: "Water Damage Reconstruction",
+          options: {
+            singleRoom: { label: "Single Room", price: "$5,000 - $12,000" },
+            multipleRooms: { label: "Multiple Rooms", price: "$12,000 - $35,000" },
+            wholeHome: { label: "Whole-Home Restoration", price: "$35,000 - $150,000+" }
+          }
+        },
+        bathroom: {
+          label: "Bathroom Remodel",
+          options: {
+            basic: { label: "Basic Remodel", price: "$10,000 - $20,000" },
+            midRange: { label: "Mid-Range Remodel", price: "$20,000 - $40,000" },
+            luxury: { label: "Luxury Remodel", price: "$40,000 - $80,000+" }
+          }
+        },
+        kitchen: {
+          label: "Kitchen Remodel",
+          options: {
+            basic: { label: "Basic", price: "$20,000 - $45,000" },
+            midRange: { label: "Mid-Range", price: "$45,000 - $85,000" },
+            highEnd: { label: "High-End", price: "$85,000 - $200,000+" }
+          }
+        },
+        generalRemodeling: {
+          label: "General Remodeling",
+          options: {
+            singleRoom: { label: "Single Room Remodel", price: "$5,000 - $25,000" },
+            multipleRooms: { label: "Multiple Room Remodel", price: "$25,000 - $75,000" },
+            majorInterior: { label: "Major Interior Remodel", price: "$75,000 - $250,000+" },
+            cosmeticRenovation: { label: "Cosmetic Renovation", price: "$50,000 - $150,000" },
+            fullRenovation: { label: "Full Renovation", price: "$150,000 - $350,000" },
+            highEndWholeHome: { label: "High-End Whole Home Renovation", price: "$350,000 - $750,000+" }
+          }
+        },
+        fire: {
+          label: "Fire & Smoke Damage Repair",
+          options: {
+            minor: { label: "Minor", price: "$3,000 - $15,000" },
+            moderate: { label: "Moderate", price: "$15,000 - $50,000" },
+            severe: { label: "Severe", price: "$50,000 - $250,000+" }
+          }
+        },
+        structural: {
+          label: "Structural Damage Repair",
+          options: {
+            localized: { label: "Localized Structural Repair", price: "$5,000 - $25,000" },
+            major: { label: "Major Structural Repair", price: "$25,000 - $100,000+" }
+          }
+        }
       };
 
+      const fullEstimateMap = {
+        waterDamageRestoration: {
+          label: "Water Damage Restoration",
+          options: {
+            minor: {
+              label: "Minor Water Damage",
+              price: "$1,500 - $5,000",
+              scope: [
+                "Water extraction",
+                "Moisture detection",
+                "Drying equipment setup",
+                "Minor drywall removal",
+                "Sanitization"
+              ]
+            },
+            moderate: {
+              label: "Moderate Water Damage",
+              price: "$5,000 - $15,000",
+              scope: [
+                "Water extraction",
+                "Drying and dehumidification",
+                "Drywall replacement",
+                "Baseboard replacement",
+                "Flooring repairs",
+                "Paint touch-up"
+              ]
+            },
+            major: {
+              label: "Major Water Damage",
+              price: "$15,000 - $50,000+",
+              scope: [
+                "Emergency mitigation",
+                "Demolition of affected areas",
+                "Structural drying",
+                "Flooring replacement",
+                "Cabinet replacement",
+                "Interior reconstruction"
+              ]
+            }
+          }
+        },
+        waterDamageReconstruction: {
+          label: "Water Damage Reconstruction",
+          options: {
+            singleRoom: {
+              label: "Single Room",
+              price: "$5,000 - $12,000",
+              scope: [
+                "Drywall",
+                "Paint",
+                "Flooring",
+                "Trim installation"
+              ]
+            },
+            multipleRooms: {
+              label: "Multiple Rooms",
+              price: "$12,000 - $35,000",
+              scope: [
+                "Flooring replacement",
+                "Wall reconstruction",
+                "Interior painting",
+                "Finish carpentry"
+              ]
+            },
+            wholeHome: {
+              label: "Whole-Home Restoration",
+              price: "$35,000 - $150,000+",
+              scope: [
+                "Whole-home water mitigation",
+                "Interior reconstruction",
+                "Finish replacement",
+                "Cabinet and flooring restoration"
+              ]
+            }
+          }
+        },
+        bathroom: {
+          label: "Bathroom Remodel",
+          options: {
+            basic: {
+              label: "Basic Remodel",
+              price: "$10,000 - $20,000",
+              scope: [
+                "Vanity",
+                "Toilet",
+                "Fixtures",
+                "Paint",
+                "Basic flooring"
+              ]
+            },
+            midRange: {
+              label: "Mid-Range Remodel",
+              price: "$20,000 - $40,000",
+              scope: [
+                "Custom vanity",
+                "Tile shower",
+                "Flooring replacement",
+                "Lighting upgrades"
+              ]
+            },
+            luxury: {
+              label: "Luxury Remodel",
+              price: "$40,000 - $80,000+",
+              scope: [
+                "Custom tile work",
+                "Frameless shower",
+                "Premium fixtures",
+                "Structural modifications"
+              ]
+            }
+          }
+        },
+        kitchen: {
+          label: "Kitchen Remodel",
+          options: {
+            basic: {
+              label: "Basic",
+              price: "$20,000 - $45,000",
+              scope: [
+                "Cabinet refacing or replacement",
+                "Countertops",
+                "Fixtures",
+                "Paint"
+              ]
+            },
+            midRange: {
+              label: "Mid-Range",
+              price: "$45,000 - $85,000",
+              scope: [
+                "Semi-custom cabinets",
+                "New flooring",
+                "Lighting updates",
+                "Appliance relocation"
+              ]
+            },
+            highEnd: {
+              label: "High-End",
+              price: "$85,000 - $200,000+",
+              scope: [
+                "Custom cabinetry",
+                "Luxury countertops",
+                "Structural modifications",
+                "Premium appliances"
+              ]
+            }
+          }
+        },
+        generalRemodeling: {
+          label: "General Remodeling",
+          options: {
+            singleRoom: {
+              label: "Single Room Remodel",
+              price: "$5,000 - $25,000",
+              scope: [
+                "Finish updates",
+                "Painting",
+                "Flooring improvements",
+                "Minor fixture changes"
+              ]
+            },
+            multipleRooms: {
+              label: "Multiple Room Remodel",
+              price: "$25,000 - $75,000",
+              scope: [
+                "Multi-room updates",
+                "Cabinet and countertop changes",
+                "Floor and finish replacements",
+                "Lighting and fixture upgrades"
+              ]
+            },
+            majorInterior: {
+              label: "Major Interior Remodel",
+              price: "$75,000 - $250,000+",
+              scope: [
+                "Interior reconfiguration",
+                "Electrical upgrades",
+                "Plumbing improvements",
+                "Ceiling and wall renovations"
+              ]
+            },
+            cosmeticRenovation: {
+              label: "Cosmetic Renovation",
+              price: "$50,000 - $150,000",
+              scope: [
+                "Paint",
+                "Flooring",
+                "Fixtures",
+                "Cabinet updates"
+              ]
+            },
+            fullRenovation: {
+              label: "Full Renovation",
+              price: "$150,000 - $350,000",
+              scope: [
+                "Kitchen",
+                "Bathrooms",
+                "Flooring",
+                "Electrical",
+                "Plumbing",
+                "Interior finishes"
+              ]
+            },
+            highEndWholeHome: {
+              label: "High-End Whole Home Renovation",
+              price: "$350,000 - $750,000+",
+              scope: [
+                "Structural modifications",
+                "Complete redesign",
+                "Premium materials",
+                "Custom finishes"
+              ]
+            }
+          }
+        },
+        fire: {
+          label: "Fire & Smoke Damage Repair",
+          options: {
+            minor: {
+              label: "Minor",
+              price: "$3,000 - $15,000",
+              scope: [
+                "Smoke and soot assessment",
+                "Surface cleaning",
+                "Odor mitigation",
+                "Minor finish repairs"
+              ]
+            },
+            moderate: {
+              label: "Moderate",
+              price: "$15,000 - $50,000",
+              scope: [
+                "Interior cleaning",
+                "Debris removal",
+                "Repair of damaged drywall and finishes",
+                "Odor remediation"
+              ]
+            },
+            severe: {
+              label: "Severe",
+              price: "$50,000 - $250,000+",
+              scope: [
+                "Extensive material removal",
+                "Deep cleaning and deodorization",
+                "Reconstruction of affected rooms",
+                "Full restoration coordination"
+              ]
+            }
+          }
+        },
+        structural: {
+          label: "Structural Damage Repair",
+          options: {
+            localized: {
+              label: "Localized Structural Repair",
+              price: "$5,000 - $25,000",
+              scope: [
+                "Structural assessment",
+                "Localized framing repair",
+                "Material replacement",
+                "Code-compliance review"
+              ]
+            },
+            major: {
+              label: "Major Structural Repair",
+              price: "$25,000 - $100,000+",
+              scope: [
+                "Framing and load-bearing repairs",
+                "Sheathing replacement",
+                "Structural reinforcement",
+                "Finish restoration"
+              ]
+            }
+          }
+        }
+      };
+
+      const projectType = document.getElementById("project-type");
+      const projectScope = document.getElementById("project-scope");
+      const summaryScope = document.getElementById("summary-scope");
+      const summaryPrice = document.getElementById("summary-price");
+      const selectedProjectLabelEl = document.getElementById("selected-project-label");
+      const detailedPricingList = document.getElementById("detailed-pricing-list");
+
       function buildDetailCards() {
-        detailedPricingList.innerHTML = Object.entries(estimateMap)
+        detailedPricingList.innerHTML = Object.entries(fullEstimateMap)
           .map(([key, project]) => {
             const cards = Object.entries(project.options)
               .map(([scopeKey, option]) => `
@@ -468,11 +899,11 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
                   <h4>${option.label}</h4>
                   <p class="price-range">${option.price}</p>
                   <ul>
-                    ${option.scope.map((item) => `<li>${item}</li>`).join('')}
+                    ${option.scope.map((item) => `<li>${item}</li>`).join("")}
                   </ul>
                 </div>
               `)
-              .join('');
+              .join("");
 
             return `
               <div class="pricing-group">
@@ -481,22 +912,24 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
               </div>
             `;
           })
-          .join('');
+          .join("");
       }
 
       function syncScopeOptions() {
         const selected = projectType.value;
-        const options = projectValues[selected]?.options || {};
+        const options = estimateMap[selected]?.options || {};
         const entries = Object.entries(options);
 
         projectScope.innerHTML = `
-          <option value="" disabled ${entries.length ? '' : 'selected'}>Select scope</option>
-          ${entries.map(([key, value]) => `<option value="${key}">${value.label}</option>`).join('')}
+          <option value="" disabled ${entries.length ? "" : "selected"}>Select scope</option>
+          ${entries
+            .map(([key, value]) => `<option value="${key}">${value.label}</option>`)
+            .join("")}
         `;
 
-        const selectedScope = entries[0]?.[0] || '';
-        if (selectedScope) {
-          projectScope.value = selectedScope;
+        const firstScope = entries[0]?.[0] || "";
+        if (firstScope) {
+          projectScope.value = firstScope;
         }
 
         updateSummary();
@@ -505,7 +938,11 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
       function updateSummary() {
         const selected = projectType.value;
         const scope = projectScope.value;
-        const scopeData = projectValues[selected]?.options?.[scope];
+        const scopeData = estimateMap[selected]?.options?.[scope];
+
+        if (selectedProjectLabelEl && estimateMap[selected]) {
+          selectedProjectLabelEl.textContent = estimateMap[selected].label;
+        }
 
         if (summaryScope && scopeData) {
           summaryScope.textContent = scopeData.label;
@@ -516,14 +953,14 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
         }
       }
 
-      projectType.addEventListener('change', syncScopeOptions);
-      projectScope.addEventListener('change', updateSummary);
+      projectType.addEventListener("change", syncScopeOptions);
+      projectScope.addEventListener("change", updateSummary);
 
       buildDetailCards();
       syncScopeOptions();
     </script>
 
-    <style is:global>
+    <style>
       :root {
         --navy-950: #0b1d2d;
         --navy-900: #102c40;
@@ -538,16 +975,32 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
         --panel: #ffffff;
       }
 
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      html { scroll-behavior: smooth; }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
       body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         line-height: 1.6;
         color: var(--text);
         background: linear-gradient(135deg, #f5f1eb 0%, #f9f9f7 100%);
       }
-      a { text-decoration: none; color: inherit; }
-      img { max-width: 100%; display: block; }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
 
       .site-header {
         position: sticky;
@@ -683,11 +1136,16 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
         color: #1d2a36;
       }
 
-      input, select, textarea, button {
+      input,
+      select,
+      textarea,
+      button {
         font: inherit;
       }
 
-      input, select, textarea {
+      input,
+      select,
+      textarea {
         width: 100%;
         padding: 0.9rem 1rem;
         border: 2px solid #dde5eb;
@@ -706,7 +1164,9 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
         -moz-appearance: menulist;
       }
 
-      input:focus, select:focus, textarea:focus {
+      input:focus,
+      select:focus,
+      textarea:focus {
         outline: none;
         border-color: var(--gold-600);
       }
@@ -913,7 +1373,10 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
       }
 
       @media (max-width: 768px) {
-        .nav-toggle { display: block; }
+        .nav-toggle {
+          display: block;
+        }
+
         .nav-links {
           display: none;
           position: absolute;
@@ -926,9 +1389,13 @@ const selectedPrice = estimateMap[projectParam]?.options?.[scopeParam]?.price ||
           gap: 1rem;
           z-index: 10;
         }
-        .nav-links.open { display: flex; }
 
-        .request-layout, .form-grid {
+        .nav-links.open {
+          display: flex;
+        }
+
+        .request-layout,
+        .form-grid {
           grid-template-columns: 1fr;
         }
       }
