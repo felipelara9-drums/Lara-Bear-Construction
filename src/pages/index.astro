@@ -821,6 +821,7 @@ const services = [
     </style>
     <script>
      ```javascript
+
 function initHeroVideoRotation() {
   const videos = [
     document.querySelector(".hero-video-front"),
@@ -828,37 +829,40 @@ function initHeroVideoRotation() {
     document.querySelector(".hero-video-living-room")
   ];
 
-  if (videos.some((video) => !video)) return;
+  if (videos.some((video) => !video)) {
+    console.error("Hero video missing from the page.");
+    return;
+  }
 
-  // Prepare all videos for muted, inline playback.
-  videos.forEach((video) => {
-    video.muted = true;
-    video.loop = false;
-    video.playsInline = true;
-  });
-
-  let activeIndex = 0;
-  let transitioning = false;
-  let cleanupTimer = null;
   const fadeSeconds = 1.8;
-
   const reducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
 
-  // Show the first video initially.
+  let activeIndex = 0;
+  let transitioning = false;
+  let cleanupTimer = null;
+
   videos.forEach((video, index) => {
+    video.muted = true;
+    video.loop = false;
+    video.playsInline = true;
     video.classList.toggle("is-active", index === 0);
 
     if (index !== 0) {
       video.pause();
-      try {
-        video.currentTime = 0;
-      } catch (error) {}
+      video.preload = "auto";
+      video.currentTime = 0;
     }
   });
 
-  videos[0].play().catch(() => {});
+  function playVideo(video) {
+    return video.play().catch((error) => {
+      console.error("Could not play hero video:", error);
+    });
+  }
+
+  playVideo(videos[0]);
 
   if (reducedMotion) return;
 
@@ -877,7 +881,12 @@ function initHeroVideoRotation() {
       nextVideo.currentTime = 0;
     } catch (error) {}
 
-    nextVideo.play().then(() => {
+    playVideo(nextVideo).then(() => {
+      if (nextVideo.paused) {
+        transitioning = false;
+        return;
+      }
+
       nextVideo.classList.add("is-active");
       currentVideo.classList.remove("is-active");
       activeIndex = nextIndex;
@@ -896,25 +905,30 @@ function initHeroVideoRotation() {
         transitioning = false;
       }, fadeSeconds * 1000);
     }).catch(() => {
-      // Keep the current video visible if the next cannot play.
       transitioning = false;
     });
   }
 
-  // Transition near the end of the currently playing clip.
   videos.forEach((video, index) => {
     video.addEventListener("timeupdate", () => {
-      if (index !== activeIndex || transitioning || !video.duration) {
-        return;
+      if (
+        index === activeIndex &&
+        !transitioning &&
+        video.duration &&
+        video.duration - video.currentTime <= fadeSeconds
+      ) {
+        transitionToNext();
       }
+    });
 
-      if (video.duration - video.currentTime <= fadeSeconds) {
+    video.addEventListener("ended", () => {
+      if (index === activeIndex && !transitioning) {
         transitionToNext();
       }
     });
   });
 }
-```
+
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initHeroVideoRotation, {
     once: true
