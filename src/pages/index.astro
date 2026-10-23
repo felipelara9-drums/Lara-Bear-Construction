@@ -65,10 +65,10 @@ const services = [
 
     <section class="hero" aria-label="Lara Bear Construction project inspiration">
       <div class="hero-video-stage" aria-hidden="true">
-        <video class="hero-video hero-video-front is-active" autoplay muted loop playsinline preload="auto">
+        <video class="hero-video hero-video-front is-active" autoplay muted playsinline preload="auto">
           <source src="/videos/front-home.mp4" type="video/mp4" />
         </video>
-        <video class="hero-video hero-video-kitchen" autoplay muted loop playsinline preload="auto">
+        <video class="hero-video hero-video-kitchen" muted playsinline preload="auto">
           <source src="/videos/kitchen-remodel.mp4" type="video/mp4" />
         </video>
       </div>
@@ -818,55 +818,76 @@ const services = [
     </style>
     <script>
       function initHeroVideoRotation() {
-        const frontVideo = document.querySelector(".hero-video-front");
-        const kitchenVideo = document.querySelector(".hero-video-kitchen");
+        const videos = [
+          document.querySelector(".hero-video-front"),
+          document.querySelector(".hero-video-kitchen")
+        ];
 
-        if (!frontVideo || !kitchenVideo) return;
+        if (videos.some((video) => !video)) return;
 
-        // Avoid duplicate timers if this script is initialized more than once.
-        if (window.heroVideoRotationTimer) {
-          window.clearInterval(window.heroVideoRotationTimer);
-        }
+        // Clean up if initialization ever runs more than once.
+        videos.forEach((video) => {
+          video.muted = true;
+          video.loop = false;
+          video.playsInline = true;
+        });
 
-        const videos = [frontVideo, kitchenVideo];
         let activeIndex = 0;
+        let transitioning = false;
+        let cleanupTimer = null;
+        const fadeSeconds = 1.8;
         const reducedMotion = window.matchMedia(
           "(prefers-reduced-motion: reduce)"
         ).matches;
 
-        frontVideo.classList.add("is-active");
-        kitchenVideo.classList.remove("is-active");
+        videos[0].classList.add("is-active");
+        videos[1].classList.remove("is-active");
+        videos[1].pause();
+        try { videos[1].currentTime = 0; } catch (error) {}
 
-        // Start both muted videos up front so the next clip is ready to fade in.
-        // Keep the current video visible if a browser blocks playback of the next.
-        videos.forEach((video) => {
-          video.muted = true;
-          video.playsInline = true;
-          video.play().catch(() => {});
-        });
-
+        videos[0].play().catch(() => {});
         if (reducedMotion) return;
 
-        window.heroVideoRotationTimer = window.setInterval(() => {
-          const nextIndex = activeIndex === 0 ? 1 : 0;
+        function transitionToNext() {
+          if (transitioning) return;
+          transitioning = true;
+
           const currentVideo = videos[activeIndex];
+          const nextIndex = (activeIndex + 1) % videos.length;
           const nextVideo = videos[nextIndex];
 
-          const showNextVideo = () => {
+          // Always start the incoming clip at its first frame.
+          nextVideo.pause();
+          try { nextVideo.currentTime = 0; } catch (error) {}
+
+          nextVideo.play().then(() => {
             nextVideo.classList.add("is-active");
             currentVideo.classList.remove("is-active");
             activeIndex = nextIndex;
-          };
 
-          // If the hidden video has paused, resume it before crossfading.
-          if (nextVideo.paused) {
-            nextVideo.play().then(showNextVideo).catch(() => {
-              // Keep the currently visible video if playback is blocked.
-            });
-          } else {
-            showNextVideo();
-          }
-        }, 10000);
+            if (cleanupTimer) window.clearTimeout(cleanupTimer);
+            cleanupTimer = window.setTimeout(() => {
+              currentVideo.pause();
+              try { currentVideo.currentTime = 0; } catch (error) {}
+              transitioning = false;
+            }, fadeSeconds * 1000);
+          }).catch(() => {
+            // Keep the current clip visible and try again on a later timeupdate.
+            transitioning = false;
+          });
+        }
+
+        // Begin the crossfade near the end of each clip instead of using a
+        // fixed timer. Each video therefore plays once, rather than looping
+        // multiple times before the next transition.
+        videos.forEach((video, index) => {
+          video.addEventListener("timeupdate", () => {
+            if (index !== activeIndex || transitioning || !video.duration) return;
+            if (video.duration - video.currentTime <= fadeSeconds) {
+              transitionToNext();
+            }
+          });
+        });
       }
 
       if (document.readyState === "loading") {
