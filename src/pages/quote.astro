@@ -779,12 +779,16 @@ quoteForm?.addEventListener('submit', async (e) => {
     quoteStatus.textContent =
       'Sorry, your request could not be sent. Please try again or contact us by email.';
     quoteStatus.className = 'form-status error';
+ 
   } finally {
     submitButton.disabled = false;
   }
 });
 
-    </script>
+refreshAll();
+});
+</script>
+
 
     <style is:global>
       :root {
