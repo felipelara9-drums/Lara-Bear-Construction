@@ -551,7 +551,15 @@ const defaultPrice = estimateMap[defaultProject].options[defaultScope].price;
 
               <label class="full-width upload-field">
                 Upload project photos
-                <input type="file" name="images" accept="image/*" multiple />
+                <input
+                  type="file"
+                  name="attachment"
+                  accept="image/*"
+                  data-advanced="true"
+                  data-max-files="3"
+                  data-max-file-size="5MB"
+                  multiple
+                />
                 <small>Attach before-and-after photos, damage photos, or room images.</small>
               </label>
             </div>
@@ -738,24 +746,26 @@ quoteForm?.addEventListener('submit', async (e) => {
   try {
     const formData = new FormData(quoteForm);
 
-    // Text-only submission; photo uploads require Web3Forms Pro.
-    formData.delete('images');
-
-    formData.append(
-      'access_key',
-      'bbab1d36-0bb6-4ca5-9c2a-30c8219dc35d'
-    );
-    formData.append(
+    // Advanced Web3Forms uploader uploads files separately and supplies
+    // attachment references. Send the completed form data as JSON.
+    formData.set('access_key', 'a6239f8d-9d46-4c09-9bd5-4f92676654ac');
+    formData.set(
       'subject',
       'New Quote Request - Lara Bear Construction'
     );
-    formData.append('from_name', 'Lara Bear Construction Website');
+    formData.set('from_name', 'Lara Bear Construction Website');
+
+    const formObject = Object.fromEntries(formData.entries());
 
     const response = await fetch(
       'https://api.web3forms.com/submit',
       {
         method: 'POST',
-        body: formData
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(formObject)
       }
     );
 
@@ -1193,5 +1203,6 @@ refreshAll();
         }
       }
     </style>
+    <script src="https://web3forms.com/client/script.js" async defer></script>
   </body>
 </html>
