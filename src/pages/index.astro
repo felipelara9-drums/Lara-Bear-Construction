@@ -55,6 +55,7 @@ const services = [
         <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
 
         <ul class="nav-links">
+          <li><a href={`tel:+1${phoneClean}`} class="nav-call-button" aria-label={`Call Lara Bear Construction at ${phone}`}>☎ Call</a></li>
           <li><a href="/restoration-remodeling">Restoration</a></li>
           <li><a href="/quote">Free Quote</a></li>
           <li><a href="#about">About</a></li>
@@ -298,6 +299,28 @@ const services = [
       .nav-links a:hover{
         opacity:1;
         transform:translateY(-1px);
+      }
+
+      .nav-links a.nav-call-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 0.65rem 1.1rem;
+        border-radius: 999px;
+        background: #d4a017;
+        color: #102c40;
+        opacity: 1;
+        font-weight: 800;
+        letter-spacing: 0.03em;
+        white-space: nowrap;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+      }
+
+      .nav-links a.nav-call-button:hover {
+        background: #e6b83f;
+        color: #0b1d2d;
+        transform: translateY(-1px);
       }
 
       .nav-toggle{
@@ -897,7 +920,7 @@ const services = [
           try {
             const formData = new FormData(form);
             const payload = Object.fromEntries(formData.entries());
-            payload.access_key = 'a6239f8d-9d46-4c09-9bd5-4f92676654ac';
+            payload.access_key = 'PASTE_YOUR_NEW_WEB3FORMS_ACCESS_KEY_HERE';
             payload.subject = 'New Homepage Request - Lara Bear Construction';
             payload.from_name = 'Lara Bear Construction Website';
 
