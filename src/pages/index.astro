@@ -84,6 +84,15 @@ const services = [
         >
           <source src="/videos/kitchen-remodel.mp4" type="video/mp4" />
         </video>
+
+        <video
+          class="hero-video hero-video-living-room"
+          muted
+          playsinline
+          preload="auto"
+        >
+          <source src="/videos/living-room-homepage.mp4" type="video/mp4" />
+        </video>
       </div>
       <div class="hero-overlay"></div>
       <div class="hero-content">
@@ -917,7 +926,8 @@ const services = [
         function initHeroVideoRotation() {
           const videos = [
             document.querySelector(".hero-video-front"),
-            document.querySelector(".hero-video-kitchen")
+            document.querySelector(".hero-video-kitchen"),
+            document.querySelector(".hero-video-living-room")
           ];
 
           if (videos.some((video) => !video)) return;
