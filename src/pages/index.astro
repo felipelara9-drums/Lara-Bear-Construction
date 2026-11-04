@@ -857,63 +857,7 @@ const services = [
       .homepage-request-status.is-error { color: #b42318; }
       .contact-form button:disabled { opacity: 0.7; cursor: wait; }
 </style>
-    <script>
-      function initHeroVideoRotation() {
-        const frontVideo = document.querySelector(".hero-video-front");
-        const kitchenVideo = document.querySelector(".hero-video-kitchen");
-
-        if (!frontVideo || !kitchenVideo) return;
-
-        // Clear an existing timer if the page script is initialized again.
-        if (window.heroVideoRotationTimer) {
-          window.clearInterval(window.heroVideoRotationTimer);
-        }
-
-        const videos = [frontVideo, kitchenVideo];
-        let activeIndex = 0;
-        const reducedMotion = window.matchMedia(
-          "(prefers-reduced-motion: reduce)"
-        ).matches;
-
-        // The front video is the initial visible video.
-        frontVideo.classList.add("is-active");
-        kitchenVideo.classList.remove("is-active");
-        frontVideo.play().catch(() => {});
-
-        // Respect reduced-motion preferences by keeping the first video visible.
-        if (reducedMotion) return;
-
-        window.heroVideoRotationTimer = window.setInterval(() => {
-          const nextIndex = activeIndex === 0 ? 1 : 0;
-          const currentVideo = videos[activeIndex];
-          const nextVideo = videos[nextIndex];
-
-          // Restart the incoming video for a clean transition.
-          try {
-            nextVideo.currentTime = 0;
-          } catch (error) {
-            // The browser may not have loaded enough video data yet.
-          }
-
-          nextVideo.play()
-            .then(() => {
-              nextVideo.classList.add("is-active");
-              currentVideo.classList.remove("is-active");
-              activeIndex = nextIndex;
-            })
-            .catch(() => {
-              // Keep the current video visible if the next video cannot play.
-            });
-        }, 10000);
-      }
-
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", initHeroVideoRotation, { once: true });
-      } else {
-        initHeroVideoRotation();
-      }
-    </script>
-
+ 
     <script is:inline>
       (() => {
         const form = document.getElementById('homepage-request-form');
