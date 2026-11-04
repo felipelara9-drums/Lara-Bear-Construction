@@ -265,34 +265,32 @@ const services = [
         box-shadow: 0 10px 30px rgba(12, 26, 38, 0.18);
       }
 
-      .nav{
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        padding:1rem 2rem;
-        max-width:1220px;
-        margin:0 auto;
-      }
-
+     .nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0.75rem 30px;
+  gap: 1.5rem;
+}
       .site-brand {
-        display:flex;
-        align-items:center;
-        justify-content:flex-start;
-        flex:0 1 auto;
-        min-width:0;
-        min-height:44px;
-      }
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 0 1 auto;
+  min-width: 0;
+}
 
-      .site-brand img {
-        display:block;
-        width:clamp(130px, 15vw, 180px);
-        height:56px;
-        object-fit:contain;
-        object-position:left center;
-        /* The supplied SVG is black; invert it to show clearly on the navy header. */
-        filter:invert(1);
-      }
-
+.site-brand img {
+  display: block;
+  width: 230px;
+  height: 80px;
+  object-fit: contain;
+  object-position: left center;
+  filter: invert(1);
+}
       .footer-brand {
         display:flex;
         align-items:center;
